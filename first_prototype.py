@@ -43,10 +43,6 @@ smith_client = Client()
 st.set_page_config(page_title="Study bot", page_icon="📖")
 st.title("📖 Study bot")
 
-"""
-
-"""
-
 
 
 ## initialising key variables in st.sessionstate if first run
@@ -71,32 +67,28 @@ memory = ConversationBufferMemory(memory_key="history", chat_memory=msgs)
 
 
 
-# selections = st.sidebar
+selections = st.sidebar
 
-## removing this option for now. 
-# selections.markdown("## Feedback Scale")
-# feedback_option = (
-#     "thumbs" if st.sidebar.toggle(label="`Faces` ⇄ `Thumbs`", value=False) else "faces"
-# )
 
-# with selections:
-#     st.markdown("## LLM model selection")
-#     st.markdown(":blue[Different models have widely differing costs.   \n \n  It seems that running this whole flow with chatGPT 4 costs about $0.1 per full flow as there are multiple processing steps 👻; while the 3.5-turbo is about 100x cheaper 🤑 and gpt-4o is about 6x cheaper (I think).]")
-#     st.markdown('**Our prompts are currently set up for gpt-4 so you might want to run your first trial with that** ... however, multiple runs might be good to with some of the cheaper models.')
+with selections:
+    st.markdown("## LLM model selection")
+    st.markdown(":blue[Different models have widely differing costs.   \n \n  It seems that running this whole flow with chatGPT 4 costs about $0.1 per full flow as there are multiple processing steps 👻; while the 3.5-turbo is about 100x cheaper 🤑 and gpt-4o is about 6x cheaper (I think).]")
+    st.markdown('**Our prompts are currently set up for gpt-4 so you might want to run your first trial with that** ... however, multiple runs might be good to with some of the cheaper models.')
     
 
 
-#     st.session_state.llm_model = st.selectbox(
-#         "Which LLM would you like to try?",
-#         [ 
-#             'gpt-4o', 
-#             'gpt-4',
-#             'gpt-3.5-turbo-1106'
-#             ],
-#         key = 'llm_choice',
-#     )
+    st.session_state.llm_model = st.selectbox(
+        "Which LLM would you like to try?",
+        [ 
+            'gpt-4o', 
+            'gpt-4',
+            'gpt-3.5-turbo-1106'
+            ],
+        key = 'llm_choice',
+    )
 
-#     st.write("**Current llm-model selection:**  \n " + st.session_state.llm_model)
+    st.write("**Current llm-model selection:**  \n " + st.session_state.llm_model)
+
 
 ## ensure we are using a better prompt for 4o 
 if st.session_state['llm_model'] == "gpt-4o":
@@ -104,17 +96,25 @@ if st.session_state['llm_model'] == "gpt-4o":
 
 
 
-
-
 def getData (testing = False ): 
+    """Collects answers to main questions from the user. 
+    
+    The conversation flow is stored in the msgs variable (which acts as the persistent langchain-streamlit memory for the bot). The prompt for LLM must be set up to return "FINISHED" when all data is collected. 
+    
+    Parameters: 
+    testing: bool variable that will insert a dummy conversation instead of engaging with the user
+
+    Returns: 
+    Nothing returned as all data is stored in msgs. 
+    """
+
+    ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
         msgs.add_ai_message("Hi there -- I'm collecting stories about challenging experiences on social media to better understand and support our students. I'd appreciate if you could share your experience with me by answering a few questions. \n\n I'll start with a general question and then we'll move to a specific situation you remember. \n\n  Let me know when you're ready! ")
 
-    # ## write the whole history:
-    # for msg in msgs.messages:
-    #     st.chat_message(msg.type).write(msg.content)
 
-   # write just the last conversational turn: 
+   # as Streamlit refreshes page after each input, we have to refresh all messages. 
+   # in our case, we are just interested in showing the last AI-Human turn of the conversation for simplicity
 
     if len(msgs.messages) >= 2:
         last_two_messages = msgs.messages[-1:]
@@ -127,16 +127,23 @@ def getData (testing = False ):
                 st.chat_message(msg.type).write(msg.content)
 
 
-    # If user inputs a new prompt, generate and draw a new response
+    # If user inputs a new answer to the chatbot, generate a new response and add into msgs
     if prompt:
+        # Note: new messages are saved to history automatically by Langchain during run 
         with entry_messages:
+            # show that the message was accepted 
             st.chat_message("human").write(prompt)
-            # Note: new messages are saved to history automatically by Langchain during run
+            
+            # generate the reply using langchain 
             response = conversation.invoke(input = prompt)
-            # print(response)
+            
+            # the prompt must be set up to return "FINISHED" once all questions have been answered
+            # If finished, move the flow to summarisation, otherwise continue.
             if "FINISHED" in response['response']:
                 st.divider()
                 st.chat_message("ai").write("Great, I think I got all I need -- but let me double check!")
+
+                # call the summarisation  agent
                 st.session_state.agentState = "summarise"
                 summariseData(testing)
             else:
@@ -148,6 +155,15 @@ def getData (testing = False ):
 
 
 def extractChoices(msgs, testing ):
+    """Uses bespoke LLM prompt to extract answers to given questions from a conversation history into a JSON object. 
+
+    Arguments: 
+    msgs (str): conversations history to extract from -- this can be streamlit memory, or a dummy variable during testing
+    testing (bool): bool variable that will insert a dummy conversation instead of engaging with the user
+
+    """
+
+    ## set up our extraction LLM -- low temperature for repeatable results
     extraction_llm = ChatOpenAI(temperature=0.1, model=st.session_state.llm_model, openai_api_key=openai_api_key)
 
     ## taking the prompt from lc_prompts.py file
@@ -158,7 +174,7 @@ def extractChoices(msgs, testing ):
     extractionChain = extraction_template | extraction_llm | json_parser
 
     
-    # allow for testing with pre-coded messages -- see testing_prompts.py
+    # allow for testing the flow with pre-generated messages -- see testing_prompts.py
     if testing:
         extractedChoices = extractionChain.invoke({"conversation_history" : test_messages})
     else: 
@@ -169,9 +185,20 @@ def extractChoices(msgs, testing ):
 
 
 def collectFeedback(answer, column_id,  scenario):
+    """ Submits user's feedback on specific scenario to langsmith; called as on_submit function for the respective streamlit feedback object. 
+    
+    The payload combines the text of the scenario, user output, and answers. This function is intended to be called as 'on_submit' for the streamlit_feedback component.  
+
+    Parameters: 
+    answer (dict): Returned by streamlit_feedback function, contains "the user response, with the feedback_type, score and text fields" 
+    column_id (str): marking which column this belong too 
+    scenario (str): the scenario that users submitted feedback on
+
+    """
 
     st.session_state.temp_debug = "called collectFeedback"
-    ## not needed for now, but just so we have the opportunity to deal with faces as well 
+    
+    # allows us to pick between thumbs / faces, based on the streamlit_feedback response
     score_mappings = {
         "thumbs": {"👍": 1, "👎": 0},
         "faces": {"😀": 1, "🙂": 0.75, "😐": 0.5, "🙁": 0.25, "😞": 0},
@@ -181,11 +208,13 @@ def collectFeedback(answer, column_id,  scenario):
     # Get the score from the selected feedback option's score mapping
     score = scores.get(answer['score'])
 
+    # store the Langsmith run_id so the feedback is attached to the right flow on Langchain side 
     run_id = st.session_state['run_id']
 
     if DEBUG: 
         st.write(run_id)
         st.write(answer)
+
 
     if score is not None:
         # Formulate feedback type string incorporating the feedback option
@@ -194,6 +223,7 @@ def collectFeedback(answer, column_id,  scenario):
 
         st.session_state.temp_debug = feedback_type_str
 
+        ## combine all data that we want to store in Langsmith
         payload = f"{answer['score']} rating scenario: \n {scenario} \n Based on: \n {answer_set}"
 
         # Record the feedback with the formulated feedback type string
@@ -212,7 +242,14 @@ def collectFeedback(answer, column_id,  scenario):
 
 @traceable # Auto-trace this function
 def summariseData(testing = False): 
-    # turn the prompt into a prompt template:
+    """Takes the extracted answers to questions and generates three scenarios, based on selected prompts. 
+
+    testing (bool): will insert a dummy data instead of user-generated content if set to True
+
+    """
+
+
+    # start by setting up the langchain chain from our template (defined in lc_prompts.py)
     prompt_template = PromptTemplate.from_template(prompt_one_shot)
 
     # add a json parser to make sure the output is a json object
@@ -221,29 +258,29 @@ def summariseData(testing = False):
     # connect the prompt with the llm call, and then ensure output is json with our new parser
     chain = prompt_template | chat | json_parser
 
-    ## pick the prompt we want to use:
+    ## pick the prompt we want to use 
     prompt_1 = prompt_formal
-    # prompt_1 = prompt_goth
-    # prompt_2 = prompt_youth
-    # prompt_2 = prompt_youth
     prompt_2 = prompt_sibling
     prompt_3 = prompt_goth
     end_prompt = end_prompt_core
 
-    ### NEED TO EXTRACT THE CHOICES:
+    ### call extract choices on real data / stored test data based on value of testing
     if testing: 
         answer_set = extractChoices(msgs, True)
     else:
         answer_set = extractChoices(msgs, False)
     
+    ## debug shows the interrim steps of the extracted set
     if DEBUG: 
         st.divider()
         st.chat_message("ai").write("**DEBUGGING** *-- I think this is a good summary of what you told me ... check if this is correct!*")
         st.chat_message("ai").json(answer_set)
 
+    # store the generated answers into streamlit session state
     st.session_state['answer_set'] = answer_set
 
 
+    # let the user know the bot is starting to generate content 
     with entry_messages:
         if testing:
             st.markdown(":red[DEBUG active -- using testing messages]")
@@ -252,11 +289,13 @@ def summariseData(testing = False):
         st.chat_message("ai").write("Seems I have everything! Let me try to summarise what you said in three scenarios. \n See you if you like any of these! ")
 
 
-        ## can't be bothered to stream these, so just showing progress bar 
+        ## can't be bothered to set up LLM stream here, so just showing progress bar for now  
+        ## this gets manually updated after each scenario
         progress_text = 'Processing your scenarios'
         bar = st.progress(0, text = progress_text)
 
 
+    # create first scenario & store into st.session state 
     st.session_state.response_1 = chain.invoke({
         "main_prompt" : prompt_1,
         "end_prompt" : end_prompt,
@@ -272,6 +311,7 @@ def summariseData(testing = False):
     })
     run_1 = get_current_run_tree()
 
+    ## update progress bar
     bar.progress(33, progress_text)
 
     st.session_state.response_2 = chain.invoke({
@@ -289,6 +329,7 @@ def summariseData(testing = False):
     })
     run_2 = get_current_run_tree()
 
+    ## update progress bar
     bar.progress(66, progress_text)
 
     st.session_state.response_3 = chain.invoke({
@@ -306,6 +347,7 @@ def summariseData(testing = False):
     })
     run_3 = get_current_run_tree()
 
+    ## update progress bar after the last scenario
     bar.progress(99, progress_text)
 
     # remove the progress bar
@@ -321,14 +363,17 @@ def summariseData(testing = False):
     ## update the correct run ID -- all three calls share the same one. 
     st.session_state.run_id = run_1.id
 
-    ## set the next target
+    ## move the flow to the next state
     st.session_state["agentState"] = "review"
 
+    # we need the user to do an action (e.g., button click) to generate a natural streamlit refresh (so we can show scenarios on a clear page). Other options like streamlit rerun() have been marked as 'failed runs' on Langsmith which is annoying. 
     st.button("I'm ready -- show me!", key = 'progressButton')
-    #st.rerun() 
+
 
 def testing_reviewSetUp():
-    ## DEPRECATED -- DOES NOT WORK AT THIS POINT
+    """Simple function that just sets up dummy scenario data, used when testing later flows of the process. 
+    """
+    
 
     ## setting up testing code -- will likely be pulled out into a different procedure 
     text_scenarios = {
@@ -338,33 +383,25 @@ def testing_reviewSetUp():
 
         "s3": "So, here's the deal. I've been trying to learn this coding language called langchain, right? And it's been a real struggle. So, I decided to post about it online, hoping for some support or advice. But guess what? My PhD students and postdocs, the same people I've been telling how important it is to learn coding, just laughed at me! Can you believe it? I was so ticked off and embarrassed. I mean, who does that? So, I did what any self-respecting person would do. I fired all the postdocs and re-advertised their positions. And for the PhDs? I had a serious talk with them about how uncool their reaction was to my coding struggles."
     }
+
+    # insert the dummy text into the right st.sessionstate locations 
     st.session_state.response_1 = {'output_scenario': text_scenarios['s1']}
     st.session_state.response_2 = {'output_scenario': text_scenarios['s2']}
     st.session_state.response_3 = {'output_scenario': text_scenarios['s3']}
 
-def test_call(answer, key, *args, **kwargs):
-    
-    if st.session_state[key]:
-        answer = st.session_state[key]
-        st.write(answer)
-
-        st.write("answer:", answer)
-        st.write("key:", key)
-        st.write("*args:", args)
-        st.write("**kwargs:", kwargs)
-
-
-    else: 
-        st.write("feedback not available")
 
 def click_selection_yes(button_num, scenario):
+    """ Function called on_submit when a final scenario is selected. 
+    
+    Saves all key information in the st.session_state.scenario_package persistent variable.
+    """
     st.session_state.scenario_selection = button_num
     
-    ## if we are testing, some of these do not have to be ready: 
+    ## if we are testing, the answer_set might not have been set & needs to be added:
     if 'answer_set' not in st.session_state:
         st.session_state['answer_set'] = "Testing - no answers"
 
-    ## save all important information in one package
+    ## save all important information in one package into st.session state
     st.session_state.scenario_package = {
             'scenario': scenario,
             'judgment': st.session_state['scenario_decision'],
@@ -374,22 +411,36 @@ def click_selection_yes(button_num, scenario):
 
 
 def click_selection_no():
+    """ Function called on_submit when a user clicks on 'actually, let me try another one'. 
+     
+    The only purpose is to set the scenario judged flag back on 
+    """
     st.session_state['scenario_judged'] = True
 
 def sliderChange(name, *args):
+    """Function called on_change for the 'Judge_scenario' slider.  
+    
+    It updates two variables:
+    st.session_state['scenario_judged'] -- which shows that some rating was provided by the user and un-disables a button for them to accept the scenario and continue 
+    st.session_state['scenario_decision'] -- which stores the current rating
+
+    """
     st.session_state['scenario_judged'] = False
-    # print(f"we're looking at slider name {name}. This should have value of {st.session_state[name]}")
-    # print(f"name is {name}, other args given: {args}")
     st.session_state['scenario_decision'] = st.session_state[name]
 
 
      
 def scenario_selection (popover, button_num, scenario):
-    with popover:
-        # st.markdown(f"You're thinking of selecting scenario {button_num}:")
-        # st.markdown(f"*{scenario}*")
+    """ Helper function which sets up the text & infrastructure for each scenario popover. 
 
-        ## make sure that the button can't be pressed unless slider moved
+    Arguments: 
+    popover: streamlit popover object that we are operating on 
+    button_num (str): allows us to keep track which scenario column the popover belongs to 
+    scenario (str): the text of the scenario that the button refers to  
+    """
+    with popover:
+        
+        ## if this is the first run, set up the scenario_judged flag -- this will ensure that people cannot accept a scenario without rating it first (by being passes as the argument into 'disabled' option of the c1.button). For convenience and laziness, the bool is flipped -- "True" here means that 'to be judged'; "False" is 'has been judged'. 
         if "scenario_judged" not in st.session_state:
             st.session_state['scenario_judged'] = True
 
@@ -403,7 +454,7 @@ def scenario_selection (popover, button_num, scenario):
 
         c1, c2 = st.columns(2)
         
-        ## only the accept button button should be disabled 
+        ## the accept button should be disabled if no rating has been provided yet
         c1.button("Continue with this scenario 🎉", key = f'yeskey_{button_num}', on_click = click_selection_yes, args = (button_num, scenario), disabled = st.session_state['scenario_judged'])
 
         ## the second one needs to be accessible all the time!  
@@ -412,17 +463,15 @@ def scenario_selection (popover, button_num, scenario):
 
 
 def reviewData(testing):
+    """ Procedure that governs the scenario review and selection by the user. 
+
+    It presents the scenarios generated in previous phases (and saved to st.session_state) and sets up the feedback / selection buttons and popovers. 
+    """
 
     ## If we're testing this function, the previous functions have set up the three column structure yet and we don't have scenarios. 
     ## --> we will set these up now. 
     if testing:
         testing_reviewSetUp() 
-
-    # ## ensuring we can clear the screen first time we enter reviewData!
-    # if 'reviewing' not in st.session_state:
-    #     st.session_state['reviewing'] = True
-    #     st.rerun()
-
 
 
     ## if this is the first time running, let's make sure that the scenario selection variable is ready. 
@@ -452,7 +501,7 @@ def reviewData(testing):
                 # update the corresponding entry in the disable dict
                 disable[col] = st.session_state[col]['score']
 
-
+        # now set up the columns with each scenario & feedback functions
         with col1: 
             st.header("Scenario 1") 
             st.write(st.session_state.response_1['output_scenario'])
@@ -477,6 +526,7 @@ def reviewData(testing):
                 optional_text_label="[Optional] Please provide an explanation",
                 align='center',
                 key="col2_fb",
+                # this ensures that feedback cannot be submitted twice 
                 disable_with_score = disable['col2_fb'],            
                 on_submit = collectFeedback,
                 args = ('col2', 
@@ -492,6 +542,7 @@ def reviewData(testing):
                 optional_text_label="[Optional] Please provide an explanation",
                 align='center',
                 key="col3_fb",
+                # this ensures that feedback cannot be submitted twice 
                 disable_with_score = disable['col3_fb'],            
                 on_submit = collectFeedback,
                 args = ('col3', 
@@ -500,7 +551,7 @@ def reviewData(testing):
             )   
 
 
-        ## now we should have col1, col2, col3 with text available -- let's set up the infrastructure. 
+        ## now we should have col1, col2, col3 with text available -- let's set up the infrastructure for selection. 
         st.divider()
 
         if DEBUG:
@@ -512,74 +563,80 @@ def reviewData(testing):
         
 
 
-    ## if we haven't selected scenario, let's give them a choice. 
-        # st.chat_message("ai").write("Please have a look at the scenarios above and pick one you like the most! You can use 👍 and 👎 if you want to leave a comment for us on any scenario.")
-
+        ## if we haven't selected scenario, let's give them a choice. 
         st.chat_message("ai").write("Please have a look at the scenarios above. Use the 👍 and 👎  to leave a rating and short comment on each of the scenarios. Then pick the one that you like the most to continue. ")
      
         b1,b2,b3 = st.columns(3)
+        # set up the popover buttons 
         p1 = b1.popover('Pick scenario 1', use_container_width=True)
         p2 = b2.popover('Pick scenario 2', use_container_width=True)
         p3 = b3.popover('Pick scenario 3', use_container_width=True)
 
+        # and now initialise them properly
         scenario_selection(p1,'1', st.session_state.response_1['output_scenario']) 
         scenario_selection(p2,'2',st.session_state.response_2['output_scenario']) 
         scenario_selection(p3,'3',st.session_state.response_3['output_scenario']) 
     
     
-    ## and finally, assuming we have selected a scenario, let's move into the final state!  Note that we ensured that the screen is free for any new content now! 
+    ## and finally, assuming we have selected a scenario, let's move into the final state!  Note that we ensured that the screen is free for any new content now as people had to click to select a scenario -- streamlit is starting with a fresh page 
     else:
-        # great, we have a scenario selected, and all the key information is not in st.session_state['scenario_package'], created in the def click_selection_yes(button_num, scenario):
+        # great, we have a scenario selected, and all the key information is now in st.session_state['scenario_package'], created in the def click_selection_yes(button_num, scenario):
 
+        # set the flow pointer accordingly 
         st.session_state['agentState'] = 'finalise'
-        print("ended loop -- should move to finalise!")
+        # print("ended loop -- should move to finalise!")
         finaliseScenario()
 
-def test_area (*args):
-    print(args)
-    
 
 def updateFinalScenario (new_scenario):
+    """ Updates the final scenario when the user accepts. 
+    """
     st.session_state.scenario_package['scenario'] = new_scenario
     st.session_state.scenario_package['judgment'] = "Ready as is!"
 
 @traceable
 def finaliseScenario():
+    """ Procedure governs the last part of the flow, which is the scenario adaptation.
+    """
 
-    debug_expander = st.expander("Debug -- history")
-
-    # grab a 'local' copy of the package
+    # grab a 'local' copy of the package collected in the previous flow
     package = st.session_state['scenario_package']
 
-    with debug_expander:
-        st.header("Great -- you've selected a scenario ... this is what we know about it! ")
-        st.write(st.session_state['scenario_package'])
-
-    
+    # if scenario is judged as 'ready' by the user -- we're done
     if package['judgment'] == "Ready as is!":
         st.markdown(":tada: Yay! :tada:")
-        st.markdown("You've now completed the interaction and hopefully found a scenario that you liked! Please return to the survey window to complete the rest of the study -- your code for Prolific is '**CyberCorgi CodeCrumbs**' ")
+        st.markdown("You've now completed the interaction and hopefully found a scenario that you liked! ")
         st.markdown(f":green[{package['scenario']}]")
+    
+    
+    # if the user still wants to continue adapting
     else:
+        # set up a streamlit container for the original scenario
         original = st.container()
         
         with original:
             st.markdown(f"It seems that you selected a scenario that you liked: \n\n :green[{package['scenario']}]")
             st.markdown(f"... but that you also think it: :red[{package['judgment']}]")
 
+
+        # set up a streamlit container for the new conversation & adapted scenario
         adapt_convo_container = st.container()
         
         with adapt_convo_container:
             st.chat_message("ai").write("Okay, what's missing or could change to make this better?")
         
+            # once user enters something 
             if prompt:
                 st.chat_message("human").write(prompt) 
 
+                # use a new chain, drawing on the prompt_adaptation template from lc_prompts.py
                 adaptation_prompt = PromptTemplate(input_variables=["input", "scenario"], template = prompt_adaptation)
                 json_parser = SimpleJsonOutputParser()
 
                 chain = adaptation_prompt | chat | json_parser
 
+                # set up a UX feedback in case the scenario takes longer to generate
+                # note -- spinner disappears once the code inside finishes
                 with st.spinner('Working on your updated scenario 🧐'):
                     new_response = chain.invoke({
                         'scenario': package['scenario'], 
@@ -589,15 +646,21 @@ def finaliseScenario():
 
                 st.markdown(f"Here is the adapted response: \n :orange[{new_response['new_scenario']}]\n\n **what do you think?**")
 
-                # st.markdown(":red[Still working on how to best do the adaptation here]")
-
-                # c1, c2, c3 = st.columns(3)
+              
                 c1, c2  = st.columns(2)
 
                 c1.button("All good!", 
                           on_click=updateFinalScenario,
                           args=(new_response['new_scenario'],))
+
+                # clicking the "keep adapting" button will force streamlit to refresh the page 
+                # --> this loop will run again.  
                 c2.button("Keep adapting")
+
+
+                ## TODO -- add an opportunity for people to rewrite the scenario themselves. 
+                # The implementation below wasn't very aesthetically pleasing. 
+
                 # popover_rewrite = c3.popover("I'll rewrite it myself")
                 # with popover_rewrite:
                 #     txt = st.text_area("Edit the scenario yourself and press command + Enter when you're happy with it",value=new_response['new_scenario'], on_change=test_area)            
@@ -606,13 +669,20 @@ def finaliseScenario():
             
 
 def stateAgent(): 
+    """ Main flow function of the whole interaction -- keeps track of the system state and calls the appropriate procedure on each streamlit refresh. 
+    """
+
+    # testing will ensure using dummy data (rather than user-data collection) to simplify development / testing of later parts of the flow. 
     testing = False
 
+    # keep track of where we are, if testing
     if testing:
         print("Running stateAgent loop -- session state: ", st.session_state['agentState'])
-### make choice of the right 'agent': 
+
+
+    # Main loop -- selecting the right 'agent' each time: 
     if st.session_state['agentState'] == 'start':
-            getData(False)
+            getData(testing)
             # summariseData(testing)
             # reviewData(testing)
     elif st.session_state['agentState'] == 'summarise':
@@ -625,27 +695,16 @@ def stateAgent():
 
 
 def markConsent():
+    """On_submit function that marks the consent progress 
+    """
     st.session_state['consent'] = True
 
-# #Draw the messages at the end, so newly generated ones show up immediately
-# with view_messages:
-#     """
-#     Message History initialized with:
-#     ```python
-#     msgs = StreamlitChatMessageHistory(key="langchain_messages")
-#     ```
-
-#     Contents of `st.session_state.langchain_messages`:
-#     """
-#     view_messages.json(st.session_state.langchain_messages)
 
 
 ### check we have consent -- if so, run normally 
 if st.session_state['consent']: 
-    # st.snow()
-    # view_messages = st.expander("View the message contents in session state")
-    # print('st.session_state[exp_data] is ', st.session_state['exp_data'])
-
+    
+    # setting up the right expanders for the start of the flow
     if st.session_state['agentState'] == 'review':
         st.session_state['exp_data'] = False
 
@@ -655,6 +714,7 @@ if st.session_state['consent']:
         review_messages = st.expander("Review Scenarios")
 
     
+    # create the user input object 
     prompt = st.chat_input()
 
 
@@ -668,11 +728,9 @@ if st.session_state['consent']:
         st.stop()
 
 
-
+    # Set up the LangChain for data collection, passing in Message History
     chat = ChatOpenAI(temperature=0.3, model=st.session_state.llm_model, openai_api_key = openai_api_key)
 
-
-    # Set up the LangChain for data collection, passing in Message History
     prompt_updated = PromptTemplate(input_variables=["history", "input"], template = prompt_datacollection)
 
     conversation = ConversationChain(
@@ -681,20 +739,11 @@ if st.session_state['consent']:
         verbose = True,
         memory = memory
         )
-
-    if adaptation:
-        ## set up the LangChain for adaption:
-        adaptation_prompt = PromptTemplate(input_variables=["history", "input", "scenario"], template = prompt_adaptation)
-
-        adaptation_convo  = ConversationChain(
-            prompt = adaptation_prompt,
-            llm = chat,
-            verbose = True,
-            memory = adaptation_memory
-            )
-        
+    
+    # start the flow agent 
     stateAgent()
 
+# we don't have consent yet -- ask for agreement and wait 
 else: 
     print("don't have consent!")
     consent_message = st.container()
