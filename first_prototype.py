@@ -72,8 +72,8 @@ selections = st.sidebar
 
 with selections:
     st.markdown("## LLM model selection")
-    st.markdown(":blue[Different models have widely differing costs.   \n \n  It seems that running this whole flow with chatGPT 4 costs about $0.1 per full flow as there are multiple processing steps 👻; while the 3.5-turbo is about 100x cheaper 🤑 and gpt-4o is about 6x cheaper (I think).]")
-    st.markdown('**Our prompts are currently set up for gpt-4 so you might want to run your first trial with that** ... however, multiple runs might be good to with some of the cheaper models.')
+    st.markdown(":blue[Different models have widely differing costs.   \n \n  It seems that running this whole flow with chatGPT 4 costs about $0.1 per full flow as there are multiple processing steps 👻; while the 3.5-turbo is about 100x cheaper 🤑 and gpt-4o is about 6x cheaper than gpt4.]")
+    st.markdown('**Our prompts are currently set up for gpt-4o so you might want to run your first trial with that** ... however, multiple runs might be good to with some of the cheaper models.')
     
 
 
@@ -259,9 +259,10 @@ def summariseData(testing = False):
     chain = prompt_template | chat | json_parser
 
     ## pick the prompt we want to use 
-    prompt_1 = prompt_formal
-    prompt_2 = prompt_sibling
-    prompt_3 = prompt_goth
+    prompt_1 = prompts['prompt_1']
+    prompt_2 = prompts['prompt_2']
+    prompt_3 = prompts['prompt_3']
+    
     end_prompt = end_prompt_core
 
     ### call extract choices on real data / stored test data based on value of testing

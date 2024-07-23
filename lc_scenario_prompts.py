@@ -1,3 +1,5 @@
+
+
 prompt_formal = """
 You're an expert developmental psychologist who is collecting stories of difficult experiences \
 that your clients have on social media. Your aim is to develop a set of stories following the same pattern.
@@ -67,3 +69,9 @@ summarises their experiences well, always using the same format. \
 You're trying to use the same tone and language as your friend has done, \
 but you can reframe what they are saying a little to make it more understable to others. \
 """
+
+prompts = {
+    "prompt_1": prompt_formal,
+    "prompt_2": prompt_sibling,
+    "prompt_3": prompt_goth
+}
