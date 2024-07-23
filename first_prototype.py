@@ -26,6 +26,7 @@ from testing_prompts import *
 
 
 
+# Using streamlit secrets to set environment variables for langsmith/chain
 os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
 os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
@@ -35,8 +36,7 @@ os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 ## simple switch previously used to help debug 
 DEBUG = False
 
-# Auto-trace LLM calls in-context
-# client = wrap_openai(openai.Client())
+# Langsmith set-up 
 smith_client = Client()
 
 
@@ -48,8 +48,9 @@ st.title("📖 Study bot")
 """
 
 
+
+## initialising key variables in st.sessionstate if first run
 if 'run_id' not in st.session_state: 
-    ##TEMP TO TEST CODE -- adding feedback to particular run ! 
     st.session_state['run_id'] = None
 
 if 'agentState' not in st.session_state: 
@@ -59,23 +60,15 @@ if 'consent' not in st.session_state:
 if 'exp_data' not in st.session_state: 
     st.session_state['exp_data'] = True
 
-
 ## set the model to use in case this is the first run 
-# llm_model = "gpt-3.5-turbo-1106"
 if 'llm_model' not in st.session_state:
     # st.session_state.llm_model = "gpt-3.5-turbo-1106"
     st.session_state.llm_model = "gpt-4o"
 
-# Set up memory for the data collection 
+# Set up memory for the lanchchain conversation bot
 msgs = StreamlitChatMessageHistory(key="langchain_messages")
-
 memory = ConversationBufferMemory(memory_key="history", chat_memory=msgs)
 
-adaptation = False
-## set up the memory & process for the adaptation: 
-if adaptation: 
-    adaptation_msgs = StreamlitChatMessageHistory(key = "adaptation_messages")
-    adaptation_memory = ConversationBufferMemory(memory_key="adaptation_history", chat_memory=adaptation_msgs)
 
 
 # selections = st.sidebar
