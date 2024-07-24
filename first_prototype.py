@@ -67,27 +67,27 @@ memory = ConversationBufferMemory(memory_key="history", chat_memory=msgs)
 
 
 
-selections = st.sidebar
+# selections = st.sidebar
 
 
-with selections:
-    st.markdown("## LLM model selection")
-    st.markdown(":blue[Different models have widely differing costs.   \n \n  It seems that running this whole flow with chatGPT 4 costs about $0.1 per full flow as there are multiple processing steps 👻; while the 3.5-turbo is about 100x cheaper 🤑 and gpt-4o is about 6x cheaper than gpt4.]")
-    st.markdown('**Our prompts are currently set up for gpt-4o so you might want to run your first trial with that** ... however, multiple runs might be good to with some of the cheaper models.')
+# with selections:
+#     st.markdown("## LLM model selection")
+#     st.markdown(":blue[Different models have widely differing costs.   \n \n  It seems that running this whole flow with chatGPT 4 costs about $0.1 per full flow as there are multiple processing steps 👻; while the 3.5-turbo is about 100x cheaper 🤑 and gpt-4o is about 6x cheaper than gpt4.]")
+#     st.markdown('**Our prompts are currently set up for gpt-4o so you might want to run your first trial with that** ... however, multiple runs might be good to with some of the cheaper models.')
     
 
 
-    st.session_state.llm_model = st.selectbox(
-        "Which LLM would you like to try?",
-        [ 
-            'gpt-4o', 
-            'gpt-4',
-            'gpt-3.5-turbo-1106'
-            ],
-        key = 'llm_choice',
-    )
+#     st.session_state.llm_model = st.selectbox(
+#         "Which LLM would you like to try?",
+#         [ 
+#             'gpt-4o', 
+#             'gpt-4',
+#             'gpt-3.5-turbo-1106'
+#             ],
+#         key = 'llm_choice',
+#     )
 
-    st.write("**Current llm-model selection:**  \n " + st.session_state.llm_model)
+#     st.write("**Current llm-model selection:**  \n " + st.session_state.llm_model)
 
 
 ## ensure we are using a better prompt for 4o 
@@ -403,11 +403,22 @@ def click_selection_yes(button_num, scenario):
         st.session_state['answer_set'] = "Testing - no answers"
 
     ## save all important information in one package into st.session state
+
+    scenario_dict = {
+        'col1': st.session_state.response_1['output_scenario'],
+        'col2': st.session_state.response_2['output_scenario'],
+        'col3': st.session_state.response_3['output_scenario'],
+        'fb1': st.session_state['col1_fb'],
+        'fb2': st.session_state['col2_fb'],
+        'fb3': st.session_state['col3_fb']
+    }
+
     st.session_state.scenario_package = {
             'scenario': scenario,
+            'answer set':  st.session_state['answer_set'],
             'judgment': st.session_state['scenario_decision'],
-            'chat history': msgs, 
-            'answer set':  st.session_state['answer_set']
+            'scenarios_all': scenario_dict,
+            'chat history': msgs
     }
 
 
