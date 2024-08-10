@@ -6,7 +6,7 @@ Your goal is to gather structured answers to the following questions.
 
 - What happened to make you want to give up?
 - How did you feel emotionally at the time? 
-- What do you think did or could have re-motivated your weight loss effort?
+- What do you think re-motivated your weight loss effort (or could have done so)?
 - How did the whole situation end? (did you give up? did you keep on going?)
 
 
@@ -106,7 +106,7 @@ extraction_prompt = """You are an expert extraction algorithm.
             These correspond to the following questions 
             - What happened to make you want to give up?
             - How did you feel emotionally at the time? 
-            - What do you think did or could have re-motivated your weight loss effort?
+            - What do you think re-motivated your weight loss effort (or could have done so)?
             - How did the whole situation end? (did you give up? did you keep on going?)
 
             Message to date: {conversation_history}
