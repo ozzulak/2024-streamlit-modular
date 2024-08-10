@@ -44,6 +44,15 @@ Return your answer as a JSON file with a single entry called 'new_scenario'
 # - motivate
 # - outcome
 
+example_set_bonnie1 = {
+    "what" : "I just got stuck and stopped losing weight.  In fact I gained a few pounds!",
+    "emotion": "Terrible! I felt like all my efforts were pointless, and I started questioning if I could ever succeed in losing weight again.",
+    "worst": " It made me feel old - like I’d have to settle for being less healthy and attractive than I’d been when I was younger",
+    "motivate": "Talking to a friend who reminded me that setbacks are normal and suggested focusing on how my clothes fit better and I have more energy.",
+    "outcome": "I almost gave up, but after the conversation with my friend, I decided to keep going and focus more on how I felt rather than just the numbers on the scale.",
+    "scenario": "I'd been putting a lot of effort into improving my diet and sticking to a regular exercise routine. After about a month of hard work, I was upset to see that I had actually gained a few pounds instead of losing them. This made me feel incredibly frustrated and hopeless, like all the effort I had put in was pointless. I began to doubt whether I could ever succeed in my weight loss journey. I was on the verge of giving up when I talked to a friend who reminded me that setbacks are a normal part of the process. They suggested that I focus on non-scale victories, like how my clothes were fitting better and I had more energy This conversation re-motivated me to keep going, and I decided to shift my focus from just the numbers on the scale to how I was feeling overall."
+}
+
 example_set_gpt = {
     "what" : "I’d been working hard on my diet and exercise for a month - tracking everything I ate and walking every day - but then I just got stuck.  I kept doing everything right, but I stopped losing weight - in fact I gained a few pounds!  I keep a few sizes of nice looking dresses in my closet because I know from past dieting experiences that it’ll take a while to fit back into my favorite, small size ones. But now - after a full month of starving myself - I still couldn’t fit into any of them.",
     "emotion": "I felt frustrated and hopeless. It felt like all my efforts were pointless, and I started questioning if I could ever succeed in losing weight",
@@ -92,7 +101,7 @@ Your output should be a JSON file with a single entry called 'output_scenario'
 
 
 # choose the example we want to use
-example_set = example_set_gpt
+example_set = example_set_bonnie1
 
 
 ## Note that we have pulled out the main part of the prompt ... so we can easily play with different options here -- see lc_scenario_prompts 
