@@ -307,11 +307,13 @@ def summariseData(testing = False):
         "end_prompt" : end_prompt,
         "example_what" : example_set['what'],
         "example_emotion" : example_set['emotion'],
+        "example_worst": example_set['worst'],
         "example_motivate" : example_set['motivate'],
         "example_outcome" : example_set['outcome'],
         "example_scenario" : example_set['scenario'],
         "what" : answer_set['what'],
         "emotion" : answer_set['emotion'],
+        "worst": answer_set['worst'],
         "motivate" : answer_set['motivate'],
         "outcome" : answer_set['outcome']
     })
@@ -325,11 +327,13 @@ def summariseData(testing = False):
         "end_prompt" : end_prompt,
         "example_what" : example_set['what'],
         "example_emotion" : example_set['emotion'],
+        "example_worst": example_set['worst'],
         "example_motivate" : example_set['motivate'],
         "example_outcome" : example_set['outcome'],
         "example_scenario" : example_set['scenario'],
         "what" : answer_set['what'],
         "emotion" : answer_set['emotion'],
+        "worst": answer_set['worst'],
         "motivate" : answer_set['motivate'],
         "outcome" : answer_set['outcome']
     })
@@ -343,11 +347,13 @@ def summariseData(testing = False):
         "end_prompt" : end_prompt,
         "example_what" : example_set['what'],
         "example_emotion" : example_set['emotion'],
+        "example_worst": example_set['worst'],
         "example_motivate" : example_set['motivate'],
         "example_outcome" : example_set['outcome'],
         "example_scenario" : example_set['scenario'],
         "what" : answer_set['what'],
         "emotion" : answer_set['emotion'],
+        "worst": answer_set['worst'],
         "motivate" : answer_set['motivate'],
         "outcome" : answer_set['outcome']
     })

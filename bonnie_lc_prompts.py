@@ -6,6 +6,7 @@ Your goal is to gather structured answers to the following questions.
 
 - What happened to make you want to give up?
 - How did you feel emotionally at the time? 
+- What was the worst part of this experience?
 - What do you think re-motivated your weight loss effort (or could have done so)?
 - How did the whole situation end? (did you give up? did you keep on going?)
 
@@ -44,11 +45,12 @@ Return your answer as a JSON file with a single entry called 'new_scenario'
 # - outcome
 
 example_set_gpt = {
-    "what" : "I had been working hard on my diet and exercise for weeks, but I gained a few pounds instead of losing them.",
+    "what" : "I’d been working hard on my diet and exercise for a month - tracking everything I ate and walking every day - but then I just got stuck.  I kept doing everything right, but I stopped losing weight - in fact I gained a few pounds!  I keep a few sizes of nice looking dresses in my closet because I know from past dieting experiences that it’ll take a while to fit back into my favorite, small size ones. But now - after a full month of starving myself - I still couldn’t fit into any of them.",
     "emotion": "I felt frustrated and hopeless. It felt like all my efforts were pointless, and I started questioning if I could ever succeed in losing weight",
+    "worst": "It made me feel old - like I’d lost the ability to do things I could do when I was younger",
     "motivate": "Talking to a friend who reminded me that setbacks are normal and suggested focusing on non-scale victories like how my clothes fit better",
     "outcome": "I almost gave up, but after the conversation with my friend, I decided to keep going and focus more on how I felt rather than just the numbers on the scale.",
-    "scenario": "I've been putting a lot of effort into improving my diet and sticking to a regular exercise routine. After several weeks of hard work, I was disheartened to see that I had actually gained a few pounds instead of losing them. This made me feel incredibly frustrated and hopeless, like all the effort I had put in was pointless. I began to doubt whether I could ever succeed in my weight loss journey. I was on the verge of giving up when I talked to a friend who reminded me that setbacks are a normal part of the process. They suggested that I focus on non-scale victories, like how my clothes were fitting better. This conversation re-motivated me to keep going, and I decided to shift my focus from just the numbers on the scale to how I was feeling overall."
+    "scenario": "I've been putting a lot of effort into improving my diet and sticking to a regular exercise routine. After several weeks of hard work, I was disheartened to see that I had actually gained a few pounds instead of losing them. This made me feel incredibly frustrated and hopeless, like all the effort I had put in was pointless. Like I lost the ability to do the things I could when I was younger. I began to doubt whether I could ever succeed in my weight loss journey. I was on the verge of giving up when I talked to a friend who reminded me that setbacks are a normal part of the process. They suggested that I focus on non-scale victories, like how my clothes were fitting better. This conversation re-motivated me to keep going, and I decided to shift my focus from just the numbers on the scale to how I was feeling overall."
 }
 
 
@@ -61,6 +63,8 @@ Question:  What happened to make you want to give up?
 Answer: {example_what}
 Question: How did you feel emotionally at the time? 
 Answer: {example_emotion}
+Question:  What was the worst part of this experience?
+Answer: {example_worst}
 Question: What do you think did or could have re-motivated your weight loss effort?
 Answer: {example_motivate}
 Question: How did the whole situation end? (did you give up? did you keep on going?)
@@ -70,13 +74,15 @@ The scenario based on these responses: {example_scenario}
 
 Your task:
 Create scenario based on the following answers:
-Question:  What happened? What was it exactly that people said, posted, or done?
+Question:  What happened to make you want to give up?
 Answer: {what}
-Question: What's the context? What else should we know about the situation?
+Question:How did you feel emotionally at the time? 
 Answer: {emotion}
-Question: How did the situation make you feel, and how did you react?
+Question:  What was the worst part of this experience?
+Answer: {worst}
+Question: What do you think did or could have re-motivated your weight loss effort?
 Answer: {motivate}
-Question: What was the worst part of the situation?
+Question: How did the whole situation end? (did you give up? did you keep on going?)
 Answer: {outcome}
 
 {end_prompt}
@@ -101,11 +107,12 @@ extraction_prompt = """You are an expert extraction algorithm.
             If you do not know the value of an attribute asked to extract, 
             return null for the attribute's value. 
 
-            You will output a JSON with `what`, `emotion`, `motivate` and `outcome` keys. 
+            You will output a JSON with `what`, `emotion`, `worst`, `motivate` and `outcome` keys. 
 
             These correspond to the following questions 
             - What happened to make you want to give up?
             - How did you feel emotionally at the time? 
+            - What was the worst part of this experience? 
             - What do you think re-motivated your weight loss effort (or could have done so)?
             - How did the whole situation end? (did you give up? did you keep on going?)
 
