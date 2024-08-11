@@ -7,8 +7,8 @@ Your goal is to gather structured answers to the following questions.
 - What happened to make you want to give up?
 - How did you feel emotionally at the time? 
 - What was the worst part of this experience?
-- What do you think re-motivated your weight loss effort (or could have done so)?
 - How did the whole situation end? (did you give up? did you keep on going?)
+- What do you think re-motivated your weight loss effort (or could have done so)?
 
 
 Ask each question one at a time, using empathetic and adult friendly language while maintaining a descriptive tone. Do not include '-' when you ask the question.  Ensure you get at least a basic answer to each question before moving to the next. Never answer for the human. If you are unsure what the human meant, ask again.
@@ -74,10 +74,11 @@ Question: How did you feel emotionally at the time?
 Answer: {example_emotion}
 Question:  What was the worst part of this experience?
 Answer: {example_worst}
-Question: What do you think did or could have re-motivated your weight loss effort?
-Answer: {example_motivate}
 Question: How did the whole situation end? (did you give up? did you keep on going?)
 Answer: {example_outcome}
+Question: What do you think did or could have re-motivated your weight loss effort?
+Answer: {example_motivate}
+
 
 The scenario based on these responses: {example_scenario}
 
@@ -89,10 +90,11 @@ Question:How did you feel emotionally at the time?
 Answer: {emotion}
 Question:  What was the worst part of this experience?
 Answer: {worst}
-Question: What do you think did or could have re-motivated your weight loss effort?
-Answer: {motivate}
 Question: How did the whole situation end? (did you give up? did you keep on going?)
 Answer: {outcome}
+Question: What do you think did or could have re-motivated your weight loss effort?
+Answer: {motivate}
+
 
 {end_prompt}
 Your output should be a JSON file with a single entry called 'output_scenario'
@@ -107,7 +109,7 @@ example_set = example_set_bonnie1
 ## Note that we have pulled out the main part of the prompt ... so we can easily play with different options here -- see lc_scenario_prompts 
 
 
-end_prompt_core = "Create a scenario based on these responses, using youth-friendly language."
+end_prompt_core = "Create a scenario based on these responses, using adult friendly language."
 
 
 extraction_prompt = """You are an expert extraction algorithm. 
@@ -116,14 +118,15 @@ extraction_prompt = """You are an expert extraction algorithm.
             If you do not know the value of an attribute asked to extract, 
             return null for the attribute's value. 
 
-            You will output a JSON with `what`, `emotion`, `worst`, `motivate` and `outcome` keys. 
+            You will output a JSON with `what`, `emotion`, `worst`, `outcome` and `motivate` keys. 
 
             These correspond to the following questions 
             - What happened to make you want to give up?
             - How did you feel emotionally at the time? 
             - What was the worst part of this experience? 
-            - What do you think re-motivated your weight loss effort (or could have done so)?
             - How did the whole situation end? (did you give up? did you keep on going?)
+            - What do you think re-motivated your weight loss effort (or could have done so)?
+      
 
             Message to date: {conversation_history}
 
