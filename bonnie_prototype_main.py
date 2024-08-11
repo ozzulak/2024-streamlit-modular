@@ -790,9 +790,9 @@ else:
         st.markdown(''' 
                     ## 🎉 Welcome to our Let's-make-Bonnie-happy prototype! 🎉
 
-                    \n In this task you’re going to engage with a prototype chatbot that asks you to talk about your experiences with weightloss. This is a testing prototype for now, so anything you submit will be stored on LangSmith servers and readable by the research team ... however we will have no way of knowing who wrote the text.  
+                    \n In this task, you’re going to engage with an internet program that asks you to talk about your experiences with weight loss.  The program is in development for now, so anything you submit will be stored on servers at University of Michigan/Northwestern University and be readable by the research team.  However, your responses will be anonymous - i.e., we will have no way of knowing who wrote the text or who you are. 
                     
-                    \n \n **It's important that you do not report situations that contain personal information about yourself that you are uncomfortable others to see!.** 
+                    \n \n **Therefore, it's important that you do not report situations that contain personal information about yourself that you are uncomfortable having others see!.** 
                     
                     \n \n To proceed to the task, please confirm that you have read and understood this information.
         ''')
