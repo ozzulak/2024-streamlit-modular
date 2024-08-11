@@ -41,9 +41,13 @@ smith_client = Client()
 
 
 
-
-
 ## initialising key variables in st.sessionstate if first run
+if 'pid' not in st.session_state:
+    if 'pid' in st.query_params:
+        st.session_state["pid"] = st.query_params['pid']
+    else:
+        st.session_state['pid'] = "0"
+
 if 'run_id' not in st.session_state: 
     st.session_state['run_id'] = None
 
@@ -115,7 +119,7 @@ def getData (testing = False ):
 
     ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
-        msgs.add_ai_message("Hello! I'm help people share their stories about experiences with trying to lose weight. Today, I'd be really interested to hear about a a time when you felt like you want to give up on trying to lose weight. I'll ask you a few questions and then we'll try to make a story out of these to share with others who might be facing similar challenges.  \n\n  Let me know when you're ready! ")
+        msgs.add_ai_message("Today I’m helping people share stories about experiences with trying to lose weight. I’m doing that so they can help their support people understand better what the weight loss journey feels like for the person who’s actually going through it. \n \n I'd be really interested to hear about a time when you felt like you wanted to give up on trying to lose weight. I'll ask you a few questions and then we'll try to make a story out of it.  We’ll share it with people who are trying to help others who might be facing similar challenges.  \n\n  Let me know when you're ready!")
 
 
    # as Streamlit refreshes page after each input, we have to refresh all messages. 
@@ -425,6 +429,7 @@ def click_selection_yes(button_num, scenario):
     }
 
     st.session_state.scenario_package = {
+            'pid': st.session_state['pid'],
             'scenario': scenario,
             'answer set':  st.session_state['answer_set'],
             'judgment': st.session_state['scenario_decision'],
@@ -627,6 +632,14 @@ def finaliseScenario():
 
     # if scenario is judged as 'ready' by the user -- we're done
     if package['judgment'] == "Ready as is!":
+
+        run_id = st.session_state['run_id']
+
+        smith_client.create_feedback(
+            run_id=run_id,
+            value=package,
+            key="final_package"
+        )
         st.markdown(":tada: Yay! :tada:")
         st.markdown("You've now completed the interaction and hopefully found a scenario that you liked! ")
         st.markdown(f":green[{package['scenario']}]")
@@ -771,6 +784,9 @@ else:
     print("don't have consent!")
     consent_message = st.container()
     with consent_message:
+        # if DEBUG:
+        #     st.markdown(f'''  :red[DEBUG] :green[-- your Prolific ID is: {st.session_state['pid']}.] :blue[Qualtrics should automatically pass the id by adding ?pid=ID_CODE_HERE to the website address when generating the link for each participant. Note that the PID will be then saved to all the final package passed onto LangSmith (for now), or be used as a key for the local database.]
+        #                 ''')
         st.markdown(''' 
                     ## 🎉 Welcome to our Let's-make-Bonnie-happy prototype! 🎉
 
