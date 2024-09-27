@@ -44,7 +44,6 @@ st.set_page_config(page_title="Study bot", page_icon="📖")
 st.title("📖 Study bot")
 
 
-
 ## initialising key variables in st.sessionstate if first run
 if 'run_id' not in st.session_state: 
     st.session_state['run_id'] = None
@@ -712,6 +711,20 @@ def markConsent():
     st.session_state['consent'] = True
 
 
+
+## hide the github icon so we don't de-anonymise! 
+st.markdown(
+    """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 ### check we have consent -- if so, run normally 
 if st.session_state['consent']: 

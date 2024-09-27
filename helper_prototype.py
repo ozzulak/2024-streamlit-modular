@@ -136,9 +136,13 @@ What would you tell a younger version of you who is trying to manage this tricky
 
 st.sidebar.write("Hello and welcome. This tool will try to support you in developing your template for the micro-narrative bot")
 
-st.sidebar.select_slider("How many questions do you want the bot to ask?", options = [ 3, 4, 5, 6], value = 5, key = "questions_num")
 
-st.sidebar.text_area("Questions -- one per line", value = init_questions, key = "questions", height = 250)
+st.sidebar.text_area("I want to collect stories about a time when ...", value = "...", height = 20)
+
+st.sidebar.text_area("Questions that bot should ask -- one per line", value = init_questions, key = "questions", height = 250)
+
+
+st.sidebar.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6], value = 5, key = "questions_num")
 
 st.sidebar.text_area("Persona", value = init_persona, key = "persona", height = 250)
 
