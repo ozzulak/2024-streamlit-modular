@@ -714,10 +714,9 @@ def markConsent():
 
 ## hide the github icon so we don't de-anonymise! 
 st.markdown(
-    """
+"""
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    [data-testid="stToolbarActions"] {visibility: hidden;}
     </style>
     """,
     unsafe_allow_html=True
