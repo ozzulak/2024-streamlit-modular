@@ -13,6 +13,11 @@ os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
 os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
 os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 
+
+st.set_page_config(page_title="Template design bot", page_icon="🤷🏻‍♂️")
+st.title("Template design bot")
+
+
 init_persona = """You're an expert sociologist who is collecting short-but-detailed stories of life experiences that your interviewees face. Your aim is to develop a set of stories following the same pattern.
 Based on client's answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. Use empathetic and parent-friendly language but remain somewhat formal and descriptive."""
 
@@ -106,8 +111,20 @@ def create_scenario(history,persona):
     return(scenario)
 
 
-st.set_page_config(page_title="Template design bot", page_icon="🤷🏻‍♂️")
-st.title("Template design bot")
+
+
+
+# Define your CSS
+style = """
+<style>
+.stTextArea>div>div>textarea {
+    font-size: 12px;
+}
+</style>
+"""
+
+# Inject CSS with markdown
+st.markdown(style, unsafe_allow_html=True)
 
 
 init_questions = """What was the win or breakthrough situation you experienced?
