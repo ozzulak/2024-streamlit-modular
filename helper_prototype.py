@@ -134,19 +134,19 @@ How did that make you feel?
 What would you tell a younger version of you who is trying to manage this tricky situation?
 """
 
-st.sidebar.write("Hello and welcome. This tool will try to support you in developing your template for the micro-narrative bot")
+st.sidebar.write("Hello and welcome. This first step will help you find the right questions for micro-narrative bot. \n Start by listing your questions below, and then trying to provide sample answers in the box on the right. You will be able to see the resulting narrative by pressing Ready")
 
 
 st.sidebar.text_area("I want to collect stories about a time when ...", value = "...", height = 20)
 
-st.sidebar.text_area("Questions that bot should ask -- one per line", value = init_questions, key = "questions", height = 250)
+st.sidebar.text_area("Possible Questions that bot should ask -- one per line", value = init_questions, key = "questions", height = 250)
 
 
 st.sidebar.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6], value = 5, key = "questions_num")
 
 st.sidebar.text_area("Persona", value = init_persona, key = "persona", height = 250)
 
-exp_qs = st.expander("**Insert your example answers here and press Ready when done**", expanded = False)
+exp_qs = st.expander("**Insert your example answers here and press Ready when done**", expanded = True)
 exp_llm = st.container()
 
 # assuming the user input some questions already
