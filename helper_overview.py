@@ -26,9 +26,15 @@ You don't need to change anything about the system otherwise, thanks to the :mag
 st.image("images/implementation.png") 
 
 st.markdown("""Specifically, the :violet[template] determines three things: 
-1. **the core questions** you want the system to ask ... and the answers to which will combine into a *good* story!
+1. **the core questions** you want the system to ask ... and the answers to which will combine into a *good* story! This is the heart of a good micro-narrative, and teh ability for the researcher to 'inject' some psychological theory into the story creation.
 2. **example answers set & scenario**, which teaches the LLM how to combine your questions into a linear narrative 
 3. **three personas**, which guides how the system fills in the 'connective tissue' in between the user's answers. 
+
+Note that the :violet[core questions] are going to be different to what you would normally use in interviews -- the idea here is that you use each question to uncover another key facet of the story you think the participant can tell; while ensuring that putting these all facets together creates a coherent story. 
+
+In our experience, the best micro-narratives happen when the questions ask about parts of participants' experience that they might not consider necessarily important, but that pull out something crucial about their perspective about the world. 
+
+As a team, we are still trying to understand how best to generate such templates, and how to help others to do so too ... thus also this :robot_face::factory:.
 """)
 
 
