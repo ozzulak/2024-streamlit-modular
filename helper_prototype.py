@@ -6,6 +6,9 @@ from langsmith import Client
 from langsmith import traceable
 import os
 
+## get all the prompts needed 
+from helper_prompts import *
+
 
 # Using streamlit secrets to set environment variables for langsmith/chain
 os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
@@ -17,54 +20,31 @@ os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 st.set_page_config(page_title="Step 1: design your questions", page_icon="🤷🏻‍♂️")
 # st.title("Step 1: Design your questions")
 
-st.write("""Hello and welcome. This first step will help you find the right questions for micro-narrative bot. You can do this in three steps: 
-1. Start by listing your questions in the sidebar on the left. 
-2. Provide sample answers in the expander below. 
-3. Check how a resulting narrative could look like by pressing Ready""")
-
-init_persona = """You're an expert sociologist who is collecting short-but-detailed stories of life experiences that your interviewees face. Your aim is to develop a set of stories following the same pattern.
-Based on client's answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. Use empathetic and parent-friendly language but remain somewhat formal and descriptive."""
-
-generation_prompt = """{persona}
+# Langsmith set-up 
+smith_client = Client()
 
 
-Example:
-Question:  What happened? What was it exactly that people said, posted, or done?
-Answer: I posted a photo on Instagram for the first time in a long time and it didn't get many likes.
-Question: What's the context? What else should we know about the situation?
-Answer: I haven't posted in over a year. I only use Instagram to look at my friend's posts.
-Question: How did the situation make you feel, and how did you react?
-Answer: I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account.
-Question: What was the worst part of the situation?
-Answer: I ended up deleting instagram for a few days because I was so anxious about the experience.
+def init_package():
+    # we are setting up a single 'package' that will include all the information needed for config file
+    st.session_state['package'] = {
+        'stage' : 'step1',
+        'questions_num': 5,
+        'questions_str' : init_questions,
+        'current_example_set' : init_exampleSet,
+        'new_example_set': "",
+        'persona': init_persona,
+        'convo': "Please update your questions on the left. ",
+        'personas' : {
+            'p1' : "",
+            'p2' : "",
+            'p3' : ""
+        }
+    }
 
-The scenario based on these responses: Recently I've had mixed feelings about my social media use, particularly Instagram. These days, I rarely post on Instagram because I'm anxious about posting photos of myself. I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. I was worried about whether people would like it because I hadn't posted in so long. When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. I got so anxious about it that I ended up deleting the app. I learnt my lesson and probably won't post again.
 
-
-Your task:
-Create scenario based on the following questions and answers: 
-{history}
-
-Create a scenario based on these responses, using parent-friendly language. 
-Return your answer as a JSON file with a single entry called 'new_scenario'
-
-"""
-
-extraction_prompt = """You are an expert extraction algorithm. 
-                Only extract relevant information from the answers in the text.
-                Use only the words and phrases that the text contains. 
-                If you do not know the value of an attribute asked to extract, 
-                return null for the attribute's value. 
-
-                You will output a JSON with {json_keys}
-
-                These correspond to the following questions 
-                {questions}
-                
-                Message to date: {conversation_history}
-
-                Remember, only extract text that is in the messages above and do not change it. 
-        """
+# init if this is run for the first time
+if 'package' not in st.session_state:
+    init_package()
 
 @traceable
 def extractChoices(json_keys, questions, msgs):
@@ -97,11 +77,11 @@ def extractChoices(json_keys, questions, msgs):
 
 
 @traceable
-def create_scenario(history,persona):
+def create_scenario(history,example_set,persona):
     chat = ChatOpenAI(temperature=0.3, model="gpt-4o", openai_api_key = st.secrets.openai_api_key)
 
     # start by setting up the langchain chain from our template (defined in lc_prompts.py)
-    scenario_template = PromptTemplate(input_variables = ["history", "persona"], template = generation_prompt)
+    scenario_template = PromptTemplate(input_variables = ["history", "example_set", "persona"], template = generation_prompt)
     # st.write(scenario_template)
 
     # add a json parser to make sure the output is a json object
@@ -110,15 +90,55 @@ def create_scenario(history,persona):
     # connect the prompt with the llm call, and then ensure output is json with our new parser
     chain = scenario_template | chat | json_parser
 
-    scenario = chain.invoke({"history" : history, "persona" : persona})
+    scenario = chain.invoke({"history" : history, "persona" : persona, "example_set" : example_set})
 
     return(scenario)
 
 
 
+## called once the "update questions and persona" button is pressed: 
+def update_qp():
+    qs = st.session_state['questions'] 
+    nq = st.session_state['questions_num']
+    
+    # update the questions in the package    
+    st.session_state.package['questions_str'] = qs  # save current questions
+    st.session_state.package['questions_num'] = nq
+
+    # update the conversation: 
+    
+    lines = qs.splitlines()
+    
+    if len(lines) < nq:
+        st.session_state.package['convo'] = "Add more questions on the left please!"
+    else: 
+        
+        
+        convo = ""
+        ## build the conversation history string and questions string 
+        for n in range(1, nq + 1):    
+            convo += (f"Q{n}: {lines[n-1].strip()} \nHuman:  \n \n") 
+        
+        # now insert to be presented  
+        st.session_state.package['convo'] = convo
+
+def setupSidebar(): 
+    ## set up side bar content
+    st.sidebar.button("Update questions and persona", key = 'q_updated', on_click = update_qp)
+
+    st.sidebar.text_area("I want to collect stories about a time when ...", value = "[example - change me!]\n ... a parent had a breakthrough with a parenting technique ", height = 15)
+
+    st.sidebar.text_area("questions that bot should ask -- one per line", value = st.session_state.package["questions_str"], key = "questions", height = 200)
+
+    st.sidebar.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6], value = st.session_state.package["questions_num"], key = "questions_num")
+
+    st.sidebar.text_area("Persona", value = st.session_state.package["persona"], key = "persona", height = 200)
+
+  
 
 
-# Define your CSS
+
+# Define your CSS and inject it -- ensuring smaller font in the text areas. 
 style = """
 <style>
 .stTextArea>div>div>textarea {
@@ -126,57 +146,50 @@ style = """
 }
 </style>
 """
-
-# Inject CSS with markdown
 st.markdown(style, unsafe_allow_html=True)
 
+setupSidebar()
 
-init_questions = """What was the win or breakthrough situation you experienced?
-I’d like to know more about the situation. What was happening at the time that was making the situation tricky? 
-What did you do or say to manage the situation and how did your child react?
-How did that make you feel?
-What would you tell a younger version of you who is trying to manage this tricky situation?
-"""
-
-
-st.sidebar.text_area("I want to collect stories about a time when ...", value = "[example - change me!]\n ... a parent had a breakthrough with a parenting technique ", height = 20)
-
-st.sidebar.text_area("Possible questions that bot should ask -- one per line", value = init_questions, key = "questions", height = 250)
+# load up initial questions
+if 'firstRun' not in st.session_state:
+    st.session_state['firstRun'] = True
+    update_qp()
+    
 
 
-st.sidebar.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6], value = 5, key = "questions_num")
+## set up basic structure of the page: 
+# Prepare two tabs, one tab to explore in, the other to finalise and move on. 
+tab1, tab2, tab3 = st.tabs(['👷‍♀️ Build / test your Qs', '🔎 Update your example', '🔮 See current configuration'])
 
-st.sidebar.text_area("Persona", value = init_persona, key = "persona", height = 250)
 
-exp_qs = st.expander("**Insert your example answers here and press Ready when done**", expanded = False)
-exp_llm = st.container()
+## First working with tab1 -- helping the user identify their questions
+with tab1: 
+    st.write("""Hello and welcome. This first step will help you find the right questions for micro-narrative bot. You can do this in three steps: 
+1. Start by listing your questions in the sidebar on the left. 
+2. Provide sample answers in the expander below. 
+3. Check how a resulting narrative could look like by pressing Ready""")
 
-# assuming the user input some questions already
-if st.session_state['questions'] is not None:
-    qs = st.session_state['questions'] 
-    lines = qs.splitlines()
+    exp_qs = st.expander("**Insert your example answers here and press Ready when done**", expanded = False)
+    exp_llm = st.container()  # insert container to show the LLM in
 
-    nq = st.session_state['questions_num']
+# write the recent value of convo 
+with exp_qs:
+    st.text_area("fill in your conversation here:", value = st.session_state.package['convo'], height= 400, key = "convo_history", label_visibility= "hidden")
+    st.button("Ready!", key = "ready_llm")
 
-    with exp_qs:
-        if len(lines) < nq:
-            st.write("Add more questions on the left please!")
-        else: 
-            ## build the conversation history string: 
-            convo = ""
-            for n in range(1, nq + 1):
-                
-                convo += (f"Q{n}: {lines[n-1].strip()} \nHuman:  \n \n")
-                # st.text_input(f"Q{n} answer", key = f"ans_Q{n}", label_visibility = "hidden")
-            st.text_area("fill in your conversation here:", value = convo, height= 400, key = "convo_history", label_visibility= "hidden")
-            st.button("Ready!", key = "ready_llm")
-# Langsmith set-up 
-smith_client = Client()
 
 ## check that we have the button visualised 
 if 'ready_llm' in st.session_state: 
     ## now wait for it to be pressed:
     if st.session_state['ready_llm']:
+
+        # once pressed, let's save the current convo & persona first: 
+        st.session_state.package['convo'] = st.session_state['convo_history']
+        st.session_state.package['persona'] = st.session_state['persona']
+
+        # load up the data from package: 
+        lines = st.session_state.package['questions_str'].splitlines()
+        nq = st.session_state.package['questions_num']
         with exp_llm:
             st.write("**This is what LLM extracts:**")
             
@@ -189,11 +202,54 @@ if 'ready_llm' in st.session_state:
             json_keys = list(question_pairs.keys())
             questions = list(question_pairs.values())
 
-            # choices = extractChoices(json_keys, questions, st.session_state['convo_history'])
             with st.spinner('Creating your scenario...'):
-                scenario = create_scenario(st.session_state['convo_history'], st.session_state['persona'])
-            st.write(scenario['new_scenario'])
+                scenario = create_scenario(st.session_state['convo_history'], st.session_state.package['current_example_set'], st.session_state['persona'])
+
+            if 'new_scenario' in scenario:  # assuming that the LLM call went well!
+                # save the current version of the example in the config-package
+                example_set = f"{st.session_state['convo_history']} \n \n The scenario based on these responses: {scenario['new_scenario']}"
+                st.session_state.package['new_example_set'] = example_set
+                
+                # show to the user 
+                st.write(scenario['new_scenario'])
+            else: 
+                st.write("Error in scenario generation: ", scenario)
             # st.write(choices)
 
-            
+## Moving onto the second tab -- now adapting & finalising the scenario examples. 
+with tab2: 
+    st.write("This tab will help you finalise your example answers set, based on your questions. This will guide your bot as the _'One shot'_ example -- so it is crucial that you have it right, and take a neutral tone.")
 
+    st.write("This is what you have so far ... feel free to edit the answers & resulting scenario, but **do not alter the questions themselves** -- you would need to go back to the `Build your Qs' tab to do that.")
+
+    st.text_area("Finalise your example answers set here:", value = st.session_state.package['new_example_set'], height= 400, key = "fix_answer_set", label_visibility= "hidden") 
+
+    st.button("Save the example above into the bot", key = "fix_answer_set_button")
+
+    # if update clicked  
+    if st.session_state['fix_answer_set_button']:
+        st.session_state.package['current_example_set'] = st.session_state['fix_answer_set']
+        st.write(":green[Perfect, you can get back to the previous tab]")
+        st.button("OK")
+
+with tab3: 
+    
+    ## build the conversation history string and questions string 
+    lines = st.session_state.package['questions_str'].splitlines()
+    nq = st.session_state.package['questions_num']
+    qs = ""
+    for n in range(1, nq + 1):    
+        qs += (f"- Q{n}: {lines[n-1].strip()}\n \n") 
+    
+
+    st.write("This tab just shows you what configuration your bot has right now.")
+    st.divider()
+
+    st.markdown(f"**Your questions:** \n")
+    st.write(qs)
+    st.divider()
+    st.markdown(f"**Your one-shot example:** \n")
+    st.write(st.session_state.package['current_example_set'])
+    st.divider()
+    st.markdown(f"**Your current persona:** \n")
+    st.write(st.session_state.package['persona'])
