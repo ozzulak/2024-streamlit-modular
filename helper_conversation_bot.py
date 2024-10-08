@@ -16,7 +16,7 @@ import os
 
 import streamlit as st
 
-from helper_prompts import prompt_datacollection_old
+from helper_prompts import prompt_datacollection_old, extraction_prompt
 
 
 # Using streamlit secrets to set environment variables for langsmith/chain
@@ -24,6 +24,36 @@ os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
 os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
 os.environ["LANGCHAIN_TRACING_V2"] = 'true'
+
+
+@traceable
+def extractChoices(json_keys, questions, msgs):
+    """Uses bespoke LLM prompt to extract answers to given questions from a conversation history into a JSON object. 
+
+    Arguments: 
+    msgs (str): conversations history to extract from -- this can be streamlit memory, or a dummy variable during testing
+    json_keys (str): a list of keys, likely being 'Q1', 'Q2', 'Q3' ... 
+    questions (str): a list of questions, starting with Q1, Q2 ... 
+
+    """
+
+    ## set up our extraction LLM -- low temperature for repeatable results
+    extraction_llm = ChatOpenAI(temperature=0.1, model="gpt-4o", openai_api_key=st.secrets.openai_api_key)
+
+    
+    extraction_template = PromptTemplate(input_variables=["json_keys", "questions", "conversation_history"], template = extraction_prompt)
+
+    ## set up the rest of the chain including the json parser we will need. 
+    json_parser = SimpleJsonOutputParser()
+    extractionChain = extraction_template | extraction_llm | json_parser
+
+    
+    # allow for testing the flow with pre-generated messages -- see testing_prompts.py
+    extractedChoices = extractionChain.invoke({"conversation_history" : msgs, "json_keys" : json_keys, "questions" : questions})
+    
+
+    return(extractedChoices)
+
 
 
 def init_session_stateVars():
@@ -44,10 +74,28 @@ def reset_conversation():
     msgs.clear()
     st.session_state['agentState'] = "start"
 
-def convo_finished():
-    st.write("Great, you've finished the data collection. You can review the history below and reset the conversation to start again. _Note that you could copy & paste the conversation history to use it in the next stage of the process._")
+def create_JSON_keys():
+    """Creates the JSON keys for the extraction LLM. 
 
-    st.button("Reset conversation", key = "reset_convo", on_click = reset_conversation)
+    Returns: 
+    json_keys: a string of keys, likely being 'Q1', 'Q2', 'Q3' ... 
+    questions: a string of questions, starting with Q1, Q2 ... 
+    """
+
+    lines = st.session_state.package['questions_str'].splitlines()
+    nq = st.session_state.package['questions_num']
+    question_pairs = {}
+    for n in range(1, nq + 1):
+        question_pairs[f'Q{n}'] = f"Q{n}: {lines[n-1].strip()}"
+    
+    # Collecting all keys and values in separate lists
+    json_keys = list(question_pairs.keys())
+    questions = list(question_pairs.values())  
+
+    return(json_keys, questions)
+
+def convo_finished():
+    st.write("Great, you've finished the data collection. You can review the history below, the text that the LLM would extract from it, as well as reset the conversation to start again.")
 
     history = ""
     #build the conversation history
@@ -57,9 +105,25 @@ def convo_finished():
         else:
             history += f"Human: {msg.content}\n\n"
 
-    st.expander("Conversation history", expanded = True).write(history)
+    st.expander("Conversation history", expanded = False).write(history)
+
+    # build the extraction chain
+    json_keys, questions = create_JSON_keys()
+
+    # extract the data
+    extracted_data = extractChoices(json_keys, questions, history)
+
+    st.write("What the extraction LLM would pick up from this conversation. _Note that you could copy & paste the answers in extracted data to use it in the next stage of the process._ ")
+    # st.expander("Extracted data", expanded = False).write(extracted_data)
+
+    with st.expander("Extracted data", expanded = True):
+        for key, value in extracted_data.items():
+            question = questions[json_keys.index(key)]
+            st.write(f"*{question}*")
+            st.write(f"Human: **{value}**")
 
 
+    st.button("Reset conversation", key = "reset_convo", on_click = reset_conversation)
 
 def getData (testing = False ): 
     """Collects answers to main questions from the user. 

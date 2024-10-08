@@ -39,14 +39,14 @@ Return your answer as a JSON file with a single entry called 'new_scenario'
 """
 
 extraction_prompt = """You are an expert extraction algorithm. 
-                Only extract relevant information from the answers in the text.
+                Only extract relevant information from the answers in the text. These can be spread across multiple messages.
                 Use only the words and phrases that the text contains. 
                 If you do not know the value of an attribute asked to extract, 
                 return null for the attribute's value. 
 
-                You will output a JSON with {json_keys}
+                You will output a JSON with {json_keys} keys.     
 
-                These correspond to the following questions 
+                These correspond to the answers to the following questions 
                 {questions}
                 
                 Message to date: {conversation_history}
