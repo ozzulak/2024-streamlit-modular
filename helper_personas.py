@@ -93,7 +93,7 @@ else:
     # exp_stories = st.expander("Resulting stories")
     
 
-    exp_history, exp_persona, exp_stories, exp_config = st.tabs(["🗣 Insert user answers", "🧞 Persona definitions", "📚 Resulting stories", "🔮 Current config"])
+    exp_history, exp_persona, exp_stories, exp  _config = st.tabs(["🗣 Insert user answers", "🧞 Persona definitions", "📚 Resulting stories", "🔮 Current config"])
 
     with exp_history:
         ## build the conversation history string and questions string 
@@ -105,7 +105,10 @@ else:
             for n in range(1, nq + 1):
                 convo += (f"{lines[n-1].strip()} \nHuman:  \n \n") 
         else:
-            convo = st.session_state['persona_user_history']            
+            if 'persona_user_history' in st.session_state: 
+                convo = st.session_state['persona_user_history']
+            else:
+                convo = ""
         st.text_area("fill in your conversation here:", value = convo, height= 400, key = "persona_user_history", label_visibility= "hidden")
 
         st.button("Ready", on_click = story_ready)
