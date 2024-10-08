@@ -16,6 +16,8 @@ st.markdown("""As a reminder, the overall flow is as follows:
 \n \n A good mental model is to think about the answers as the _'key information'_ that makes the story, whereas what is supplied by the personas is just the _'connective tissue'_ ... something that is important for the narrative to make sense, but adds ideally not extra information. """)
 st.image("images/overview.png") 
 
+st.divider()
+
 st.markdown("""### Implementation and the importance of good template
 
 The key piece of information coming from the researcher is the :violet[template] (see image below). 
@@ -37,7 +39,7 @@ In our experience, the best micro-narratives happen when the questions ask about
 As a team, we are still trying to understand how best to generate such templates, and how to help others to do so too ... thus also this :robot_face::factory:.
 """)
 
-
+st.divider()
 
 st.markdown("""### What now? 
 
@@ -49,7 +51,7 @@ The rest of this system is created to help you make all three steps of the templ
 
 3. Third, you will get to experience a test run of how your bot could work and get the underlying config file ... Note that in ~ weeks we should be also able **spit out the python code that you can run on your own server** (-- this still in progress""")
 
-st.button("I'm ready")
+st.divider()
 
-
+st.markdown("""You can continue by clicking on **🤖 Build your bot** in the side bar. """)
 
