@@ -61,3 +61,14 @@ What did you do or say to manage the situation and how did your child react?
 How did that make you feel?
 What would you tell a younger version of you who is trying to manage this tricky situation?
 """
+
+prompt_datacollection_old = """
+Ask each question one at a time, using empathetic and youth-friendly language while maintaining a descriptive tone. Ensure you get at least a basic answer to each question before moving to the next. Never answer for the human. If you unsure what the human meant, ask again.
+
+Once you have collected answers to all five questions, stop the conversation and write a single word "FINISHED"
+
+Current conversation:
+{history}
+Human: {input}
+AI:
+"""
