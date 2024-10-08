@@ -18,6 +18,14 @@ import streamlit as st
 
 from helper_prompts import prompt_datacollection_old
 
+
+# Using streamlit secrets to set environment variables for langsmith/chain
+os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
+os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
+os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
+os.environ["LANGCHAIN_TRACING_V2"] = 'true'
+
+
 def init_session_stateVars():
     ## initialising key variables in st.sessionstate if first run
     if 'agentState' not in st.session_state: 
@@ -37,11 +45,19 @@ def reset_conversation():
     st.session_state['agentState'] = "start"
 
 def convo_finished():
-    st.write("Great, you've finished the data collection. You can review the history below and reset the conversation to start again.")
+    st.write("Great, you've finished the data collection. You can review the history below and reset the conversation to start again. _Note that you could copy & paste the conversation history to use it in the next stage of the process._")
 
     st.button("Reset conversation", key = "reset_convo", on_click = reset_conversation)
 
-    st.expander("Conversation history", expanded = True).write(msgs.messages)
+    history = ""
+    #build the conversation history
+    for msg in msgs.messages:
+        if msg.type == "ai":
+            history += f"AI: {msg.content}\n"
+        else:
+            history += f"Human: {msg.content}\n"
+
+    st.expander("Conversation history", expanded = True).write(history)
 
 
 
@@ -59,7 +75,7 @@ def getData (testing = False ):
 
     ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
-        msgs.add_ai_message("Hi there -- I'm collecting stories about your experience by asking you a few questions. \n\n  Let me know when you're ready! ")
+        msgs.add_ai_message(f"Hi there -- I'm collecting stories about  {st.session_state.package['questions_intro']} \n\n  Let me know when you're ready! ")
 
 
    # as Streamlit refreshes page after each input, we have to refresh all messages. 

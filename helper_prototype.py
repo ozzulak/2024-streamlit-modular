@@ -10,11 +10,6 @@ import os
 from helper_prompts import *
 
 
-# Using streamlit secrets to set environment variables for langsmith/chain
-os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
-os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
-os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
-os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 
 
 st.set_page_config(page_title="Step 1: design your questions", page_icon="🤷🏻‍♂️")
@@ -28,6 +23,7 @@ def init_package():
     # we are setting up a single 'package' that will include all the information needed for config file
     st.session_state['package'] = {
         'stage' : 'step1',
+        'questions_intro': "a time you were able to connect with your child today. Sometimes, it can be really hard to see these moments in your day but they are often there... even if they are really, really small!",
         'questions_num': 5,
         'questions_str' : init_questions,
         'current_example_set' : init_exampleSet,
@@ -40,6 +36,7 @@ def init_package():
             'p3' : ""
         }
     }
+    st.session_state['ready'] = False
 
 
 # init if this is run for the first time
@@ -104,6 +101,7 @@ def update_qp():
     # update the questions in the package    
     st.session_state.package['questions_str'] = qs  # save current questions
     st.session_state.package['questions_num'] = nq
+    st.session_state.package['questions_intro'] = st.session_state['questions_intro']
 
     # update the conversation: 
     
@@ -126,7 +124,7 @@ def setupSidebar():
     ## set up side bar content
     st.sidebar.button("Update questions and persona", key = 'q_updated', on_click = update_qp)
 
-    st.sidebar.text_area("I want to collect stories about a time when ...", value = "[example - change me!]\n ... a parent had a breakthrough with a parenting technique ", height = 15)
+    st.sidebar.text_area("I want to collect stories about ...", key = 'questions_intro', value = st.session_state.package['questions_intro'], height = 15)
 
     st.sidebar.text_area("questions that bot should ask -- one per line", value = st.session_state.package["questions_str"], key = "questions", height = 200)
 
@@ -134,7 +132,9 @@ def setupSidebar():
 
     st.sidebar.text_area("Persona", value = st.session_state.package["persona"], key = "persona", height = 200)
 
-  
+
+def toggle_ready():
+    st.session_state['ready'] = not st.session_state['ready'] 
 
 
 

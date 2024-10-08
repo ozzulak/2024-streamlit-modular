@@ -26,7 +26,7 @@ You don't need to change anything about the system otherwise, thanks to the :mag
 st.image("images/implementation.png") 
 
 st.markdown("""Specifically, the :violet[template] determines three things: 
-1. **the core questions** you want the system to ask ... and the answers to which will combine into a *good* story! This is the heart of a good micro-narrative, and teh ability for the researcher to 'inject' some psychological theory into the story creation.
+1. **the core questions** you want the system to ask ... and the answers to which will combine into a *good* story! This is the heart of a good micro-narrative, and the ability for the researcher to 'inject' some psychological theory into the story creation.
 2. **example answers set & scenario**, which teaches the LLM how to combine your questions into a linear narrative 
 3. **three personas**, which guides how the system fills in the 'connective tissue' in between the user's answers. 
 
@@ -43,11 +43,11 @@ st.markdown("""### What now?
 
 The rest of this system is created to help you make all three steps of the template, one at a time. 
 
-1. First, we will look at identifying the *questions* you think the bot should be asking, give some answers that mirror what you think your users could say; and see how the narratives shape up (or not). This then also creates your *answer set*. Please do xpect that this *could be an iterative process, as getting the questions right is what makes or breaks your micro-narrative bot*!
+1. First, we will look at identifying the *questions* you think the bot should be asking, give some answers that mirror what you think your users could say; and see how the narratives shape up (or not). This then also creates your *answer set*. Please do expect that this *could be an iterative process, as getting the questions right is what makes or breaks your micro-narrative bot*!
 
 2. Second, we will then allow you to try your questions & suggested answer set to test your three *personas* you would like your system to use. 
 
-3. Third, you will get to experience a test run of how your bot could work ... and if you like it, we then **spit out the python code that you can run on your own server**. """)
+3. Third, you will get to experience a test run of how your bot could work and get the underlying config file ... Note that in ~ weeks we should be also able **spit out the python code that you can run on your own server** (-- this still in progress""")
 
 st.button("I'm ready")
 
