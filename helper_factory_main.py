@@ -7,6 +7,6 @@ chatbot_page = st.Page("helper_conversation_bot.py", title = " 🧐 Test data co
 # testing_page = st.Page("helper_testing.py", title = "Step 3: Test your bot")
 
 
-pg = st.navigation([overview_page, questions_page, personas_page, chatbot_page])
+pg = st.navigation([overview_page, questions_page, chatbot_page, personas_page])
 
 pg.run()

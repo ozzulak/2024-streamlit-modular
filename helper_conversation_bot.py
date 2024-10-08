@@ -32,7 +32,16 @@ def init_session_stateVars():
         # st.session_state.llm_model = "gpt-3.5-turbo-1106"
         st.session_state.llm_model = "gpt-4o"
 
+def reset_conversation():
+    msgs.clear()
+    st.session_state['agentState'] = "start"
 
+def convo_finished():
+    st.write("Great, you've finished the data collection. You can review the history below and reset the conversation to start again.")
+
+    st.button("Reset conversation", key = "reset_convo", on_click = reset_conversation)
+
+    st.expander("Conversation history", expanded = True).write(msgs.messages)
 
 
 
@@ -81,14 +90,15 @@ def getData (testing = False ):
             # If finished, move the flow to summarisation, otherwise continue.
             if "FINISHED" in response['response']:
                 st.divider()
-                st.chat_message("ai").write("Great, I think I got all I need -- but let me double check!")
+                st.chat_message("ai").write("Great, I think I got all I need -- click okay to continue.")
 
                 # call the summarisation  agent
-                st.session_state.agentState = "summarise"
-                summariseData(testing)
+                st.session_state.agentState = "done"
+                
+                st.button("Okay")
             else:
                 st.chat_message("ai").write(response["response"])
-        
+
 
 def stateAgent(): 
     """ Main flow function of the whole interaction -- keeps track of the system state and calls the appropriate procedure on each streamlit refresh. 
@@ -115,7 +125,7 @@ else:
     nq = st.session_state.package['questions_num']
     qs = ""
     for n in range(1, nq + 1):    
-        qs += (f"- Q{n}: {lines[n-1].strip()}\n \n") 
+        qs += (f"- {lines[n-1].strip()}\n \n") 
 
     st.sidebar.write(qs)
 
@@ -139,7 +149,9 @@ else:
     # Set up the LangChain for data collection, passing in Message History
     chat = ChatOpenAI(temperature=0.3, model=st.session_state.llm_model, openai_api_key = st.secrets.openai_api_key)
 
-    prompt_datacollection = f"""You're a trained psychologist. Your goal is to gather structured answers to the following questions. {st.session_state.package['questions_str']}
+    prompt_datacollection = f"""You're a trained psychologist. Your goal is to gather structured answers to the following questions. 
+    
+    {qs}
 
     {prompt_datacollection_old}
     """
