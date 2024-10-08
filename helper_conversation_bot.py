@@ -53,9 +53,9 @@ def convo_finished():
     #build the conversation history
     for msg in msgs.messages:
         if msg.type == "ai":
-            history += f"AI: {msg.content}\n"
+            history += f"AI: {msg.content}\n\n"
         else:
-            history += f"Human: {msg.content}\n"
+            history += f"Human: {msg.content}\n\n"
 
     st.expander("Conversation history", expanded = True).write(history)
 
