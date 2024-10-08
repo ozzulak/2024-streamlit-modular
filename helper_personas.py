@@ -93,7 +93,7 @@ else:
     # exp_stories = st.expander("Resulting stories")
     
 
-    exp_history, exp_persona, exp_stories, exp  _config = st.tabs(["🗣 Insert user answers", "🧞 Persona definitions", "📚 Resulting stories", "🔮 Current config"])
+    exp_history, exp_persona, exp_stories, exp_config = st.tabs(["🗣 Insert user answers", "🧞 Persona definitions", "📚 Resulting stories", "🔮 Current config"])
 
     with exp_history:
         ## build the conversation history string and questions string 
