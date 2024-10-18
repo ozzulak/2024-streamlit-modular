@@ -28,8 +28,7 @@ def init_package():
     # we are setting up a single 'package' that will include all the information needed for config file
     st.session_state['package'] = {
         'stage' : 'step1',
-        'questions_intro': """the story you shared with me today: \n\n "Recently, I've been struggling with something that happened on social media. Someone posted a really unflattering picture of me, and it was clear they did it just to make fun of me. This made me feel incredibly powerless, like I had no control over how people saw me. I tried to ignore the situation, hoping it would just go away. But the worst part was feeling like I was being bullied. It was a tough experience, and it made me question how safe I really am online." 
-        """,
+        'questions_intro': init_story,
         'questions_num': 4,
         'questions_str' : init_questions,
         'current_example_set' : init_exampleSet,
