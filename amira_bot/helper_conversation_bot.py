@@ -16,7 +16,7 @@ import os
 
 import streamlit as st
 
-from helper_prompts import prompt_datacollection_old, extraction_prompt
+from helper_prompts import prompt_datacollection_old, extraction_prompt, story_reminder
 
 
 # Using streamlit secrets to set environment variables for langsmith/chain
@@ -209,8 +209,11 @@ else:
 
     st.sidebar.write(qs)
 
+    story = st.expander("Reminder of the story 'you' shared:", expanded = False)
+    with story: 
+        st.write(f"_{story_reminder}_")
     ## create the UX structure
-    entry_messages = st.expander("Collecting your story", expanded = True)
+    entry_messages = st.expander("Collecting your reflections", expanded = True)
 
     # create the user input object 
     prompt = st.chat_input()

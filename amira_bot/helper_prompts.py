@@ -10,6 +10,8 @@ The scenario based on these responses: Lately, I've been feeling quite upset and
 
 init_story = """ the story you shared with me today: \n\n "Recently, I've been struggling with something that happened on social media. Someone posted a really unflattering picture of me, and it was clear they did it just to make fun of me. This made me feel incredibly powerless, like I had no control over how people saw me. I tried to ignore the situation, hoping it would just go away. But the worst part was feeling like I was being bullied. It was a tough experience, and it made me question how safe I really am online." """
 
+story_reminder = """Recently, I've been struggling with something that happened on social media. Someone posted a really unflattering picture of me, and it was clear they did it just to make fun of me. This made me feel incredibly powerless, like I had no control over how people saw me. I tried to ignore the situation, hoping it would just go away. But the worst part was feeling like I was being bullied. It was a tough experience, and it made me question how safe I really am online."""
+
 init_persona_sociologist = """You're an expert sociologist who is collecting short-but-detailed stories of life experiences that your interviewees face. Your aim is to develop a set of stories following the same pattern.
 Based on client's answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. Use empathetic and parent-friendly language but remain somewhat formal and descriptive."""
 
