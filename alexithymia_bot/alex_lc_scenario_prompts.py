@@ -20,9 +20,6 @@ prompt_scientist = """You are an academic and emotion scientist that is an exper
 
 prompts = {
     "prompt_1": prompt_psychologist,
-    # "prompt_2": prompt_friend,
-    # "prompt_3": prompt_scientist
-    # "prompt_1": prompt_close_friend,
     "prompt_2": prompt_close_friend2,
     "prompt_3": prompt_book_author
 }
