@@ -29,7 +29,7 @@ from alex_testing_prompts import *
 # Using streamlit secrets to set environment variables for langsmith/chain
 os.environ["OPENAI_API_KEY"] = st.secrets['OPENAI_API_KEY']
 os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
-os.environ["LANGCHAIN_PROJECT"] = "bonnie_test_v0"
+os.environ["LANGCHAIN_PROJECT"] = "alex_testing"
 os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 
 
@@ -119,7 +119,7 @@ def getData (testing = False ):
 
     ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
-        msgs.add_ai_message("Let's talk about how your day went! \n\n  Let me know when you're ready!")
+        msgs.add_ai_message("Hi I'm your 'emotion coach', I'm hear to listen about your day, and help you understand and express your feelings. \n\n  Let me know when you're ready!")
 
 
    # as Streamlit refreshes page after each input, we have to refresh all messages. 
@@ -505,8 +505,8 @@ def reviewData(testing):
 
     ## If we're testing this function, the previous functions have set up the three column structure yet and we don't have scenarios. 
     ## --> we will set these up now. 
-    if testing:
-        testing_reviewSetUp() 
+    # if testing:
+    #     testing_reviewSetUp() 
 
 
     ## if this is the first time running, let's make sure that the scenario selection variable is ready. 
