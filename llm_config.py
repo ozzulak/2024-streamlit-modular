@@ -18,7 +18,8 @@ class LLMConfig:
         self.personas = list(config["summaries"]["personas"].values())
         self.example_messages = config["example"]["messages"]
         self.example_summary = config["example"]["summary"]
-        self.one_shot = config["example"]["one_shot"]
+        self.one_shot = self.generate_one_shot(config["questions"]["specific"], config["example"]["summary"])
+
 
     def generate_questions_prompt(self, questions):
 
@@ -32,7 +33,7 @@ class LLMConfig:
 
         n_specific = len(questions["specific"])
         questions_prompt += f"\nYou proceed to ask the following {n_specific} questions about a specific experience they had:\n"
-        for count, question in enumerate(questions["specific"]):
+        for count, question in enumerate(list(questions["specific"].values())):
             questions_prompt += f"{n_general+count+1}. {question}\n"
 
         questions_prompt += f"\nAsk each question one at a time. {questions['language_type']} "\
@@ -83,3 +84,23 @@ class LLMConfig:
             "Return your answer as a JSON file with a single entry called 'new_scenario'."
 
         return prompt_adaptation
+
+
+    def generate_one_shot(self, questions, example_answers):
+
+        one_shot = "{main_prompt}\n\nExample:\n"
+
+        for key, question in questions.items():
+            one_shot += f"Question: {question}\n"
+            one_shot += f"Answer: {example_answers[key]}\n"
+
+        one_shot += "\nThe scenario based on these responses: {example_scenario}\n\n" \
+            "Your task:\n Create scenario based on the following answers:\n\n"
+
+        for key, question in questions.items():
+            one_shot += f"Question: {question}\n"
+            one_shot += f"Answer: {{{key}}}\n"
+
+        one_shot += "\n{end_prompt}\n\nYour output should be a JSON file with a single entry called 'output_scenario'"
+
+        return one_shot

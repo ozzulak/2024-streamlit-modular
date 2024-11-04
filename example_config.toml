@@ -16,12 +16,11 @@ general = [
     "What do you find most challenging about your current social media use?"
 ]
 
-specific = [
-    "What happened? Specifically, what was said, posted, or done?", 
-    "What's the context? What else should we know about the situation?", 
-    "How did the situation make you feel, and how did you react?", 
-    "What was the worst part of the situation?"
-]
+[questions.specific]
+what = "What happened? Specifically, what was said, posted, or done?"
+context = "What's the context? What else should we know about the situation?"
+outcome = "How did the situation make you feel, and how did you react?"
+reaction = "What was the worst part of the situation?"
 
 [summaries]
 
@@ -70,36 +69,6 @@ Human: wasn't great -- kind of angry and embarrased if you must know!
 AI: I can understand how that would make you feel both angry and embarrassed. It's not easy to put yourself out there, especially when it comes to learning new things. Finally, how did you react to this situation? What did it make you do?
 Human: I was just really miffed -- I obviously I let all the postdocs go and re-advertised their positions, and explained to the phds that this is not appropriate reaction to my coding struggles. 
 AI: Great, I think I got all I need, let me summarise this for you. 
-"""
-
-one_shot = """
-{main_prompt}
-
-Example:
-Question:  What happened? What was it exactly that people said, posted, or done?
-Answer: {example_what}
-Question: What's the context? What else should we know about the situation?
-Answer: {example_context}
-Question: How did the situation make you feel, and how did you react?
-Answer: {example_outcome}
-Question: What was the worst part of the situation?
-Answer: {example_reaction}
-
-The scenario based on these responses: {example_scenario}
-
-Your task:
-Create scenario based on the following answers:
-Question:  What happened? What was it exactly that people said, posted, or done?
-Answer: {what}
-Question: What's the context? What else should we know about the situation?
-Answer: {context}
-Question: How did the situation make you feel, and how did you react?
-Answer: {outcome}
-Question: What was the worst part of the situation?
-Answer: {reaction}
-
-{end_prompt}
-Your output should be a JSON file with a single entry called 'output_scenario'
 """
 
 [example.summary]
