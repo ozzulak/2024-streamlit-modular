@@ -14,6 +14,7 @@ from streamlit_feedback import streamlit_feedback
 from functools import partial
 
 import os
+import sys
 
 from llm_config import LLMConfig
 
@@ -27,8 +28,12 @@ os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
 os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 
 
+# Parse input args, checking for config file
+input_args = sys.argv[1:]
+config_file = input_args[0] if len(input_args) else "example_config.toml"
+
 # Create prompts based on configuration file
-llm_prompts = LLMConfig("example_config.toml")
+llm_prompts = LLMConfig(config_file)
 
 ## simple switch previously used to help debug 
 DEBUG = False
