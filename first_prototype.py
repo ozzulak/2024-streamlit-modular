@@ -746,15 +746,7 @@ else:
     print("don't have consent!")
     consent_message = st.container()
     with consent_message:
-        st.markdown(''' 
-                    ## Welcome to our teenbot-prototype.
-
-                    \n In this task you’re going to engage with a prototype chatbot that asks you to imagine certain social media experiences. We would like you to imagine that you are a young person who regularly uses social media. Please answer the questions from the perspective of this young person. You can refer to *general* social media experiences or situations that have happened to people you know but please do not share any personal data or experiences. 
-                    
-                    \n \n **It's important that you do not report situations that contain personal information about yourself.** 
-                    
-                    \n \n To proceed to the task, please confirm that you have read and understood this information.
-        ''')
+        st.markdown(llm_prompts.intro_and_consent)
         st.button("I accept", key = "consent_button", on_click=markConsent)
            
 

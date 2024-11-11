@@ -1,3 +1,17 @@
+[consent]
+
+intro_and_consent = """## Welcome to our teenbot-prototype.
+
+In this task you’re going to engage with a prototype chatbot that asks you to imagine certain social media experiences. \
+We would like you to imagine that you are a young person who regularly uses social media. \
+Please answer the questions from the perspective of this young person. \
+You can refer to *general* social media experiences or situations that have happened to people you know but please do not share any personal data or experiences.
+
+**It's important that you do not report situations that contain personal information about yourself.**
+
+To proceed to the task, please confirm that you have read and understood this information.
+"""
+
 [questions]
 
 persona = "You're a high-school counsellor collecting stories from students about their difficult experiences on social media."

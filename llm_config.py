@@ -7,6 +7,8 @@ class LLMConfig:
         with open(filename, "rb") as f:
             config = tomllib.load(f)
 
+        self.intro_and_consent = config["consent"]["intro_and_consent"].strip()
+
         self.questions_intro = config["questions"]["intro"]
         self.questions_prompt_template = self.generate_questions_prompt_template(config["questions"])
         self.questions_outro = "Great, I think I got all I need -- but let me double check!"
