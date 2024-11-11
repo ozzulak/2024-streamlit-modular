@@ -9,11 +9,11 @@ class LLMConfig:
 
         self.intro_and_consent = config["consent"]["intro_and_consent"].strip()
 
-        self.questions_intro = config["questions"]["intro"]
+        self.questions_intro = config["questions"]["intro"].strip() + "\n\nLet me know when you're ready!"
         self.questions_prompt_template = self.generate_questions_prompt_template(config["questions"])
         self.questions_outro = "Great, I think I got all I need -- but let me double check!"
 
-        self.extraction_task = f"Create a scenario based on these responses. {config['summaries']['language_type']}"
+        self.extraction_task = "Create a scenario based on these responses."
         self.extraction_prompt_template = self.generate_extraction_prompt_template(config["summaries"])
         self.summary_keys = list(config["summaries"]["questions"].keys())
         self.extraction_adaptation_prompt_template = self.generate_adaptation_prompt_template()

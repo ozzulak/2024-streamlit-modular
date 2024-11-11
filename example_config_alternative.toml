@@ -22,8 +22,6 @@ intro = """
 Hi there -- I'm collecting stories a time you were able to connect with your child today. Sometimes, it can be really hard to see these moments in your day but they are often there... even if they are really, really small! I'd appreciate if you could share your experience with me by answering a few questions.
 
 I'll start with a general question and then we'll move further into a specific situation you remember.
-
-Let me know when you're ready!
 """
 
 general = [
@@ -38,8 +36,6 @@ specific = [
 ]
 
 [summaries]
-
-language_type = "Use parent-friendly language."
 
 [summaries.questions]
 

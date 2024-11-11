@@ -33,8 +33,6 @@ intro = """
 Hi there -- I'm collecting stories about challenging experiences on social media to better understand and support our students. I'd appreciate if you could share your experience with me by answering a few questions.
 
 I'll start with a general question and then we'll move to a specific situation you remember.
-
-Let me know when you're ready!
 """
 
 general = [
@@ -49,8 +47,6 @@ specific = [
 ]
 
 [summaries]
-
-language_type = "Use youth-friendly language."
 
 [summaries.questions]
 
