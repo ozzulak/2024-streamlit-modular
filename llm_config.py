@@ -15,6 +15,7 @@ class LLMConfig:
 
         self.extraction_task = f"Create a scenario based on these responses. {config['summaries']['language_type']}"
         self.extraction_prompt_template = self.generate_extraction_prompt_template(config["summaries"])
+        self.summary_keys = list(config["summaries"]["questions"].keys())
         self.extraction_adaptation_prompt_template = self.generate_adaptation_prompt_template()
 
         self.personas = [persona.strip() for persona in list(config["summaries"]["personas"].values())]

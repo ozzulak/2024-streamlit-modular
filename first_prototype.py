@@ -284,17 +284,14 @@ def summariseData(testing = False):
         progress_text = 'Processing your scenarios'
         bar = st.progress(0, text = progress_text)
 
+    # Arrange answers into dictionary
+    summary_answers = {key: answer_set[key] for key in llm_prompts.summary_keys}
 
     # create first scenario & store into st.session state 
     st.session_state.response_1 = chain.invoke({
         "persona" : llm_prompts.personas[0],
         "one_shot": llm_prompts.one_shot,
-        "end_prompt" : llm_prompts.extraction_task,
-        "what" : answer_set['what'],
-        "context" : answer_set['context'],
-        "outcome" : answer_set['outcome'],
-        "reaction" : answer_set['reaction']
-    })
+        "end_prompt" : llm_prompts.extraction_task} | summary_answers)
     run_1 = get_current_run_tree()
 
     ## update progress bar
@@ -303,12 +300,7 @@ def summariseData(testing = False):
     st.session_state.response_2 = chain.invoke({
         "persona" : llm_prompts.personas[1],
         "one_shot": llm_prompts.one_shot,
-        "end_prompt" : llm_prompts.extraction_task,
-        "what" : answer_set['what'],
-        "context" : answer_set['context'],
-        "outcome" : answer_set['outcome'],
-        "reaction" : answer_set['reaction']
-    })
+        "end_prompt" : llm_prompts.extraction_task} | summary_answers)
     run_2 = get_current_run_tree()
 
     ## update progress bar
@@ -317,12 +309,7 @@ def summariseData(testing = False):
     st.session_state.response_3 = chain.invoke({
         "persona" : llm_prompts.personas[2],
         "one_shot": llm_prompts.one_shot,
-        "end_prompt" : llm_prompts.extraction_task,
-        "what" : answer_set['what'],
-        "context" : answer_set['context'],
-        "outcome" : answer_set['outcome'],
-        "reaction" : answer_set['reaction']
-    })
+        "end_prompt" : llm_prompts.extraction_task} | summary_answers)
     run_3 = get_current_run_tree()
 
     ## update progress bar after the last scenario
