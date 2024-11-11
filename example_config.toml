@@ -16,15 +16,16 @@ general = [
     "What do you find most challenging about your current social media use?"
 ]
 
-[questions.specific]
-what = "What happened? Specifically, what was said, posted, or done?"
-context = "What's the context? What else should we know about the situation?"
-outcome = "How did the situation make you feel, and how did you react?"
-reaction = "What was the worst part of the situation?"
+specific = [
+    "What happened? Specifically, what was said, posted, or done?",
+    "What's the context? What else should we know about the situation?",
+    "How did the situation make you feel, and how did you react?",
+    "What was the worst part of the situation?",
+]
 
 [summaries]
 
-language_type = "Use youth-friendly language"
+language_type = "Use youth-friendly language."
 
 [summaries.questions]
 
@@ -38,43 +39,42 @@ reaction = "What was worst about the situation?"
 formal = """
 You're an expert developmental psychologist who is collecting stories of difficult experiences that your clients have on social media. Your aim is to develop a set of stories following the same pattern. \
 Based on client's answers to four questions, you then create a scenario that summarises their experiences well, always using the same format. \
-Use empathetic and youth-friendly language but remain somewhat formal and descriptive.\
+Use empathetic and youth-friendly language but remain somewhat formal and descriptive.
 """
 
 sibling = """
 You’re a 23 year old college student who is collecting stories of difficult experiences that your younger siblings and their friends have on social media. Your aim is to develop a set of stories following the same pattern. \
 Based on younger siblings and their friends' answers to four questions, you then create a scenario that summarises their experiences well, always using the same format. \
-Use a language that an average 25 year old would use when trying to be helpful to their younger sibling. \
-Be empathic, but remain descriptive.\
+Use a language that an average 25 year old would use when trying to be helpful to their younger sibling.
+Be empathic, but remain descriptive.
 """
 
 goth = """
 You're 45 year old goth punk who is collecting stories of difficult experiences that the silly youth nowadays have on social media. Your aim is to develop a set of stories following the same pattern. \
 Based on student's answers to four questions, you then create a scenario that summarises their experiences well, always using the same format. \
 Use a language that you assume the toddler would use themselves, based on their response. \
-Be edgy and cheeky in your response but remain marginally respectful\
+Be edgy and cheeky in your response but remain marginally respectful.
 """
 
 [example]
 
-messages = """
-AI: Hi there -- welcome to the data collection bot! Let me know when you're ready! 
-Human: Hi I'm read
-AI: Great! Let's start. Can you tell me about a time when something happened on social media that was difficult for you? Specifically, what was said, posted, or done?
-Human: Posted something online about struggling to learn how to code in langchain and my phd students and postdocs just laughted at me!  
-AI: I'm really sorry to hear that you had to go through that. It's not easy when people we look up to react in a way that's less than supportive. Can you give me a bit more context about the situation? Was there any prior conversation or incident that led to this?
-Human: not really, but I have been talking to them excessively about how important it is to learn how to code
-AI: I see, so it sounds like this was something you've been passionate about and have been discussing a lot. Now, can you tell me more about why this was wrong? How did their laughter make you feel and what harm do you think was done?
-Human: wasn't great -- kind of angry and embarrased if you must know!
-AI: I can understand how that would make you feel both angry and embarrassed. It's not easy to put yourself out there, especially when it comes to learning new things. Finally, how did you react to this situation? What did it make you do?
-Human: I was just really miffed -- I obviously I let all the postdocs go and re-advertised their positions, and explained to the phds that this is not appropriate reaction to my coding struggles. 
-AI: Great, I think I got all I need, let me summarise this for you. 
+conversation = """
+Question: What happened? Specifically, what was said, posted, or done?
+Answer: "I posted a photo on Instagram for the first time in a long time and it didn't get many likes."
+Question: What's the context? What else should we know about the situation?
+Answer: "I haven't posted in over a year. I only use Instagram to look at my friend's posts."
+Question: How did the situation make you feel, and how did you react?
+Answer: "I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account."
+Question: What was the worst part of the situation?
+Answer: "I ended up deleting instagram for a few days because I was so anxious about the experience."
 """
 
-[example.summary]
-
-what = "I posted a photo on Instagram for the first time in a long time and it didn't get many likes."
-context = "I haven't posted in over a year. I only use Instagram to look at my friend's posts."
-outcome = "I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account."
-reaction = "I ended up deleting instagram for a few days because I was so anxious about the experience."
-scenario = "Recently I've had mixed feelings about my social media use, particularly Instagram. These days, I rarely post on Instagram because I'm anxious about posting photos of myself. I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. I was worried about whether people would like it because I hadn't posted in so long. When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. I got so anxious about it that I ended up deleting the app. I learnt my lesson and probably won't post again."
+scenario = """
+Recently I've had mixed feelings about my social media use, particularly Instagram. \
+These days, I rarely post on Instagram because I'm anxious about posting photos of myself. \
+I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. \
+I was worried about whether people would like it because I hadn't posted in so long. \
+When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. \
+I got so anxious about it that I ended up deleting the app. \
+I learnt my lesson and probably won't post again.
+"""
