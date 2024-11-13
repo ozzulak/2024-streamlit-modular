@@ -30,7 +30,11 @@ os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 
 # Parse input args, checking for config file
 input_args = sys.argv[1:]
-config_file = input_args[0] if len(input_args) else "example_config.toml"
+if len(input_args):
+    config_file = input_args[0]
+else:
+    config_file = st.secrets.get("CONFIG_FILE", "example_config.toml")
+print(f"Configuring app using {config_file}...\n")
 
 # Create prompts based on configuration file
 llm_prompts = LLMConfig(config_file)
