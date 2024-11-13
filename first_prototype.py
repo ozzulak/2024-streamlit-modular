@@ -14,16 +14,11 @@ from streamlit_feedback import streamlit_feedback
 from functools import partial
 
 import os
+import sys
+
+from llm_config import LLMConfig
 
 import streamlit as st
-
-
-## import our prompts: 
-
-from lc_prompts import *
-from lc_scenario_prompts import *
-from testing_prompts import * 
-
 
 
 # Using streamlit secrets to set environment variables for langsmith/chain
@@ -32,6 +27,17 @@ os.environ["LANGCHAIN_API_KEY"] = st.secrets['LANGCHAIN_API_KEY']
 os.environ["LANGCHAIN_PROJECT"] = st.secrets['LANGCHAIN_PROJECT']
 os.environ["LANGCHAIN_TRACING_V2"] = 'true'
 
+
+# Parse input args, checking for config file
+input_args = sys.argv[1:]
+if len(input_args):
+    config_file = input_args[0]
+else:
+    config_file = st.secrets.get("CONFIG_FILE", "example_config.toml")
+print(f"Configuring app using {config_file}...\n")
+
+# Create prompts based on configuration file
+llm_prompts = LLMConfig(config_file)
 
 ## simple switch previously used to help debug 
 DEBUG = False
@@ -91,7 +97,7 @@ memory = ConversationBufferMemory(memory_key="history", chat_memory=msgs)
 
 ## ensure we are using a better prompt for 4o 
 if st.session_state['llm_model'] == "gpt-4o":
-    prompt_datacollection = prompt_datacollection_4o
+    prompt_datacollection = llm_prompts.questions_prompt_template
 
 
 
@@ -109,7 +115,7 @@ def getData (testing = False ):
 
     ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
-        msgs.add_ai_message("Hi there -- I'm collecting stories about challenging experiences on social media to better understand and support our students. I'd appreciate if you could share your experience with me by answering a few questions. \n\n I'll start with a general question and then we'll move to a specific situation you remember. \n\n  Let me know when you're ready! ")
+        msgs.add_ai_message(llm_prompts.questions_intro)
 
 
    # as Streamlit refreshes page after each input, we have to refresh all messages. 
@@ -140,7 +146,7 @@ def getData (testing = False ):
             # If finished, move the flow to summarisation, otherwise continue.
             if "FINISHED" in response['response']:
                 st.divider()
-                st.chat_message("ai").write("Great, I think I got all I need -- but let me double check!")
+                st.chat_message("ai").write(llm_prompts.questions_outro)
 
                 # call the summarisation  agent
                 st.session_state.agentState = "summarise"
@@ -166,7 +172,7 @@ def extractChoices(msgs, testing ):
     extraction_llm = ChatOpenAI(temperature=0.1, model=st.session_state.llm_model, openai_api_key=openai_api_key)
 
     ## taking the prompt from lc_prompts.py file
-    extraction_template = PromptTemplate(input_variables=["conversation_history"], template = extraction_prompt)
+    extraction_template = PromptTemplate(input_variables=["conversation_history"], template = llm_prompts.extraction_prompt_template)
 
     ## set up the rest of the chain including the json parser we will need. 
     json_parser = SimpleJsonOutputParser()
@@ -175,7 +181,7 @@ def extractChoices(msgs, testing ):
     
     # allow for testing the flow with pre-generated messages -- see testing_prompts.py
     if testing:
-        extractedChoices = extractionChain.invoke({"conversation_history" : test_messages})
+        extractedChoices = extractionChain.invoke({"conversation_history" : llm_prompts.example_messages})
     else: 
         extractedChoices = extractionChain.invoke({"conversation_history" : msgs})
     
@@ -223,7 +229,7 @@ def collectFeedback(answer, column_id,  scenario):
         st.session_state.temp_debug = feedback_type_str
 
         ## combine all data that we want to store in Langsmith
-        payload = f"{answer['score']} rating scenario: \n {scenario} \n Based on: \n {answer_set}"
+        payload = f"{answer['score']} rating scenario: \n {scenario} \n Based on: \n {llm_prompts.one_shot}"
 
         # Record the feedback with the formulated feedback type string
         # and optional comment
@@ -249,20 +255,13 @@ def summariseData(testing = False):
 
 
     # start by setting up the langchain chain from our template (defined in lc_prompts.py)
-    prompt_template = PromptTemplate.from_template(prompt_one_shot)
+    prompt_template = PromptTemplate.from_template(llm_prompts.main_prompt_template)
 
     # add a json parser to make sure the output is a json object
     json_parser = SimpleJsonOutputParser()
 
     # connect the prompt with the llm call, and then ensure output is json with our new parser
     chain = prompt_template | chat | json_parser
-
-    ## pick the prompt we want to use 
-    prompt_1 = prompts['prompt_1']
-    prompt_2 = prompts['prompt_2']
-    prompt_3 = prompts['prompt_3']
-    
-    end_prompt = end_prompt_core
 
     ### call extract choices on real data / stored test data based on value of testing
     if testing: 
@@ -294,57 +293,32 @@ def summariseData(testing = False):
         progress_text = 'Processing your scenarios'
         bar = st.progress(0, text = progress_text)
 
+    # Arrange answers into dictionary
+    summary_answers = {key: answer_set[key] for key in llm_prompts.summary_keys}
 
     # create first scenario & store into st.session state 
     st.session_state.response_1 = chain.invoke({
-        "main_prompt" : prompt_1,
-        "end_prompt" : end_prompt,
-        "example_what" : example_set['what'],
-        "example_context" : example_set['context'],
-        "example_outcome" : example_set['outcome'],
-        "example_reaction" : example_set['reaction'],
-        "example_scenario" : example_set['scenario'],
-        "what" : answer_set['what'],
-        "context" : answer_set['context'],
-        "outcome" : answer_set['outcome'],
-        "reaction" : answer_set['reaction']
-    })
+        "persona" : llm_prompts.personas[0],
+        "one_shot": llm_prompts.one_shot,
+        "end_prompt" : llm_prompts.extraction_task} | summary_answers)
     run_1 = get_current_run_tree()
 
     ## update progress bar
     bar.progress(33, progress_text)
 
     st.session_state.response_2 = chain.invoke({
-        "main_prompt" : prompt_2,
-        "end_prompt" : end_prompt,
-        "example_what" : example_set['what'],
-        "example_context" : example_set['context'],
-        "example_outcome" : example_set['outcome'],
-        "example_reaction" : example_set['reaction'],
-        "example_scenario" : example_set['scenario'],
-        "what" : answer_set['what'],
-        "context" : answer_set['context'],
-        "outcome" : answer_set['outcome'],
-        "reaction" : answer_set['reaction']
-    })
+        "persona" : llm_prompts.personas[1],
+        "one_shot": llm_prompts.one_shot,
+        "end_prompt" : llm_prompts.extraction_task} | summary_answers)
     run_2 = get_current_run_tree()
 
     ## update progress bar
     bar.progress(66, progress_text)
 
     st.session_state.response_3 = chain.invoke({
-        "main_prompt" : prompt_3,
-        "end_prompt" : end_prompt,
-        "example_what" : example_set['what'],
-        "example_context" : example_set['context'],
-        "example_outcome" : example_set['outcome'],
-        "example_reaction" : example_set['reaction'],
-        "example_scenario" : example_set['scenario'],
-        "what" : answer_set['what'],
-        "context" : answer_set['context'],
-        "outcome" : answer_set['outcome'],
-        "reaction" : answer_set['reaction']
-    })
+        "persona" : llm_prompts.personas[2],
+        "one_shot": llm_prompts.one_shot,
+        "end_prompt" : llm_prompts.extraction_task} | summary_answers)
     run_3 = get_current_run_tree()
 
     ## update progress bar after the last scenario
@@ -641,7 +615,7 @@ def finaliseScenario():
                 st.chat_message("human").write(prompt) 
 
                 # use a new chain, drawing on the prompt_adaptation template from lc_prompts.py
-                adaptation_prompt = PromptTemplate(input_variables=["input", "scenario"], template = prompt_adaptation)
+                adaptation_prompt = PromptTemplate(input_variables=["input", "scenario"], template = llm_prompts.extraction_adaptation_prompt_template)
                 json_parser = SimpleJsonOutputParser()
 
                 chain = adaptation_prompt | chat | json_parser
@@ -768,15 +742,7 @@ else:
     print("don't have consent!")
     consent_message = st.container()
     with consent_message:
-        st.markdown(''' 
-                    ## Welcome to our teenbot-prototype.
-
-                    \n In this task you’re going to engage with a prototype chatbot that asks you to imagine certain social media experiences. We would like you to imagine that you are a young person who regularly uses social media. Please answer the questions from the perspective of this young person. You can refer to *general* social media experiences or situations that have happened to people you know but please do not share any personal data or experiences. 
-                    
-                    \n \n **It's important that you do not report situations that contain personal information about yourself.** 
-                    
-                    \n \n To proceed to the task, please confirm that you have read and understood this information.
-        ''')
+        st.markdown(llm_prompts.intro_and_consent)
         st.button("I accept", key = "consent_button", on_click=markConsent)
            
 
