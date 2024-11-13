@@ -9,8 +9,8 @@ class LLMConfig:
 
         self.intro_and_consent = config["consent"]["intro_and_consent"].strip()
 
-        self.questions_intro = config["questions"]["intro"].strip() + "\n\nLet me know when you're ready!"
-        self.questions_prompt_template = self.generate_questions_prompt_template(config["questions"])
+        self.questions_intro = config["collection"]["intro"].strip() + "\n\nLet me know when you're ready!"
+        self.questions_prompt_template = self.generate_questions_prompt_template(config["collection"])
         self.questions_outro = "Great, I think I got all I need -- but let me double check!"
 
         self.extraction_task = "Create a scenario based on these responses."
@@ -24,29 +24,25 @@ class LLMConfig:
         self.main_prompt_template = self.generate_main_prompt_template(config["summaries"]["questions"])
 
 
-    def generate_questions_prompt_template(self, questions):
+    def generate_questions_prompt_template(self, data_collection):
 
-        questions_prompt = f"{questions['persona']}\n\nYour goal is to gather structured answers to the following questions.\n\n"
+        questions_prompt = f"{data_collection['persona']}\n\nYour goal is to gather structured answers to the following questions:\n\n"
 
-        n_general = len(questions["general"])
-        if questions["general"]:
-            questions_prompt += f"You start with {n_general} general question{'s' if n_general > 1 else ''}:\n"
-            for count, question in enumerate(questions["general"]):
-                questions_prompt += f"{count+1}. {question}\n"
+        for count, question in enumerate(data_collection["questions"]):
+            questions_prompt += f"{count+1}. {question}\n"
 
-        n_specific = len(questions["specific"])
-        questions_prompt += f"\nYou proceed to ask the following {n_specific} questions about a specific experience they had:\n"
-        for count, question in enumerate(questions["specific"]):
-            questions_prompt += f"{n_general+count+1}. {question}\n"
-
-        questions_prompt += f"\nAsk each question one at a time. {questions['language_type']} "\
+        questions_prompt += f"\nAsk each question one at a time. {data_collection['language_type']} "\
             "Ensure you get at least a basic answer to each question before moving to the next. "\
             "Never answer for the human. "\
             "If you unsure what the human meant, ask again."
 
-        n_total = n_general + n_specific
-        questions_prompt += f'\n\nOnce you have collected answers to all {n_total} question{"" if n_total == 1 else "s"}, stop the conversation and write a single word "FINISHED".\n\n'\
-            "Current conversation:\n{history}\nHuman: {input}\nAI:"
+        n_questions = len(data_collection["questions"])
+        if n_questions == 1:
+            questions_prompt += "\n\nOnce you have collected an answer to the question"
+        else:
+            questions_prompt += f"\n\nOnce you have collected answers to all {n_questions} questions"
+
+        questions_prompt += ', stop the conversation and write a single word "FINISHED".\n\nCurrent conversation:\n{history}\nHuman: {input}\nAI:'
 
         return questions_prompt
 
