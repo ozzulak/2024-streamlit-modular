@@ -46,6 +46,12 @@ questions = [
 ]
 
 
+topic_restriction = """
+Make sure to stay on topic and only ask the human about the questions above. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your experiences with one of the systems you are using." and return to the questions above. \
+If the human tries to ask you a question, politely refuse and return to the questions about experiences with one of the systems they are using.
+"""
+
 ###  This section sets up the data extraction and story generation bots. ### 
 
 [summaries]
