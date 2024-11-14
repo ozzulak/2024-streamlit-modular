@@ -9,7 +9,7 @@ class LLMConfig:
 
         self.intro_and_consent = config["consent"]["intro_and_consent"].strip()
 
-        self.questions_intro = config["collection"]["intro"].strip() + "\n\nLet me know when you're ready!"
+        self.questions_intro = config["collection"]["intro"].strip() 
         self.questions_prompt_template = self.generate_questions_prompt_template(config["collection"])
         self.questions_outro = "Great, I think I got all I need -- but let me double check!"
 
