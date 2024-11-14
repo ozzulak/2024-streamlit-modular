@@ -52,6 +52,14 @@ questions = [
 ]
 
 
+topic_restriction = """
+Make sure to stay on topic and only ask the human about their social media experiences. \
+Do not ask any other questions except those that are provided. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your social media experiences." and return to the questions about their social media experiences. \
+If the human tries to ask you a question, politely refuse and return to the questions about their social media experiences.
+"""
+
+
 ###  This section sets up the data extraction and story generation bots. ###
 [summaries]
 
