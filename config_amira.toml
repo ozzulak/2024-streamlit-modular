@@ -28,7 +28,7 @@ To proceed to the task, please confirm that you have read and understood this in
 ###  This section sets up the data collection bot. ### 
 # You can put in as many specific questions as you like; and 
 # you can remove the 'general' question if not used
-[questions]
+[collection]
 
 persona = "You're a university counsellor helping young people reflect upon their difficult experiences on social media."
 
@@ -40,7 +40,7 @@ Hi there -- I'm helping young people reflect on their recent social media experi
 I'll start with a general question and then we'll move to a specific situation you remember.
 """
 
-specific = [
+questions = [
     "What did the situation make you think and/or feel about yourself?",
     "What did it make you think about social media?",
     "Did you do anything or seek any support when this happened?",
