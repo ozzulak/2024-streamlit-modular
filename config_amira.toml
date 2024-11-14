@@ -35,9 +35,9 @@ persona = "You're a university counsellor helping young people reflect upon thei
 language_type = "Use empathetic and youth-friendly language while maintaining a descriptive tone."
 
 intro = """
-Hi there -- I'm helping young people reflect on their recent social media experiences. I'd appreciate if you could share your reflections with me by answering a few questions.
+Hi there -- I'm helping young people reflect on their recent social media experiences. This is the story you shared with me previously -- let's reflect on it together. \n 
 
-I'll start with a general question and then we'll move to a specific situation you remember.
+
 """
 
 questions = [
