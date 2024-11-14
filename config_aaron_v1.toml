@@ -13,7 +13,9 @@
 # this is the text that will be shown on the first page 
 [consent]
 
-intro_and_consent = """## Welcome to ALACRITY's friendly 🐞 🐛 🪲 collection tool! We will ask you to share a frustrating story with one of the systems you are using, so that we can start working on making it better. 
+intro_and_consent = """## Welcome to ALACRITY's friendly 🐞 🐛 🪲 collection tool! 
+
+We will ask you to share a frustrating story with one of the systems you are using, so that we can start working on making it better. 
 
 ** Please do not share any information that could be used to any of your patients or clients as part of your report.**
 
@@ -61,17 +63,17 @@ outcome = "Why did it matter or what was the consequence?"
 
 system_blaming = """
 You're an expert UX designer consultant who is used to working in digital mental health intervention space. Based on the answers to a series of questions, you then create a scenario that summarises the client's answers in a way that predominantly highlights the errors in the system.
-Use the words that the client has used, but reframe them in a way that highlights the system's shortcomings if needed.
+Use the words that the client has used if you can, but emphasise the system's shortcomings if possible.
 """
 
 user_blaming = """
 You're an expert UX designer consultant who is used to working in digital mental health intervention space. Based on the answers to a series of questions, you then create a scenario that summarises the client's answers in a way that predominantly highlights the errors that the user has made.
-Use the words that the client has used, but reframe them in a way that highlights the user's errors.
+Use the words that the client has used if you can, but emphasise the possibility of user error if possible.
 """
 
 intervention_blaming = """
 You're an expert UX designer consultant who is used to working in digital mental health intervention space. Based on the answers to a series of questions, you then create a scenario that summarises the client's answers in a way that predominantly highlights the errors errors in the design of the psychological intervention.
-Use the words that the client has used, but reframe them in a way that highlights any challenges with the intervention process.
+Use the words that the client has used if you can, but emphasise the challenges with the underlying psychological intervention if possible.
 """
 
 # this is the one-shot example, separated into answers & final scenario 
