@@ -57,7 +57,7 @@ questions = [
 # --> ensure that the questions here are aligned with the questions you have above 
 [summaries.questions]
 
-feeling = "What did the situation make them feel or think about themselves?"
+feeling = "When you think back to this situation, how did it affect you?"
 perspective = "What did the situation make them think about social media?"
 reaction = "Did the situation make them respond in a particular way or seek support?"
 desiredreaction = "What kind of support would they have liked in response to the situation?"
