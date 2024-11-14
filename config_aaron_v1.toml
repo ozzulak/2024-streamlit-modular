@@ -1,0 +1,93 @@
+# This file is used to configure the "first_prototype" Streamlit app.
+#
+# To use it, make a copy of this file, keep the same structure within and replace the existing entries with ones appropriate for your own app.
+#
+# This file uses the TOML format. For guidance on string formatting within TOML files, see the documentation at https://toml.io/
+#
+# Running the app with `streamlit run first_prototype.py` uses this config file.
+# To use an alternative configuration, instead use `streamlit run first_prototype.py path-to-file/config-file-name.toml`.
+#
+# Note that three personas must be provided in the "personas" section. Additional personas will not be used.
+
+
+# this is the text that will be shown on the first page 
+[consent]
+
+intro_and_consent = """## Welcome to ALACRITY's friendly 🐞 🐛 🪲 collection tool! We will ask you to share a frustrating story with one of the systems you are using, so that we can start working on making it better. 
+
+** Please do not share any information that could be used to any of your patients or clients as part of your report.**
+
+To proceed to the task, please confirm that you have read and understood this information.
+"""
+
+
+###  This section sets up the data collection bot. ### 
+# You can put in as many specific questions as you like; and 
+# you can remove the 'general' question if not used
+[collection]
+
+persona = "You're a friendly design consultant helping busy clinicians and researchers to share difficult experiences with their digital systems."
+
+language_type = "Use empathetic and friendly language while maintaining a descriptive tone."
+
+intro = """
+Hello, thanks for finding the time to share this issue. I'll ask you a couple of questions about your experience, and then we'll try to put it together into a coherent narrative. Let me know when you're ready by typing anything below.  \n 
+
+
+"""
+
+questions = [
+    "What were you trying to do?", 
+    "What happened and how did you feel?", 
+    "What did you think should have happened?", 
+    "Why did it matter or what was the consequence?"
+]
+
+
+###  This section sets up the data extraction and story generation bots. ### 
+
+[summaries]
+
+# Summaries.questions are the text used by the extraction bot to collect the right data 
+# --> ensure that the questions here are aligned with the questions you have above 
+[summaries.questions]
+
+goal = "What were you trying to do?"
+situation = "What happened and how did you feel?"
+aim  = "What did you think should have happened?"
+outcome = "Why did it matter or what was the consequence?"
+
+[summaries.personas]
+
+system_blaming = """
+You're an expert UX designer consultant who is used to working in digital mental health intervention space. Based on the answers to a series of questions, you then create a scenario that summarises the client's answers in a way that predominantly highlights the errors in the system.
+Use the words that the client has used, but reframe them in a way that highlights the system's shortcomings if needed.
+"""
+
+user_blaming = """
+You're an expert UX designer consultant who is used to working in digital mental health intervention space. Based on the answers to a series of questions, you then create a scenario that summarises the client's answers in a way that predominantly highlights the errors that the user has made.
+Use the words that the client has used, but reframe them in a way that highlights the user's errors.
+"""
+
+intervention_blaming = """
+You're an expert UX designer consultant who is used to working in digital mental health intervention space. Based on the answers to a series of questions, you then create a scenario that summarises the client's answers in a way that predominantly highlights the errors errors in the design of the psychological intervention.
+Use the words that the client has used, but reframe them in a way that highlights any challenges with the intervention process.
+"""
+
+# this is the one-shot example, separated into answers & final scenario 
+[example]
+
+conversation = """
+Question: What were you trying to do?
+Answer: I was attempting to deliver TF-CBT in my school with a student and I wanted to do a parent session but couldn't because only the student sees me (since they're in school) and I've had minimal parent contact.
+Question: What happened and how did you feel?
+Answer: I felt like it was difficult to complete TF-CBT as I thought I should. It made me feel like I wasn't doing it right and was failing!
+Question: What did you think should have happened?
+Answer: I thought I needed an alternative way to connect with the parent or maybe I shouldn't bother trying to do any parent work at all.
+Question: Why did it matter or what was the consequence?
+Answer: I'm not sure, but it might make TF-CBT less effective...or not as impactful on the student's home context. I just hope they're getting enough support on dealing with their trauma.
+"""
+
+scenario = """
+I recently faced a challenge while trying to help a student at school using a method called TF-CBT, which is supposed to help with trauma. I wanted to include the student's parent in the process, but it was hard because I only see the student at school and haven't had much contact with the parent. This made me feel like I wasn't doing the TF-CBT as well as I should be, and I started to worry that I was failing. I thought maybe I needed to find a different way to reach out to the parent or perhaps I should just focus on working with the student alone. I was concerned that not involving the parent might make the TF-CBT less effective or not as helpful for the student's life at home. I just hope that the student is getting enough support to deal with their trauma.
+"""
