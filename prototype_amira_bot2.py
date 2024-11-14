@@ -119,7 +119,9 @@ def getData (testing = False ):
         ### ASHISH -- we would need to just append the previous story to the llm_prompts.questions_intro here -- this is just a placeholder for now.
         story_from_db = "Recently I've had mixed feelings about my social media use, particularly Instagram. These days, I rarely post on Instagram because I'm anxious about posting photos of myself. I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. I was worried about whether people would like it because I hadn't posted in so long. When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. I got so anxious about it that I ended up deleting the app. I learnt my lesson and probably won't post again."
 
-        first_message = llm_prompts.questions_intro + story_from_db
+        intro_from_template = "Hi there -- I'm helping young people reflect on their recent social media experiences. This is the story you shared with me previously -- let's reflect on it together. \n \n "
+
+        first_message = intro_from_template + story_from_db + "\n Let me know when you're ready!"
 
         msgs.add_ai_message(first_message)
 
