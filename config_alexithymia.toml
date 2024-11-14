@@ -47,6 +47,14 @@ questions = [
 ]
 
 
+topic_restriction = """
+Make sure to stay on topic and only ask the human about their situation where something stressful has happened. \
+Do not ask any other questions except those that are provided. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your situation where something stressful has happened." and return to the questions about their experience of their situation where something stressful has happened. \
+If the human tries to ask you a question, politely refuse and return to the questions about their situation where something stressful has happened.
+"""
+
+
 ###  This section sets up the data extraction and story generation bots. ###
 [summaries]
 

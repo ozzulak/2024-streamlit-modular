@@ -34,7 +34,7 @@ class LLMConfig:
         questions_prompt += f"\nAsk each question one at a time. {data_collection['language_type']} "\
             "Ensure you get at least a basic answer to each question before moving to the next. "\
             "Never answer for the human. "\
-            "If you unsure what the human meant, ask again."
+            f"If you unsure what the human meant, ask again. {data_collection['topic_restriction']}"
 
         n_questions = len(data_collection["questions"])
         if n_questions == 1:
