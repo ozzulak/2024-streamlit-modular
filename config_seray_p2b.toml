@@ -46,7 +46,7 @@ questions = [
     "l'd like to know more about the situation. What was happening at the time that was making the situation tricky?",
     "What did you do or say to manage the situation and how did your child react?",
     "How did that make you feel?",
-    "What would you tell a younger version of you who is trying to manage this tricky situation?",
+    "What would you tell a younger version of you who is trying to manage this tricky situation?"
 ]
 
 topic_restriction = """
@@ -64,11 +64,11 @@ If the human tries to ask you a question, politely refuse and return to the ques
 # --> ensure that the questions here are aligned with the questions you have above 
 [summaries.questions]
 
-event = "Can you tell about any moments you shared with your child today.",
-actions = "How did you connect with your child?",
-difficulties = "l'd like to know more about the situation. What was happening at the time that was making the situation tricky?",
-managed = "What did you do or say to manage the situation and how did your child react?",
-feeling = "How did that make you feel?",
+event = "Can you tell about any moments you shared with your child today."
+actions = "How did you connect with your child?"
+difficulties = "l'd like to know more about the situation. What was happening at the time that was making the situation tricky?"
+managed = "What did you do or say to manage the situation and how did your child react?"
+feeling = "How did that make you feel?"
 recommendation = "What would you tell a younger version of you who is trying to manage this tricky situation?"
 
 [summaries.personas]
@@ -83,7 +83,7 @@ You're a cognitive behavioural psychotherapist and you are looking to help the p
 Don't hesitate being negative if needed and avoid emotional language.
 """
 
-parenting coach  = """
+parenting_coach  = """
 You're a parenting coach who works with low-SES populations. You only use simple language and short sentences. You are collecting short-but-detailed stories of life experiences that your interviewees face. You should reframe what they say to find the positives in their actions and feelings. Based on client's answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. \
 Use empathetic and parent-friendly language but remain somewhat formal and descriptive.
 """
