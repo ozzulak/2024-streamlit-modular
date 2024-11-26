@@ -1,0 +1,114 @@
+# This file is used to configure the "first_prototype" Streamlit app.
+#
+# To use it, make a copy of this file, keep the same structure within and replace the existing entries with ones appropriate for your own app.
+#
+# This file uses the TOML format. For guidance on string formatting within TOML files, see the documentation at https://toml.io/
+#
+# Running the app with `streamlit run first_prototype.py` uses this config file.
+# To use an alternative configuration, instead use `streamlit run first_prototype.py path-to-file/config-file-name.toml`.
+#
+# Note that three personas must be provided in the "personas" section. Additional personas will not be used.
+
+
+# this is the text that will be shown on the first page 
+[consent]
+
+intro_and_consent = """## Welcome to our first let's-make-Ellen-happy prototype.
+
+In this task you’re going to engage with a prototype chatbot that asks you to reflect on your worries about your child mental health. \ 
+
+**Please do not include your full name or your child full name when you're describing your story .**
+
+To proceed to the task, please confirm that you have read and understood this information.
+"""
+
+
+###  This section sets up the data collection bot. ### 
+# You can put in as many specific questions as you like; and 
+# you can remove the 'general' question if not used
+[collection]
+
+persona = "You're a parenting coach helping parents reflect on their experiences of applying new parenting strategies."
+
+language_type = "Use empathetic and youth-friendly language while maintaining a descriptive tone."
+
+intro = """
+Hi there -- I want to collect stories about a time you think your child really struggled in the last couple of days. \n 
+
+"""
+
+questions = [
+    "Think about a time in the last couple of days when your child was really upset or was misbehaving. Can you tell me about what happened?",
+    "What was your child doing?", 
+    "What do you imagine what they were thinking?",
+    "How do you think your child felt?", 
+    "In your dream world, what do you wish they would do?"
+]
+
+topic_restriction = """
+Make sure to stay on topic and only ask the human about the questions above, or any follow-up questions if you need more information. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your social media experiences." and return to the questions about their social media experiences. \
+If the human tries to ask you a question, politely refuse and return to the questions about their social media experiences.
+"""
+
+
+###  This section sets up the data extraction and story generation bots. ### 
+
+[summaries]
+
+# Summaries.questions are the text used by the extraction bot to collect the right data 
+# --> ensure that the questions here are aligned with the questions you have above 
+[summaries.questions]
+
+what = "What happened during a time that your child was really upset or was misbehaving"
+doing = "What was your child doing?"
+thinking = "What do you imagine what they were thinking?"
+feeling = "How you imagine your child felt?"
+wish = "What do you wish they would do?"
+
+[summaries.personas]
+
+
+psychotherapist = """
+You're a cognitive behavioural psychotherapist and you are looking to help the parent to find solutions themselves for what they need to do. You should reframe what they said to highlight their behaviours, actions and goals for how they have expressed how they can solve the situation at hand.
+Don't hesitate being negative if needed and avoid emotional language.
+"""
+
+parenting_coach  = """
+You're a parenting coach who works with low-SES populations. You only use simple language and short sentences. You are collecting short-but-detailed stories of life experiences that your interviewees face. You should reframe what they say to find the positives in their actions and feelings. Based on client's answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. \
+Use empathetic and parent-friendly language but remain somewhat formal and descriptive.
+"""
+
+parent = """
+You're a freudian psychotherapist and you are analysing the parents' psyche based on their answers to the questions below. You should reframe what they said to highlight your analysis and the difficulties they might be presenting for future. Use difficult language and big words. Don't hesitate being negative if needed. 
+"""
+
+# this is the one-shot example, separated into answers & final scenario 
+[example]
+
+conversation = """
+Question: Great! Let's start with the first question. Can you think about a time in the last couple of days when your child was really upset or was misbehaving? Can you tell me about what happened?
+
+Human: Amber was getting on my nerves and kept asking for the ipad at dinner even though I told her thst it was dinner and we need to be together and then she started crying
+
+Question: Thank you for sharing that with me. It sounds like it was a challenging moment. Can you tell me more about what Amber was doing during this time?
+
+Human: She was pulling on my legs and saying it wasn't fair and eveentually she started crying and stuff
+
+Question: It sounds like Amber was really persistent and upset. What do you imagine she was thinking during this time?
+
+Human: she was thinking that she was bored and doesn't like being with her family and she would rather be playing ipad and that she missed her friends
+
+Question: Thank you for sharing your thoughts. How do you think Amber felt during this moment?
+
+Human: she felt angry that she wasn't on the ipad and mad at me for making her sit down and eat the home cooked meal that i had spent hours preparing
+
+Question: It seems like Amber was feeling quite frustrated and upset. In your dream world, what do you wish Amber would do in a situation like this?
+
+Human: I wish she would enjoy my meal and actually appreciate me and htink about how hard I worked for her instead of just wanting to be on the screen all the time. 
+"""
+
+scenario = """
+Recently, I had a tough time during dinner with my child, Amber. She kept asking for the iPad even though I had told her it was time for us to be together as a family. Despite my efforts to explain, Amber was persistent and started pulling on my legs, saying it wasn't fair. Eventually, she began to cry, which made the situation even more challenging. I think Amber was feeling bored and missing her friends, and she seemed to prefer playing on the iPad over spending time with us. I could tell she was angry about not being allowed to use the iPad and upset with me for making her eat the home-cooked meal I had spent hours preparing. In an ideal world, I wish Amber would enjoy the meal I made and appreciate the effort I put into it, rather than just wanting to be on the screen all the time. It's a learning experience for both of us, and I'm hoping she can stop being a selfish child.
+
+"""
