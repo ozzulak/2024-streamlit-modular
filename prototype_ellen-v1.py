@@ -667,7 +667,7 @@ def stateAgent():
     """
 
     # testing will ensure using dummy data (rather than user-data collection) to simplify development / testing of later parts of the flow. 
-    testing = True
+    testing = False
 
     # keep track of where we are, if testing
     if testing:
@@ -676,9 +676,9 @@ def stateAgent():
 
     # Main loop -- selecting the right 'agent' each time: 
     if st.session_state['agentState'] == 'start':
-            # getData(testing)
+            getData(testing)
             # summariseData(testing)
-            reviewData(testing)
+            # reviewData(testing)
     elif st.session_state['agentState'] == 'summarise':
             summariseData(testing)
     elif st.session_state['agentState'] == 'review':
