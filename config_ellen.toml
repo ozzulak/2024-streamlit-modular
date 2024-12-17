@@ -33,7 +33,7 @@ persona = "You're a parenting coach helping parents reflect on their experiences
 language_type = "Use empathetic and youth-friendly language while maintaining a descriptive tone."
 
 intro = """
-Hi there -- I want to collect stories about a time you think your child really struggled in the last couple of days. \n 
+Hi there -- I want to collect stories about a time you think your child really struggled in the last couple of days. \n  \n Let me know when you're ready to start.
 
 """
 
