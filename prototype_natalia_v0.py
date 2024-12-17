@@ -285,12 +285,12 @@ def summariseData(testing = False):
             st.markdown(":red[DEBUG active -- using testing messages]")
 
         st.divider()
-        st.chat_message("ai").write("Seems I have everything! Let me try to summarise what you said in three scenarios. \n See you if you like any of these! ")
+        st.chat_message("ai").write("¡Parece que tengo todo! Déjame intentar resumir lo que dijiste en tres escenarios. \n ¡Dime si te gusta alguno de estos! ")
 
 
         ## can't be bothered to set up LLM stream here, so just showing progress bar for now  
         ## this gets manually updated after each scenario
-        progress_text = 'Processing your scenarios'
+        progress_text = 'Procesando tus escenarios'
         bar = st.progress(0, text = progress_text)
 
     # Arrange answers into dictionary
@@ -341,7 +341,7 @@ def summariseData(testing = False):
     st.session_state["agentState"] = "review"
 
     # we need the user to do an action (e.g., button click) to generate a natural streamlit refresh (so we can show scenarios on a clear page). Other options like streamlit rerun() have been marked as 'failed runs' on Langsmith which is annoying. 
-    st.button("I'm ready -- show me!", key = 'progressButton')
+    st.button("¡Estoy listo, muéstrame!", key = 'progressButton')
 
 
 def testing_reviewSetUp():
@@ -430,8 +430,8 @@ def scenario_selection (popover, button_num, scenario):
             st.session_state['scenario_judged'] = True
 
 
-        st.markdown(f"How well does the scenario {button_num} capture what you had in mind?")
-        sliderOptions = ["Not really ", "Needs some edits", "Pretty good but I'd like to tweak it", "Ready as is!"]
+        st.markdown(f"¿Qué tan bien captura el escenario {button_num} lo que tenías en mente?")
+        sliderOptions = ["No realmente", "Necesita algunos ajustes", "Bastante bien, pero me gustaría ajustarlo", "¡Listo tal cual!"]
         slider_name = f'slider_{button_num}'
 
         st.select_slider("Judge_scenario", label_visibility= 'hidden', key = slider_name, options = sliderOptions, on_change= sliderChange, args = (slider_name,))
@@ -440,10 +440,10 @@ def scenario_selection (popover, button_num, scenario):
         c1, c2 = st.columns(2)
         
         ## the accept button should be disabled if no rating has been provided yet
-        c1.button("Continue with this scenario 🎉", key = f'yeskey_{button_num}', on_click = click_selection_yes, args = (button_num, scenario), disabled = st.session_state['scenario_judged'])
+        c1.button("Continuar con este escenario 🎉", key = f'yeskey_{button_num}', on_click = click_selection_yes, args = (button_num, scenario), disabled = st.session_state['scenario_judged'])
 
         ## the second one needs to be accessible all the time!  
-        c2.button("actually, let me try another one 🤨", key = f'nokey_{button_num}', on_click= click_selection_no)
+        c2.button("En realidad, déjame probar con otro 🤨", key = f'nokey_{button_num}', on_click= click_selection_no)
 
 
 
@@ -549,7 +549,7 @@ def reviewData(testing):
 
 
         ## if we haven't selected scenario, let's give them a choice. 
-        st.chat_message("ai").write("Please have a look at the scenarios above. Use the 👍 and 👎  to leave a rating and short comment on each of the scenarios. Then pick the one that you like the most to continue. ")
+        st.chat_message("ai").write("Por favor, revisa los escenarios de arriba. Usa 👍 y 👎 para dejar una calificación y un comentario breve en cada uno de ellos. Luego, elige el que más te guste para continuar.")
      
         b1,b2,b3 = st.columns(3)
         # set up the popover buttons 
@@ -589,8 +589,8 @@ def finaliseScenario():
 
     # if scenario is judged as 'ready' by the user -- we're done
     if package['judgment'] == "Ready as is!":
-        st.markdown(":tada: Yay! :tada:")
-        st.markdown("You've now completed the interaction and hopefully found a scenario that you liked! ")
+        st.markdown(":tada: ¡Yay! :tada:")
+        st.markdown("¡Has completado la interacción y, con suerte, encontrado un escenario que te haya gustado!")
         st.markdown(f":green[{package['scenario']}]")
     
     
@@ -600,7 +600,7 @@ def finaliseScenario():
         original = st.container()
         
         with original:
-            st.markdown(f"It seems that you selected a story that you liked ... but that you also think it :red[{package['judgment']}]. You can either edit this below, or ask the AI to adapt it for you.)")
+            st.markdown(f"Parece que seleccionaste una historia que te gustó... pero también piensas que :red[{package['judgment']}]. Puedes editarla a continuación o pedirle a la IA que la adapte por ti.")
 
             st.divider()
             st.markdown("### Adapt yourself ✍️ :")
