@@ -45,13 +45,22 @@ st.markdown("""### What now?
 
 The rest of this system is created to help you make all three steps of the template, one at a time. 
 
-1. First, we will look at identifying the *questions* you think the bot should be asking, give some answers that mirror what you think your users could say; and see how the narratives shape up (or not). This then also creates your *answer set*. Please do expect that this *could be an iterative process, as getting the questions right is what makes or breaks your micro-narrative bot*!
+1. First, we will look at identifying the *questions* you think the bot should be asking 
+   ➡ **💡 Design your question** 
 
-2. Second, we will then allow you to try your questions & suggested answer set to test your three *personas* you would like your system to use. 
+2. Second, you can try out how these questions would work in the bot (and collect a sample dialogue in the process)  ➡ **🧪 Test data collection**
 
-3. Third, you will get to experience a test run of how your bot could work and get the underlying config file ... Note that in ~ weeks we should be also able **spit out the python code that you can run on your own server** (-- this still in progress""")
+3. Third, you can use this sample dialogue to see how the narratives shape up based on your questions (or not). This then also creates your *answer set*, which is the key example of how to combine answers to narratives in your bot  ➡ **⚙️ Build your bot**
+
+_Please do expect that the steps 1-3  *could be an iterative process, as getting the questions right is what makes or breaks your micro-narrative bot*!_
+
+4. After you are happy with your questions and answer set, you can move onto to test your three *personas* you would like your system to use ➡ **🕵🏻‍♀️ Finetune your personas**
+
+5. Finally, the system will write out the three main parts of the configuration you've created (i.e., your questions, example answer set, personas) so you can copy & paste these into your config file ➡ **🚀 Export your config**
+
+""")
 
 st.divider()
 
-st.markdown("""You can continue by clicking on **🤖 Build your bot** in the side bar. """)
+st.markdown("""You can continue by clicking on **💡 Design your questions** in the side bar. """)
 
