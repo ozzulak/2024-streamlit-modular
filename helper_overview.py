@@ -45,18 +45,27 @@ st.markdown("""### What now?
 
 The rest of this system is created to help you make all three steps of the template, one at a time. 
 
-1. First, we will look at identifying the *questions* you think the bot should be asking 
-   ➡ **💡 Design your question** 
+1. Build your **questions**: 
+    - First, we will look at identifying the questions you think the bot should be asking  
+    ➡ **💡 Design your question** 
 
-2. Second, you can try out how these questions would work in the bot (and collect a sample dialogue in the process)  ➡ **🧪 Test data collection**
+    - You can then try out how these questions would work in the bot (and collect a sample dialogue in the process)  
+    ➡ **🧪 Test data collection**
 
-3. Third, you can use this sample dialogue to see how the narratives shape up based on your questions (or not). This then also creates your *answer set*, which is the key example of how to combine answers to narratives in your bot  ➡ **⚙️ Build your bot**
+2. Build your **answer set**:  
+    You can use the sample dialogue from previous steps to see how the narratives shape up based on your questions (or not) ... and then use this outcome as your 'answer set'      
+    ➡ **⚙️ Build your bot**
 
-_Please do expect that the steps 1-3  *could be an iterative process, as getting the questions right is what makes or breaks your micro-narrative bot*!_
 
-4. After you are happy with your questions and answer set, you can move onto to test your three *personas* you would like your system to use ➡ **🕵🏻‍♀️ Finetune your personas**
+_Please do expect that the steps 1-2  *could be an iterative process, as getting the questions right is what makes or breaks your micro-narrative bot*!_
 
-5. Finally, the system will write out the three main parts of the configuration you've created (i.e., your questions, example answer set, personas) so you can copy & paste these into your config file ➡ **🚀 Export your config**
+3. Build your **personas**:  
+   After you are happy with your questions and answer set, you can move onto to test your three *personas* you would like your system to use   
+   ➡ **🕵🏻‍♀️ Finetune your personas**
+
+4. Get your configuration:  
+    Finally, the system will write out the three main parts of the configuration you've created (i.e., your questions, example answer set, personas) so you can copy & paste these into your config file   
+    ➡ **🚀 Export your config**
 
 """)
 
