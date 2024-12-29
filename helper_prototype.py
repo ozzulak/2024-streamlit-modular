@@ -6,70 +6,15 @@ from langsmith import Client
 from langsmith import traceable
 import os
 
-## get all the prompts needed 
 from helper_prompts import *
 
-
-
-
-st.set_page_config(page_title="Step 1: design your questions", page_icon="🤷🏻‍♂️")
-# st.title("Step 1: Design your questions")
 
 # Langsmith set-up 
 smith_client = Client()
 
+st.set_page_config(page_title="Step 3: design your example scenario", page_icon="🤷🏻‍♂️")
+# st.title("Step 1: Design your questions")
 
-def init_package():
-    # we are setting up a single 'package' that will include all the information needed for config file
-    st.session_state['package'] = {
-        'stage' : 'step1',
-        'questions_intro': "a time you were able to connect with your child today. Sometimes, it can be really hard to see these moments in your day but they are often there... even if they are really, really small!",
-        'questions_num': 5,
-        'questions_str' : init_questions,
-        'current_example_set' : init_exampleSet,
-        'new_example_set': "",
-        'persona': init_persona,
-        'convo': "Please update your questions on the left. ",
-        'personas' : {
-            'p1' : "",
-            'p2' : "",
-            'p3' : ""
-        }
-    }
-    st.session_state['ready'] = False
-
-
-# init if this is run for the first time
-if 'package' not in st.session_state:
-    init_package()
-
-@traceable
-def extractChoices(json_keys, questions, msgs):
-    """Uses bespoke LLM prompt to extract answers to given questions from a conversation history into a JSON object. 
-
-    Arguments: 
-    msgs (str): conversations history to extract from -- this can be streamlit memory, or a dummy variable during testing
-    json_keys (str): a list of keys, likely being 'Q1', 'Q2', 'Q3' ... 
-    questions (str): a list of questions, starting with Q1, Q2 ... 
-
-    """
-
-    ## set up our extraction LLM -- low temperature for repeatable results
-    extraction_llm = ChatOpenAI(temperature=0.1, model="gpt-4o", openai_api_key=st.secrets.openai_api_key)
-
-    
-    extraction_template = PromptTemplate(input_variables=["json_keys", "questions", "conversation_history"], template = extraction_prompt)
-
-    ## set up the rest of the chain including the json parser we will need. 
-    json_parser = SimpleJsonOutputParser()
-    extractionChain = extraction_template | extraction_llm | json_parser
-
-    
-    # allow for testing the flow with pre-generated messages -- see testing_prompts.py
-    extractedChoices = extractionChain.invoke({"conversation_history" : msgs, "json_keys" : json_keys, "questions" : questions})
-    
-
-    return(extractedChoices)
 
 
 
@@ -93,44 +38,10 @@ def create_scenario(history,example_set,persona):
 
 
 
-## called once the "update questions and persona" button is pressed: 
-def update_qp():
-    qs = st.session_state['questions'] 
-    nq = st.session_state['questions_num']
-    
-    # update the questions in the package    
-    st.session_state.package['questions_str'] = qs  # save current questions
-    st.session_state.package['questions_num'] = nq
-    st.session_state.package['questions_intro'] = st.session_state['questions_intro']
-
-    # update the conversation: 
-    
-    lines = qs.splitlines()
-    
-    if len(lines) < nq:
-        st.session_state.package['convo'] = "Add more questions on the left please!"
-    else: 
-        
-        
-        convo = ""
-        ## build the conversation history string and questions string 
-        for n in range(1, nq + 1):    
-            convo += (f"Q{n}: {lines[n-1].strip()} \nHuman:  \n \n") 
-        
-        # now insert to be presented  
-        st.session_state.package['convo'] = convo
 
 def setupSidebar(): 
     ## set up side bar content
-    st.sidebar.button("Update questions and persona", key = 'q_updated', on_click = update_qp)
-
-    st.sidebar.text_area("I want to collect stories about ...", key = 'questions_intro', value = st.session_state.package['questions_intro'], height = 15)
-
-    st.sidebar.text_area("questions that bot should ask -- one per line", value = st.session_state.package["questions_str"], key = "questions", height = 200)
-
-    st.sidebar.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6], value = st.session_state.package["questions_num"], key = "questions_num")
-
-    st.sidebar.text_area("Persona", value = st.session_state.package["persona"], key = "persona", height = 200)
+    st.sidebar.markdown("Your goal for this page are to finalise your example answers and create a scenario based on them. This will be guiding all the narrative creation that your bot does in the future, so is critical!")
 
 
 def toggle_ready():
@@ -150,31 +61,25 @@ st.markdown(style, unsafe_allow_html=True)
 
 setupSidebar()
 
-# load up initial questions
-if 'firstRun' not in st.session_state:
-    st.session_state['firstRun'] = True
-    update_qp()
-    
-
 
 ## set up basic structure of the page: 
 # Prepare two tabs, one tab to explore in, the other to finalise and move on. 
-tab1, tab2, tab3 = st.tabs(['👷‍♀️ Build / test your Qs', '🔎 Update your example', '🔮 See current configuration'])
+tab1, tab2, tab3 = st.tabs(['👷‍♀️ Build your example', '🔎 Update your example', '🔮 See current configuration'])
 
 
 ## First working with tab1 -- helping the user identify their questions
 with tab1: 
-    st.write("""Hello and welcome. This first step will help you find the right questions for micro-narrative bot. You can do this in three steps: 
-1. Start by listing your questions in the sidebar on the left. 
-2. Provide sample answers in the expander below. 
-3. Check how a resulting narrative could look like by pressing Ready""")
+    st.write("""Great, you've decided on questions and tried how they work. This next step allows you to test your example answers and create an example scenario for your bot.
+1. Check the 'extracted' dialogue from the previous step, and adapt if needed.  
+2. Test how a resulting narrative could look like by pressing Ready
+3. Finalise and update the example scenario in the next tab.""")
 
     exp_qs = st.expander("**Insert your example answers here and press Ready when done**", expanded = False)
     exp_llm = st.container()  # insert container to show the LLM in
 
 # write the recent value of convo 
 with exp_qs:
-    st.text_area("fill in your conversation here:", value = st.session_state.package['convo'], height= 400, key = "convo_history", label_visibility= "hidden")
+    st.text_area("fill in your conversation here:", value = st.session_state.package['convo_extract'], height= 400, key = "convo_history", label_visibility= "hidden")
     st.button("Ready!", key = "ready_llm")
 
 
@@ -183,9 +88,9 @@ if 'ready_llm' in st.session_state:
     ## now wait for it to be pressed:
     if st.session_state['ready_llm']:
 
-        # once pressed, let's save the current convo & persona first: 
-        st.session_state.package['convo'] = st.session_state['convo_history']
-        st.session_state.package['persona'] = st.session_state['persona']
+        # once pressed, let's save the current convo  first. Note that we are using the persona from the package directly: 
+        st.session_state.package['convo_extract'] = st.session_state['convo_history']
+        st.session_state['persona'] = st.session_state.package['persona']
 
         # load up the data from package: 
         lines = st.session_state.package['questions_str'].splitlines()

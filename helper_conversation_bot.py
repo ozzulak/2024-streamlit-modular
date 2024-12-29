@@ -101,11 +101,15 @@ def convo_finished():
     #build the conversation history
     for msg in msgs.messages:
         if msg.type == "ai":
-            history += f"AI: {msg.content}\n\n"
+            if "FINISHED" not in msg.content:
+                history += f"AI: {msg.content}\n\n"
         else:
             history += f"Human: {msg.content}\n\n"
 
     st.expander("Conversation history", expanded = False).write(history)
+
+    # add this as the latest conversation to the session state
+    st.session_state.package['convo'] = history
 
     # build the extraction chain
     json_keys, questions = create_JSON_keys()
@@ -117,10 +121,17 @@ def convo_finished():
     # st.expander("Extracted data", expanded = False).write(extracted_data)
 
     with st.expander("Extracted data", expanded = True):
+        extraction_text = ""
         for key, value in extracted_data.items():
             question = questions[json_keys.index(key)]
+            
             st.write(f"*{question}*")
             st.write(f"Human: **{value}**")
+
+            extraction_text += f"{question}\n"
+            extraction_text += f"Human: {value}\n"
+        
+        st.session_state.package['convo_extract'] = extraction_text
 
 
     st.button("Reset conversation", key = "reset_convo", on_click = reset_conversation)

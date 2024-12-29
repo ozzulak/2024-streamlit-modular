@@ -93,17 +93,12 @@ else:
     # exp_stories = st.expander("Resulting stories")
     
 
-    exp_history, exp_persona, exp_stories, exp_config = st.tabs(["🗣 Insert user answers", "🧞 Persona definitions", "📚 Resulting stories", "🔮 Current config"])
+    exp_history, exp_persona, exp_stories = st.tabs(["🗣 Insert user answers", "🧞 Persona definitions", "📚 Resulting stories", ])
 
     with exp_history:
         ## build the conversation history string and questions string 
         if not st.session_state['ready']: 
-            convo = ""
-            qs = st.session_state.package['questions_str']
-            lines = qs.splitlines()
-            nq = st.session_state.package['questions_num']
-            for n in range(1, nq + 1):
-                convo += (f"{lines[n-1].strip()} \nHuman:  \n \n") 
+            convo = st.session_state.package['convo_extract'] 
         else:
             if 'persona_user_history' in st.session_state: 
                 convo = st.session_state['persona_user_history']
@@ -147,25 +142,3 @@ else:
                     st.header("Scenario 3") 
                     st.write(st.session_state.temp_stories['p3'])
         
-
-    with exp_config: 
-        
-        ## build the conversation history string and questions string 
-        lines = st.session_state.package['questions_str'].splitlines()
-        nq = st.session_state.package['questions_num']
-        qs = ""
-        for n in range(1, nq + 1):    
-            qs += (f"- Q{n}: {lines[n-1].strip()}\n \n") 
-        
-
-        st.write("This tab just shows you what configuration your bot has right now.")
-        st.divider()
-
-        st.markdown(f"**Your questions:** \n")
-        st.write(qs)
-        st.divider()
-        st.markdown(f"**Your one-shot example:** \n")
-        st.write(st.session_state.package['current_example_set'])
-        st.divider()
-        st.markdown(f"**Your current personas:** \n")
-        st.write(st.session_state.package['personas'])
