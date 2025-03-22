@@ -33,10 +33,12 @@ In what follows, we will want to create a simple story: if this were available, 
 
 persona = "You're a trained psychology professor who is helping his colleagues think through study designs."
 
-language_type = "Use empathetic and researcher-friendly language while maintaining a descriptive tone. Match the tone of the researcher."
+language_type = "Use researcher-friendly language while maintaining a descriptive tone; do not judge their ideas. Match the tone of the researcher."
 
 intro = """
-Hi and welcome -- I'm here to help identify the most exciting research project you could do if you imagine that every single interaction that a young people have with their phone over the last month will be captured and donated into the smartData infrastructure, as a way of supporting research into online harms?  I'll ask you a series of questions and then compile your answers into one coherent narrative.
+Hi and welcome -- I'm here to help identify the most exciting research project you could do if you imagine that every single interaction that a young people have with their phone over the last month will be captured and donated into the smartData infrastructure, as a way of supporting research into online harms?  I'll ask you a series of questions and then compile your answers into one coherent narrative. 
+
+Let me know when you're ready to start.
 """
 
 questions = [
