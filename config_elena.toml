@@ -13,13 +13,14 @@
 # this is the text that will be shown on the first page 
 [consent]
 
-intro_and_consent = """## Welcome to our first let's-make-Ellen-happy prototype.
+intro_and_consent = """## Welcome to our the first DataDonation exploration study bot.
 
-In this task you’re going to engage with a prototype chatbot that asks you to reflect on times when you had to react to email or text messages you found uncomfortable.  \ 
+In this task you’re going to engage with a prototype chatbot. It will ask you imagine how you, as a researcher, could benefit from datasets data donations that young provide. 
 
-**Please do not include any confidential information or sensitive data.**
+*How could this look like?* 
+The data donation platform will hold data from hundreds of youth, who will have provided time-series data on their social media use, the websites they visit, as well as potentially self-report of their mood and wellbeing.
 
-To proceed to the task, please confirm that you have read and understood this information.
+In what follows, we will want to create a simple story: if this were available, how could you use it? What is the most powerful study you can imagine you would love to run if you had this data; but cannot run without it?
 """
 
 
