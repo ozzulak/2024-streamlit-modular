@@ -83,7 +83,7 @@ with collecting_qs:
 
     st.text_area("Questions to ask -- one per line", value = st.session_state.package["questions_str"], key = "questions", height = 140)
 
-    st.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6], value = st.session_state.package["questions_num"], key = "questions_num")
+    st.select_slider("How many of the Qs above should the bot ask? \n(first N will be used)", options = [ 3, 4, 5, 6, 7, 8], value = st.session_state.package["questions_num"], key = "questions_num")
 
     st.button("I've updated questions & want to test them", key = 'q_updated', on_click = update_qp)
 
