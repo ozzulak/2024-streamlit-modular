@@ -23,7 +23,7 @@ def init_package():
     st.session_state['package'] = {
         'stage' : 'step1',
         'questions_intro': "a time you were able to connect with your child today. Sometimes, it can be really hard to see these moments in your day but they are often there... even if they are really, really small!",
-        'questions_num': 5,
+        'questions_num': 7,
         'questions_str' : init_questions,
         'current_example_set' : init_exampleSet,
         'new_example_set': "",
