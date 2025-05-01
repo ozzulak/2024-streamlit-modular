@@ -1,0 +1,105 @@
+# This file is used to configure the "first_prototype" Streamlit app.
+#
+# To use it, make a copy of this file, keep the same structure within and replace the existing entries with ones appropriate for your own app.
+#
+# This file uses the TOML format. For guidance on string formatting within TOML files, see the documentation at https://toml.io/
+#
+# Running the app with `streamlit run first_prototype.py` uses this config file.
+# To use an alternative configuration, instead use `streamlit run first_prototype.py path-to-file/config-file-name.toml`.
+#
+# Note that three personas must be provided in the "personas" section. Additional personas will not be used.
+
+
+# this is the text that will be shown on the first page 
+[consent]
+
+intro_and_consent = """## Welcome to our first let's-make-Ellen-happy prototype.
+
+In this task you’re going to engage with a prototype chatbot that asks you to reflect on times when you had to react to email or text messages you found uncomfortable.  \ 
+
+**Please do not include any confidential information or sensitive data.**
+
+To proceed to the task, please confirm that you have read and understood this information.
+"""
+
+
+###  This section sets up the data collection bot. ### 
+# You can put in as many specific questions as you like; and 
+# you can remove the 'general' question if not used
+[collection]
+
+persona = "You're a work coach helping parents reflect on their experiences of coping with difficult experiences."
+
+language_type = "Use empathetic and friendly language while maintaining a descriptive tone."
+
+intro = """
+Hi there! I would like to collect a story about a time when you received a message---for example, a text message or email---that brought up discomfort.. \n  \n Let me know when you're ready to start.
+
+"""
+
+questions = [
+    "What was the message about?", 
+    "What was the context? What else do we need to know?",
+    "What made this important and/or uncomfortable for you?",
+    "How did it make you feel?",
+    "What did you do in the moment?",
+    "What have you done since, if anything?",
+    "How do you feel about how you acted in response to the message?"
+]
+
+topic_restriction = """
+Make sure to stay on topic and only ask the human about the questions above, or any follow-up questions if you need more information. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your social media experiences." and return to the questions about their social media experiences. \
+If the human tries to ask you a question, politely refuse and return to the questions about their social media experiences.
+"""
+
+
+###  This section sets up the data extraction and story generation bots. ### 
+
+[summaries]
+
+# Summaries.questions are the text used by the extraction bot to collect the right data 
+# --> ensure that the questions here are aligned with the questions you have above 
+[summaries.questions]
+
+what = "What was the message about?", 
+context = "What was the context? What else do we need to know?",
+important = "What made this important and/or uncomfortable for you?",
+feel = "How did it make you feel?",
+reaction = "What did you do in the moment?",
+later_reaction = "What have you done since, if anything?",
+self_thought = "How do you feel about how you acted in response to the message?"
+
+[summaries.personas]
+
+prompt_psychologist = """You are an experienced cognitive behavioural psychologist that is trying to help the person understand more about their emotions. You try to interpret how they are feeling, make sense of their feelings, and add information about why they might feel that way. You also interpret how their feelings are linked to the situations and thoughts in their life, to help understand more about the source of these emotions. Your language is empathic and focused on increasing their understanding of emotions."""
+
+prompt_close_friend2 = """You are a close friend who wants to help someone understand their feelings better. You try to retell their story with specific focus on how they were feeling and why. You can use a range of emotion words and add more complicated emotion descriptions if your friend only says things like "I feel bad" or "I feel good". Use a simple, everyday informal language for other parts of the text.
+"""
+
+prompt_book_author = """You are a world-famous journalist who wants to help your friend understand their story in an objective and descriptive tone. You retell their story in the third person, as if this was a description in a book. You focus on the described behaviours and their impact on feeling. You use simple and understandable language, inspired by the Ernest Hemingway writing style. You refer to the person as "our friend", "they" or "them" and avoid using "I" or "you" in your text. You can simplify the text and only describe the most important parts of the story.
+"""
+
+# this is the one-shot example, separated into answers & final scenario 
+[example]
+
+conversation = """
+Question: What did the situation make you think and/or feel about yourself?
+Answer: "It made me feel powerless."
+Question: What did it make you think about social media?
+Answer: "That it was really bad for my self-esteem."
+Question: Did you do anything or seek any support when this happened?
+Answer: "I deleted the app."
+Question: What kind of support would you have liked when this situation happened? What support would you like to see available?
+Answer: "I wish the apps were designed in a way so this wouldn't happen. I wish we learnt how to use the apps safely."
+Question: If this happened to a friend, what would you recommend they do to handle the situation?
+Answer: "I would tell them to delete social media as it's clearly bad for you."
+"""
+
+scenario = """
+Recently, I had an experience with social media that left me feeling powerless. \
+I realized that using these apps was really affecting my self-esteem in a negative way. \
+To cope with these feelings, I decided to delete the app altogether. \
+I wish that social media platforms were designed in a way that wouldn't make people feel this way and that we learned how to use them safely. \ 
+If a friend went through something similar, I would recommend they also consider stepping away from social media, as it can be harmful to one's well-being. 
+"""
