@@ -13,7 +13,7 @@
 # this is the text that will be shown on the first page 
 [consent]
 
-intro_and_consent = """## Welcome to our parent-chatbot.
+intro_and_consent = """## Welcome to our parent-chatbot -- testing ground for our warchild foundation call. 
 
 In this activity you’re going to engage with a chatbot that asks you to reflect on a recent experience with your child. \
 Please answer the questions in relation to trying out new or different parenting strategies as you engage with the Parenting Smart course. \
