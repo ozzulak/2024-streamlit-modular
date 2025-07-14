@@ -92,17 +92,17 @@ Use empathetic and parent-friendly language but remain somewhat formal and descr
 [example]
 
 conversation = """
-Q1: What would be the best case scenario for your child's bedtime routine? What would it look like if everything went perfectly from start to finish?
-Human: ideally, he would brush his teeth when I ask him to, and around 7:30 then he is supposed to go to bed and has a bit of a read for ten minutes or so with me in the room so he can settle. Then it's light out and he's meant to go off to sleep without coming downstairs again
-Q2: Thinking of a recent time that things went wrong, what actually did happen? How was this different to what you just described?
-Human: He had been getting annoyed all afternoon, I think he had been in trouble at school, which got him annoyed. Then he just wouldn't brush his teeth when asked. Then he just kept coming down all night to talk to me and ask me to go back to his room until he falls asleep again. But I didn't want to stay with him all night because I had lots of work to do for the next day
-Q3: Is there anything I should know that helps us to understand the situation better? Was anything going on for you or your child that might have had an influence on that night?
-Human: He has ben getting in trouble more at school
-Q4: When you think back, what was the most challenging part of the night for you? What made it hard?
-Human: Just him being annoyed and not doing what he was told
-Q5: Did you try anything to help? What effect did this have? Will you try this again, or try something different?
-Human: I didn't try anything, I was exhausted and he was annoyed. Things always go badly when this happens. Next time I might try to have a calm talk with him earlier in the day when I see that he's annoyed, because sometimes that can calm him down, whilst I still have the energy. 
-Q6: Was there anything particularly surprising about that night? Does this happen often? Is it always the same problem, time after time?
+Question: What would be the best case scenario for your child's bedtime routine? What would it look like if everything went perfectly from start to finish?
+Answer: ideally, he would brush his teeth when I ask him to, and around 7:30 then he is supposed to go to bed and has a bit of a read for ten minutes or so with me in the room so he can settle. Then it's light out and he's meant to go off to sleep without coming downstairs again
+Question: Thinking of a recent time that things went wrong, what actually did happen? How was this different to what you just described?
+Answer: He had been getting annoyed all afternoon, I think he had been in trouble at school, which got him annoyed. Then he just wouldn't brush his teeth when asked. Then he just kept coming down all night to talk to me and ask me to go back to his room until he falls asleep again. But I didn't want to stay with him all night because I had lots of work to do for the next day
+Question: Is there anything I should know that helps us to understand the situation better? Was anything going on for you or your child that might have had an influence on that night?
+Answer: He has ben getting in trouble more at school
+Question: When you think back, what was the most challenging part of the night for you? What made it hard?
+Answer: Just him being annoyed and not doing what he was told
+Question: Did you try anything to help? What effect did this have? Will you try this again, or try something different?
+Answer: I didn't try anything, I was exhausted and he was annoyed. Things always go badly when this happens. Next time I might try to have a calm talk with him earlier in the day when I see that he's annoyed, because sometimes that can calm him down, whilst I still have the energy. 
+Question: Was there anything particularly surprising about that night? Does this happen often? Is it always the same problem, time after time?
 Human: Always the same"
 """
 
