@@ -16,7 +16,7 @@
 # This is the text that will be shown on the first page
 [consent]
 
-intro_and_consent = """## 🎉 Welcome to our Let's-make-Abi and all -happy prototype! 🎉
+intro_and_consent = """## 🎉 Welcome to our Let's make Dave happy prototype! 🎉
 
 \n In this task, you’re going to help us generate a scenario that will make Dave happy. Part of what makes dr Preece happy is having a consent placeholder. 
 
