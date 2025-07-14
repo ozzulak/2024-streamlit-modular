@@ -18,7 +18,7 @@
 
 intro_and_consent = """## Welcome to a Sleep in ADHD study bot. 
 
-LAURENCE --- FIX THE BELOW -- LEAVING AS AN EXAMPLE FOR NOW.
+LAURENCE --- FIX THE BELOW -- LEAVING AS AN EXAMPLE FOR NOW. UPDATED
 *I'VE PUT TOGETHER A QUICK INTRO PIECE TO SET THE SCENE -- WILL BE CHANGED DEPENDING ON THE USE.*
 In this task you’ll engage with a prototype chatbot. It will ask you some questions about your child's sleep and their bedtime routine. If you have more than one child with ADHD, please focus on the one who struggles most with their sleep. Be aware that the chatbot won't be able to answer any of your questions or offer any solutions, but we're very interested in hearing about your experiences.
 
@@ -95,22 +95,20 @@ Use empathetic and parent-friendly language but remain somewhat formal and descr
 [example]
 
 conversation = """
-Question: what would be the best case scenario for your child getting off to bed? What would happen if everything went perfectly?
-Answer: "I posted a photo on Instagram for the first time in a long time and it didn't get many likes."
-Question: What's the context? What else should we know about the situation?
-Answer: "I haven't posted in over a year. I only use Instagram to look at my friend's posts."
-Question: How did the situation make you feel, and how did you react?
-Answer: "I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account."
-Question: What was the worst part of the situation?
-Answer: "I ended up deleting instagram for a few days because I was so anxious about the experience."
+Q1: What would be the best case scenario for your child getting off to bed? What would it look like if everything went perfectly from start to finish?
+Human: brush his teeth when I ask him to, then he goes to bed and has a bit of a read for ten minutes o so with me in the room. Then it's light out and he's supposed to go off to bed
+Q2: Thinking of a recent time that things went wrong, what actually did happen? How was this different to what you just described?
+Human: He had been getting annoyed all afternoon, I think he had been in trouble at school, which got him annoyed. Then he just wouldn't brush his teeth when asked. Then he just kept coming down all night to talk to me
+Q3: Is there anything I should know that helps us to understand the situation better? Was anything going on for you or your child that might have had an influence on that night?
+Human: He has ben getting in trouble more at school
+Q4: When you think back, what was the most challenging part of the night for you? What made it hard?
+Human: Just him being annoyed and not doing what he was told
+Q5: Did you try anything to help? What effect did this have? Will you try this again, or try something different?
+Human: I didn't try anything, I was exhausted and he was annoyed. Things always go badly when this happens
+Q6: Was there anything particularly surprising about that night? Does this happen often? Is it always the same problem, time after time?
+Human: Always the same"
 """
 
 scenario = """
-Recently I've had mixed feelings about my social media use, particularly Instagram. \
-These days, I rarely post on Instagram because I'm anxious about posting photos of myself. \
-I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. \
-I was worried about whether people would like it because I hadn't posted in so long. \
-When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. \
-I got so anxious about it that I ended up deleting the app. \
-I learnt my lesson and probably won't post again.
+Bedtime can be a bit of a challenge for us, especially when my child has had a tough day at school. Ideally, I'd love for him to brush his teeth when I ask, then settle into bed with a book for a short read before lights out. But recently, things haven't been going smoothly. One night, he came home already upset from getting into trouble at school. This made bedtime even harder. He refused to brush his teeth and kept coming downstairs to talk to me, which made it difficult for both of us to settle down. I was really tired and didn't have the energy to try anything new to help the situation. It seems like this pattern happens often, especially when he's had a rough day. I know it's important to find a way to make bedtime easier for both of us, so I'm hoping to learn some new strategies from the parenting course I'm taking
 """
