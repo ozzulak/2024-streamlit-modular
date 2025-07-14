@@ -20,6 +20,8 @@ intro_and_consent = """## Welcome to a Sleep in ADHD study bot.
 
 In this task you’ll help me to develop a PhD project I am working on by engaging with a prototype chatbot. Please use your imagination and/or clinical experience to answer the questions. Also think  about the experience of using the chatbot and what sort of applications it could have.
 
+PLEASE BE AWARE THAT RESPONSES WILL BE STORED - !EVEN WHEN USING THE PROTOTYPE! - PLEASE MAKE SURE YOU DO NOT ANSWER WITH ANY IDENTIFIABLE OR PERSONAL DATA. THE BEST OPTION IS TO USE YOUR IMAGINATION TO GENERATE A PLAUSIBLE STORY
+
 This chatbot will ask you some questions about your child's sleep and their bedtime routine. If you have more than one child with ADHD, please focus on the one who struggles most with their sleep. Be aware that the chatbot won't be able to answer any of your questions or offer any solutions, but we're very interested in hearing about your experiences.
 
 
