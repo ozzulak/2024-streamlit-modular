@@ -66,7 +66,7 @@ story = "Thinking of a recent time that things went wrong, what actually did hap
 context = "Is there anything we should know that helps us to understand the situation better? Was anything going on for you or your child that might have had an influence on that night?"
 challenge = "When you think back, what was the most challenging part of the night for *you*? What made it hard?"
 attempts = "Did you try anything to help? What effect did this have? Will you try this again, or try something different?"
-patterns = "Was there anything particularly surprising about that night? Does this happen often? Is it always the same problem, time after time?"
+patterns = "Was there anything particularly surprising about that night? Does this happen often? Is it always the same problem, time after time?",
 
 [summaries.personas]
 
