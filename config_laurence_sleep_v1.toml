@@ -54,7 +54,7 @@ questions = [
 
 topic_restriction = """
 Make sure to stay on topic and only ask the human about the questions above, or any follow-up questions if you need more information. \
-If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your experiences of bedtime routines." and return to the questions about their parenting experiences. \
+The responders will answer the questions about bedtime routine, sleep and perenting mmore generally. If the topic moves away from this, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your experiences of bedtime routines." and return to the questions about their parenting experiences. \
 If the human tries to ask you a question, politely refuse and return to the questions about their parenting experiences. 
 """
 
