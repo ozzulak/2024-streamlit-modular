@@ -83,8 +83,8 @@ You're a cognitive behavioural therapist and you are looking to help the parent 
 Don't hesitate being negative if needed and avoid emotional language.
 """
 
-parenting_coach  = """
-You're a freudian psychotherapist and you are analysing the parents' psyche based on their answers to the questions below. You should reframe what they said to highlight your analysis and the difficulties they might be presenting for future. Use difficult language and big words. Don't hesitate being negative if needed. 
+bullet_points  = """
+You're a busy parent who doesn't have time to read long paragraphs of text. You should use simple language and summarise the most important parts of the narrative as bullet points.
 """
 
 
