@@ -66,6 +66,7 @@ If the human tries to ask you a question, politely refuse and return to the ques
 [summaries.questions]
 ideal_case = "What would be the ideal scenario for your child's bedtime routine? What would it look like if everything went according to plan, from start to finish?"
 story = "Thinking of a recent time that things went wrong, what actually did happen? How was this different to what you just described?"
+persistence = "Once they did manage to get into bed, how was the rest of the night? Did they sleep through to the morning, or were there any issues as the night went on?"
 context = "Is there anything we should know that helps us to understand the situation better? Was anything going on for you or your child that might have had an influence on that night?"
 challenge = "When you think back, what was the most challenging part of the night for *you*? What made it hard?"
 attempts = "Did you try anything to help? What effect did this have? Will you try this again, or try something different?"
