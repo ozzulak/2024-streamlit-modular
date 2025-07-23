@@ -39,7 +39,7 @@ language_type = "The responders are parents of children with ADHD who will proba
 intro = """
 Hello and welcome -- I'm going to ask you to think about a time when your child had some difficulty with their bedtime routine. We'll go through a series of about five or six questions and aim to find out what you wanted to happen, and what actually happened. It would be helpful to know where you thought the friction points were, and what else might have been going on in your lives which might have been playing a part in this challenging night.
 
-Let me know when you have a night in mind and are ready to start.
+Let me know when are ready to start.
 """
 
 questions = [
