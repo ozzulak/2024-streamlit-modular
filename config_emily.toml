@@ -30,11 +30,12 @@ language_type = "Use empathetic and youth-friendly language while maintaining a 
 
 intro = """
 Hi there. Our team is interested in people’s experiences with AI bots. Thanks for sharing your story!
+Can you think of a time when you turned to AI about something that was happening with another person? Maybe to get advice or another perspective?
 """
 
 questions = [
-    "Can you think of a time when you turned to AI about something that was happening with another person?", 
-    "Was the situation and who was involved?", 
+    "What happened and who was involved?", 
+    "What was the issue? What else do we need to know about the situation?",
     "Why did you decide to ask the bot? What did you want or need?",
     "How did you prompt the bot? What info did you give it (screenshots, descriptions, images ...)? Which bot did you use?",
     "What happened then? How did the AI respond?",
@@ -57,7 +58,7 @@ If the human tries to ask you a question, politely refuse and return to the ques
 # --> ensure that the questions here are aligned with the questions you have above 
 [summaries.questions]
 
-situation = "What was the situation, who was involved?"
+situation = "What was the situation, who was involved, and what was it about?"
 motive = "What was the motive for using AI?, what did they want or need?"
 AItool = "Which bot did they use and what did they prompt it with?"
 outcome = "What happened? How did the AI respond?"
