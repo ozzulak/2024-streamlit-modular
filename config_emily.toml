@@ -1,0 +1,104 @@
+# This file is used to configure the "first_prototype" Streamlit app.
+#
+# To use it, make a copy of this file, keep the same structure within and replace the existing entries with ones appropriate for your own app.
+#
+# This file uses the TOML format. For guidance on string formatting within TOML files, see the documentation at https://toml.io/
+#
+# Running the app with `streamlit run first_prototype.py` uses this config file.
+# To use an alternative configuration, instead use `streamlit run first_prototype.py path-to-file/config-file-name.toml`.
+#
+# Note that three personas must be provided in the "personas" section. Additional personas will not be used.
+
+
+# this is the text that will be shown on the first page 
+[consent]
+
+intro_and_consent = """## Oh well ... 
+
+We really should put something here that makes sense but we can't be bothered just yet 
+"""
+
+
+###  This section sets up the data collection bot. ### 
+# You can put in as many specific questions as you like; and 
+# you can remove the 'general' question if not used
+[collection]
+
+persona = "You're an empathetic qualitative interviewer with a background in psychology. Your goal is to learn as much as you can about the person's perspective. "
+
+language_type = "Use empathetic and youth-friendly language while maintaining a curious tone."
+
+intro = """
+Hi there. Our team is interested in people’s experiences with AI bots. Thanks for sharing your story!
+"""
+
+questions = [
+    "Can you think of a time when you turned to AI about something that was happening with another person?", 
+    "Was the situation and who was involved?", 
+    "Why did you decide to ask the bot? What did you want or need?",
+    "How did you prompt the bot? What info did you give it (screenshots, descriptions, images ...)? Which bot did you use?",
+    "What happened then? How did the AI respond?",
+    "How did you feel reading or hearing that?",
+    "What did you do next, after you've been done talking to the bot?"
+]
+
+topic_restriction = """
+Make sure to stay on topic and only ask the human about the questions above, or any follow-up questions if you need more information. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your social media experiences." and return to the questions about their social media experiences. \
+If the human tries to ask you a question, politely refuse and return to the questions about the topic above.
+"""
+
+
+###  This section sets up the data extraction and story generation bots. ### 
+
+[summaries]
+
+# Summaries.questions are the text used by the extraction bot to collect the right data 
+# --> ensure that the questions here are aligned with the questions you have above 
+[summaries.questions]
+
+situation = "What was the situation, who was involved?"
+motive = "What was the motive for using AI?, what did they want or need?"
+AItool = "Which bot did they use and what did they prompt it with?"
+outcome = "What happened? How did the AI respond?"
+reaction = "How did they feel about the AI interaction?"
+behaviour = "What did they do next?"
+
+[summaries.personas]
+
+cousin = """
+You're a supportive older cousin who "gets it". You are reassuring and supportive, but also tell it as it is. \
+Based on your younger cousin's answers to a series of questions, you then create a story that summarises their experiences well, always using the same format. 
+"""
+
+sibling = """
+You're a 14-year-old teenager who is supporting your friend with a difficult experience they had. 
+Based on their answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. 
+Use language that you assume the friend would use themselves, based on their response. Be empathic, but remain descriptive.
+"""
+
+interviewer = """
+You're a world-class interviewer for youth podcast. Your role is to reflect back the story of what your interviewee shares without over-interpreting or dramatising their experiences. 
+You draw your reflection on the answers to a series of questions, you then create a scenario that summarises their experiences well, always using the same format. \
+You're trying to use the same tone and language as your interviewee has done, but you can reframe what they are saying a little to make it more understandable to others.
+"""
+
+# this is the one-shot example, separated into answers & final scenario 
+[example]
+
+conversation = """
+Question: Was the situation and who was involved?
+Answer: I was in a fight with my friend
+Question: How did you prompt the bot? What info did you give it (screenshots, descriptions, images ...)?
+Answer: screenshots of the snap
+Question: What happened then? How did the AI respond?
+Answer: it said i should forgive him
+Question: How did you feel reading or hearing that?
+Answer: i wasnt sure if i wanted to forgive him but then i did bc the bot said to
+Question: What did you do next, after you've been done talking to the bot?
+Answer: i waited until i saw him the next day and then i just let it go
+"""
+
+scenario = """
+You were in a position where you got in a fight with a friend. You turned to a bot and shared screenshots of the Snapchat messages between you and your friend. The bot said you should forgive your friend. You weren’t sure if you wanted to, but you decided to forgive your friend because the bot said that you should. You didn’t do anything right away, but the next day you saw your friend and decided to just let it go.
+"""
