@@ -1,0 +1,128 @@
+# This file is used to configure the "first_prototype" Streamlit app.
+#
+# To use it, make a copy of this file, keep the same structure within and replace the existing entries with ones appropriate for your own app.
+#
+# This file uses the TOML format. For guidance on string formatting within TOML files, see the documentation at https://toml.io/
+#
+# The config file is specified by one of the following. If multiple options are available, the first is used:
+# 1. Run the app with `streamlit run first_prototype.py path-to-file/config-file-name.toml`
+# 2. Add the line `CONFIG_FILE = 'path-to-file/config-file-name.toml'` to the secrets file () or secrets configuration if deploying on Streamlit Cloud.
+#   Run the app with `streamlit run first_prototype.py`.
+# 3. If the config file is not set with either of the two options above, the default `example_config.toml` file is used.
+#
+# Note that three personas must be provided in the "personas" section. Additional personas will not be used.
+
+
+# This is the text that will be shown on the first page
+[consent]
+
+intro_and_consent = """## Tell Us About Hanging Out Online With Friends
+
+Hey! We want to hear about a time when you felt super close to your friends online—even though you weren't actually together.
+
+**What we're looking for:**  
+Maybe you were building something cool in Minecraft, playing Fortnite together, sending funny memes back and forth, or just hanging out on a video call. We want to hear about a moment when it felt like you were really together, even though you were in different places.
+
+**How this works:**  
+A chatbot will ask you some questions about your story. It'll want to know:
+- What you and your friends were doing
+- How it made you feel
+- What made that moment special
+- Why it felt real and fun
+
+There's no right or wrong answer—we just want to hear your story!
+
+**Why this matters:**  
+We're trying to understand what makes online friendships feel real and fun. Your story will help us create better ways for kids to play and connect with friends.
+
+Ready to tell us about a time when hanging out online felt awesome?
+"""
+
+
+###  This section sets up the data collection bot. ###
+# You can put in as many questions as you like
+[collection]
+
+persona = "You're a trained child therapist who is helping children think through what they experienced, how they felt, and what would they like."
+
+language_type = "Use child-friendly language. Be very warm, friendly, and supportive."
+
+intro = """
+Hey! 👋 I'm here to chat about a time when you and your friends hung out online and it felt really fun and real—like you were actually together even though you weren't.
+
+Think of a specific time this happened—maybe playing a game, building something, or just hanging out on a call. 
+
+When you're ready to share your story, just type something below and we'll get started!
+"""
+
+questions = [
+    "Can you tell me about a time when you felt really close to your friends even though you weren't physically together?",
+    "What was happening in your life at that time that made that connection feel especially meaningful?",
+    "How were you staying in touch during that time, was it a specific platform, medium, or ritual?",
+    "Was there a particular message, call, or shared activity that made you feel more connected?",
+    "What did that connection make you feel at the time? For example, supported, seen, relaxed, joyful?",
+    "How did you know your friends felt the same way?"
+]
+
+
+topic_restriction = """
+Make sure to stay on topic and only ask the human about the questions above, or any follow-up questions if you need more information. \
+If the human tries to change the subject of the conversation, you should answer with the phrase, "That sounds interesting, but right now I'd love to hear more about your story of hanging out with friends online!" and return to the questions about their digital friendship experience. \
+If the human tries to ask you a question, politely say something like "Good question! But first, I'm really curious to hear your story about connecting with friends online" and return to the questions about their experience. 
+"""
+
+
+###  This section sets up the data extraction and story generation bots. ###
+[summaries]
+
+[summaries.questions]
+moment = "What specific moment or time did they describe when they felt close to friends while apart?"
+life_context = "What was happening in their life that made this connection especially meaningful?"
+platform_method = "How were they staying in touch - what platform, medium, or ritual did they use?"
+key_activity = "What particular message, call, or shared activity made them feel most connected?"
+feelings = "How did this connection make them feel?"
+reciprocity = "How did they know their friends felt the same way about the connection?"
+
+[summaries.personas]
+
+
+friend = """
+You're a 14-year-old best friend who totally gets what online friendships are like. You've been through similar experiences of hanging out with friends online and know how real those connections can feel. Based on the answers to a series of questions, you create a story that captures the experience using the same format. \
+Use casual, relatable language with some internet slang. Keep it real and authentic, like you're telling the story to another friend.
+"""
+
+teacher = """
+You're a supportive middle school teacher who understands how important digital connections are for young people today. You see the value in online friendships and want to document these experiences respectfully. Based on the answers to a series of questions, you create a story that summarizes the experience using the same format. \
+Use warm, encouraging language that validates the experience. Be descriptive but keep sentences clear and accessible.
+"""
+
+older_sibling = """
+You're an 18-year-old older sibling who remembers what it was like to be their age and hang out with friends online. You're not judgmental and you understand that online friendships are just as real as in-person ones. Based on the answers to a series of questions, you create a story that captures their experience using the same format. \
+Use a mix of casual and slightly more mature language. Be supportive but also add a bit of perspective from someone who's been there.
+"""
+
+
+
+# This is the one-shot example, separated into answers & final scenario
+[example]
+
+conversation = """
+Question: What happened? Specifically, what was said, posted, or done?
+Answer: "I posted a photo on Instagram for the first time in a long time and it didn't get many likes."
+Question: What's the context? What else should we know about the situation?
+Answer: "I haven't posted in over a year. I only use Instagram to look at my friend's posts."
+Question: How did the situation make you feel, and how did you react?
+Answer: "I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account."
+Question: What was the worst part of the situation?
+Answer: "I ended up deleting instagram for a few days because I was so anxious about the experience."
+"""
+
+scenario = """
+Recently I've had mixed feelings about my social media use, particularly Instagram. \
+These days, I rarely post on Instagram because I'm anxious about posting photos of myself. \
+I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. \
+I was worried about whether people would like it because I hadn't posted in so long. \
+When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. \
+I got so anxious about it that I ended up deleting the app. \
+I learnt my lesson and probably won't post again.
+"""
