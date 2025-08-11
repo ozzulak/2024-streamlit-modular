@@ -16,7 +16,7 @@
 # This is the text that will be shown on the first page
 [consent]
 
-intro_and_consent = """## Tell Us About Hanging Out Online With Friends
+intro_and_consent = """
 
 Hey! We want to hear about a time when you felt super close to your friends online—even though you weren't actually together.
 
