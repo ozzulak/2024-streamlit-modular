@@ -25,11 +25,11 @@ Maybe you were hanging out on Roblox, playing Fortnite, sharing clips that made 
 We want to chat about a time when it felt like you were having the best time together 🎉—even though you weren’t in the same room.
 
 **How this works:**  
-On the following screens, a chatbot 🤖 will ask you a few quick things like:
-• What you and your mates were doing
-• How it made you feel
-• What made it cool
-• Why it felt like proper fun
+On the following screens, a chatbot :robot: will ask you a few quick things like:
+- What you and your mates were doing
+- How it made you feel
+- What made it cool
+- Why it felt like proper fun
 
 There's no right or wrong answer—we just want to hear your story! 😀
   
@@ -51,7 +51,9 @@ language_type = "Chat like you would with a younger mate - be casual, warm, and 
 
 intro = """
 Hey! 👋 I want to hear about a time you and your mates hung out online and it felt proper fun—even though you weren’t in the same room.
+
 Think of a time this happened—maybe playing a game, watching something, or just hanging out.
+
 When you’re ready, type a sentence below about what you were doing when you had the most fun and we’ll get started!
 """
 
