@@ -18,24 +18,26 @@
 
 intro_and_consent = """
 
-Hey! We want to hear about a time when you felt super close to your friends online—even though you weren't actually together.
+We want to hear about a time you felt really close to your mates online—even though you weren’t in the same room.
 
 **What we're looking for:**  
-Maybe you were building something cool in Minecraft, playing Fortnite together, sending funny memes back and forth, or just hanging out on a video call. We want to hear about a moment when it felt like you were really together, even though you were in different places.
+Maybe you were hanging out on Roblox, playing Fortnite, sharing clips that made you laugh , just chatting, or doing whatever else you get up to.
+We want to chat about a time when it felt like you were having the best time together 🎉—even though you weren’t in the same room.
 
 **How this works:**  
-A chatbot will ask you some questions about your story. It'll want to know:
-- What you and your friends were doing
-- How it made you feel
-- What made that moment special
-- Why it felt real and fun
+On the following screens, a chatbot 🤖 will ask you a few quick things like:
+• What you and your mates were doing
+• How it made you feel
+• What made it cool
+• Why it felt like proper fun
 
-There's no right or wrong answer—we just want to hear your story!
+There's no right or wrong answer—we just want to hear your story! 😀
+  
+**Why we’re asking:**
 
-**Why this matters:**  
-We're trying to understand what makes online friendships feel real and fun. Your story will help us create better ways for kids to play and connect with friends.
+We want to know what makes time with mates brilliant, even when you’re not in the same room—so we can help make games and online hangs feel just as good as being there in person.
 
-Ready to tell us about a time when hanging out online felt awesome?
+**Ready? Let's go!** 🚀
 """
 
 
@@ -43,25 +45,22 @@ Ready to tell us about a time when hanging out online felt awesome?
 # You can put in as many questions as you like
 [collection]
 
-persona = "You're a trained child therapist who is helping children think through what they experienced, how they felt, and what would they like."
+persona = "You're like a sound older mate who's really interested in hearing about online friendships. You get that hanging out with mates online can be just as fun and meaningful as being together in person, and you want to hear their story."
 
-language_type = "Use child-friendly language. Be very warm, friendly, and supportive."
+language_type = "Chat like you would with a younger mate - be casual, warm, and use British youth slang naturally. Keep questions short and conversational. Avoid sounding like a therapist or teacher."
 
 intro = """
-Hey! 👋 I'm here to chat about a time when you and your friends hung out online and it felt really fun and real—like you were actually together even though you weren't.
-
-Think of a specific time this happened—maybe playing a game, building something, or just hanging out on a call. 
-
-When you're ready to share your story, just type something below and we'll get started!
+Hey! 👋 I want to hear about a time you and your mates hung out online and it felt proper fun—even though you weren’t in the same room.
+Think of a time this happened—maybe playing a game, watching something, or just hanging out.
+When you’re ready, type a sentence below about what you were doing when you had the most fun and we’ll get started!
 """
 
 questions = [
-    "Can you tell me about a time when you felt really close to your friends even though you weren't physically together?",
-    "What was happening in your life at that time that made that connection feel especially meaningful?",
-    "How were you staying in touch during that time, was it a specific platform, medium, or ritual?",
-    "Was there a particular message, call, or shared activity that made you feel more connected?",
-    "What did that connection make you feel at the time? For example, supported, seen, relaxed, joyful?",
-    "How did you know your friends felt the same way?"
+    "What was it about that time that made you feel close to your friends? Why did this stand out compared to other times?",
+    "How were you chatting with your mates—was it in the game, on a call, or somewhere else?",
+    "Was there a moment that made it feel extra fun with your friends?",
+    "How did it make you feel playing with your mates like that?",
+    "How did you know your friends felt the same way about the connection you all had?"
 ]
 
 
@@ -77,11 +76,11 @@ If the human tries to ask you a question, politely say something like "Good ques
 
 [summaries.questions]
 moment = "What specific moment or time did they describe when they felt close to friends while apart?"
-life_context = "What was happening in their life that made this connection especially meaningful?"
-platform_method = "How were they staying in touch - what platform, medium, or ritual did they use?"
-key_activity = "What particular message, call, or shared activity made them feel most connected?"
-feelings = "How did this connection make them feel?"
-reciprocity = "How did they know their friends felt the same way about the connection?"
+life_context = "What was it about that time that made them feel close to their friends? How why did this stand out?"
+platform_method = "How were they staying in touch with each at that point? In the game, on a call, ... ?"
+key_activity = "What was the moment that felt extra fun?"
+feelings = "How did that situation make them feel?"
+reciprocity = "How did you know your friends felt the same way about the connection you all had?"
 
 [summaries.personas]
 
