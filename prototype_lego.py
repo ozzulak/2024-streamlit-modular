@@ -488,7 +488,7 @@ def reviewData(testing):
 
         # now set up the columns with each scenario & feedback functions
         with col1: 
-            st.header("Scenario 1") 
+            st.header("14 yo friend") 
             st.write(st.session_state.response_1['output_scenario'])
             col1_fb = streamlit_feedback(
                 feedback_type="thumbs",
@@ -504,7 +504,7 @@ def reviewData(testing):
             )
 
         with col2: 
-            st.header("Scenario 2") 
+            st.header("Teacher") 
             st.write(st.session_state.response_2['output_scenario'])
             col2_fb = streamlit_feedback(
                 feedback_type="thumbs",
@@ -520,7 +520,7 @@ def reviewData(testing):
             )        
         
         with col3: 
-            st.header("Scenario 3") 
+            st.header("Older sibling") 
             st.write(st.session_state.response_3['output_scenario'])
             col3_fb = streamlit_feedback(
                 feedback_type="thumbs",

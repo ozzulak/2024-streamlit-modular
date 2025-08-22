@@ -110,22 +110,18 @@ Keep the story brief and simple, between 100–120 words.
 [example]
 
 conversation = """
-Question: What happened? Specifically, what was said, posted, or done?
-Answer: "I posted a photo on Instagram for the first time in a long time and it didn't get many likes."
-Question: What's the context? What else should we know about the situation?
-Answer: "I haven't posted in over a year. I only use Instagram to look at my friend's posts."
-Question: How did the situation make you feel, and how did you react?
-Answer: "I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account."
-Question: What was the worst part of the situation?
-Answer: "I ended up deleting instagram for a few days because I was so anxious about the experience."
+Question: What made it be so much fun?
+Answer: victory royale baby!
+Question: How did this stand out compared to other times?
+Answer: we were all just really on, killing everyone in sight. it was amzing
+Question: How were you chatting with your mates—was it in the game, on a call, or somewhere else?
+Answer: in game chat
+Question: Was there any moment that felt really memorable? If so, what was it?
+Answer: we were on fire
+Question: How do you think your friend felt?
+Answer: like we were the best, like so cool
 """
 
 scenario = """
-Recently I've had mixed feelings about my social media use, particularly Instagram. \
-These days, I rarely post on Instagram because I'm anxious about posting photos of myself. \
-I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. \
-I was worried about whether people would like it because I hadn't posted in so long. \
-When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. \
-I got so anxious about it that I ended up deleting the app. \
-I learnt my lesson and probably won't post again.
+So, last night was epic! We were all online, diving into Fortnite, and it was one of those nights where everything just clicked. We were in the zone, like seriously, every move was perfect. In-game chat was lit with all of us hyping each other up. We snagged a victory royale, and it felt like we were unstoppable, just mowing down everyone in sight. It was one of those rare times where the squad was totally in sync, and it felt like we were the coolest team ever. I swear, we were on fire, and it was a night to remember. Moments like these remind me why online gaming with friends is the best.
 """
