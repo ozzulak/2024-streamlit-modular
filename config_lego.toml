@@ -77,10 +77,10 @@ If the human tries to ask you a question, politely say something like "Good ques
 [summaries]
 
 [summaries.questions]
-fun = "What made it be so much fun?",
-special ="How did this stand out compared to other times?",
-platform = "How were you chatting with your mates—was it in the game, on a call, or somewhere else?",
-memorable = "Was there any moment that felt really memorable? If so, what was it?",
+fun = "What made it be so much fun?"
+special ="How did this stand out compared to other times?"
+platform = "How were you chatting with your mates—was it in the game, on a call, or somewhere else?"
+memorable = "Was there any moment that felt really memorable? If so, what was it?"
 reciprocity = "How do you think your friend felt?"
 
 [summaries.personas]
