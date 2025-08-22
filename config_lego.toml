@@ -58,11 +58,11 @@ When you’re ready, type a sentence below about what you were doing when you ha
 """
 
 questions = [
-    "What was it about that time that made you feel close to your friends? Why did this stand out compared to other times?",
+    "What made it feel like so much fun?",
+    "How did this stand out compared to other times?",
     "How were you chatting with your mates—was it in the game, on a call, or somewhere else?",
-    "Was there a moment that made it feel extra fun with your friends?",
-    "How did it make you feel playing with your mates like that?",
-    "How did you know your friends felt the same way about the connection you all had?"
+    "Was there any moment that felt really memorable? If so, what was it?",
+    "How do you think your friend felt?"
 ]
 
 
@@ -77,12 +77,11 @@ If the human tries to ask you a question, politely say something like "Good ques
 [summaries]
 
 [summaries.questions]
-moment = "What specific moment or time did they describe when they felt close to friends while apart?"
-life_context = "What was it about that time that made them feel close to their friends? How why did this stand out?"
-platform_method = "How were they staying in touch with each at that point? In the game, on a call, ... ?"
-key_activity = "What was the moment that felt extra fun?"
-feelings = "How did that situation make them feel?"
-reciprocity = "How did you know your friends felt the same way about the connection you all had?"
+fun = "What made it be so much fun?",
+special ="How did this stand out compared to other times?",
+platform = "How were you chatting with your mates—was it in the game, on a call, or somewhere else?",
+memorable = "Was there any moment that felt really memorable? If so, what was it?",
+reciprocity = "How do you think your friend felt?"
 
 [summaries.personas]
 
