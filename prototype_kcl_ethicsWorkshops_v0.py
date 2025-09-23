@@ -493,7 +493,7 @@ def reviewData(testing):
         # now set up the columns with each scenario & feedback functions
         with col1: 
             st.header("Summary") 
-            st.write(st.session_state.response_2['output_scenario'])
+            st.write(st.session_state.response_1['output_scenario'])
             col1_fb = streamlit_feedback(
                 feedback_type="thumbs",
                 optional_text_label="[Optional] Please provide an explanation",
@@ -507,21 +507,21 @@ def reviewData(testing):
                         )
             )
 
-        # with col2: 
-        #     st.header("Youth") 
-        #     st.write(st.session_state.response_2['output_scenario'])
-        #     col2_fb = streamlit_feedback(
-        #         feedback_type="thumbs",
-        #         optional_text_label="[Optional] Please provide an explanation",
-        #         align='center',
-        #         key="col2_fb",
-        #         # this ensures that feedback cannot be submitted twice 
-        #         disable_with_score = disable['col2_fb'],            
-        #         on_submit = collectFeedback,
-        #         args = ('col2', 
-        #                 st.session_state.response_2['output_scenario']
-        #                 )
-        #     )        
+        with col2: 
+            st.header("Young person summary") 
+            st.write(st.session_state.response_2['output_scenario'])
+            col2_fb = streamlit_feedback(
+                feedback_type="thumbs",
+                optional_text_label="[Optional] Please provide an explanation",
+                align='center',
+                key="col2_fb",
+                # this ensures that feedback cannot be submitted twice 
+                disable_with_score = disable['col2_fb'],            
+                on_submit = collectFeedback,
+                args = ('col2', 
+                        st.session_state.response_2['output_scenario']
+                        )
+            )        
         
         # with col3: 
         #     st.header("Ethicist") 
@@ -550,7 +550,7 @@ def reviewData(testing):
                 st.write("debug feedback", st.session_state.temp_debug)
         
         with text1:
-            st.markdown("** Please review the text below, edit it if needed, and then copy & paste it into the mentimeter.**")
+            st.markdown("**Please review the summary text below, edit it if needed, and then copy & paste it into the mentimeter.**")
 
 
         # ## if we haven't selected scenario, let's give them a choice. 

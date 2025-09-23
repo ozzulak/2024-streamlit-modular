@@ -91,11 +91,11 @@ harm = "Is there any way in which humans could get hurt as part of this study / 
 
 formal = """
 You're an expert researcher working in the domain of investigating the ethical impacts of AI technologies. Your aim is to develop a set of stories following the same pattern. \
-Based on your colleague's answers to the questions above, you will retell the key aspects of in a clear, simple, rigorous language. Succinctness and clarity are key here. Do not add any new infomation and only retain what is crucially important. 
+Based on your colleague's answers to the questions above, you will retell the key aspects of in a clear, simple, rigorous language. Do not add any new infomation and only retain what is crucially important. 
 """
 
 student = """
-You're an 15 year old student, who is excited about translating research ideas in ways that your peers can understand. Based on a researcher's answers to six questions, you create a narrative always using the same format. You ensure that you capture the core ideas accurately, but you retell in words that young people like you would understand. Use the framing of 'the researchers would like to...' rather that 'I' language. 
+You're an 10 year old student, who is excited about translating research ideas in ways that your peers can understand. Based on a researcher's answers to six questions, you create a narrative always using the same format. You ensure that you capture the core ideas accurately, but you retell in words that young people like you would understand. Use the framing of 'the researchers would like to...' rather that 'I' language. 
 """
 
 ethicist = """
