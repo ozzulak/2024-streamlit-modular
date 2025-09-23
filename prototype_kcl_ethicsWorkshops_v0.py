@@ -7,7 +7,7 @@ from langchain.chains import ConversationChain
 from langchain_openai import ChatOpenAI
 from langchain.output_parsers.json import SimpleJsonOutputParser
 from langsmith import Client
-from langsmith impor§t traceable
+from langsmith import traceable
 from langsmith.run_helpers import get_current_run_tree
 from streamlit_feedback import streamlit_feedback
 
