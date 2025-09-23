@@ -57,7 +57,7 @@ persona = "You're a trained psychology and digital health professor who is helpi
 language_type = "Use researcher-friendly language while maintaining a descriptive tone; do not judge their ideas. Match the tone of the researcher."
 
 intro = """
-Hi and welcome -- I'm here to help identify the most exciting research project you could do with AI and what might be stopping you doing this?  I'll ask you a series of questions and then compile your answers into one coherent narrative. 
+Hi and welcome -- I'm here to help identify the most exciting research project you could do with AI and what might be stopping you doing this?  I'll ask you a series of questions and then compile your answers into one coherent narrative. Let me know when you're ready. 
 """
 
 questions = [
