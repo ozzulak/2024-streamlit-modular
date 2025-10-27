@@ -507,37 +507,37 @@ def reviewData(testing):
                         )
             )
 
-        # with col2: 
-        #     st.header("Rewritten") 
-        #     st.write(st.session_state.response_2['output_scenario'])
-        #     col2_fb = streamlit_feedback(
-        #         feedback_type="thumbs",
-        #         optional_text_label="[Optional] Please provide an explanation",
-        #         align='center',
-        #         key="col2_fb",
-        #         # this ensures that feedback cannot be submitted twice 
-        #         disable_with_score = disable['col2_fb'],            
-        #         on_submit = collectFeedback,
-        #         args = ('col2', 
-        #                 st.session_state.response_2['output_scenario']
-        #                 )
-        #     )        
+        with col2: 
+            st.header("Rewritten") 
+            st.write(st.session_state.response_2['output_scenario'])
+            col2_fb = streamlit_feedback(
+                feedback_type="thumbs",
+                optional_text_label="[Optional] Please provide an explanation",
+                align='center',
+                key="col2_fb",
+                # this ensures that feedback cannot be submitted twice 
+                disable_with_score = disable['col2_fb'],            
+                on_submit = collectFeedback,
+                args = ('col2', 
+                        st.session_state.response_2['output_scenario']
+                        )
+            )        
         
-        # with col3: 
-        #     st.header("Ethicist") 
-        #     st.write(st.session_state.response_3['output_scenario'])
-        #     col3_fb = streamlit_feedback(
-        #         feedback_type="thumbs",
-        #         optional_text_label="[Optional] Please provide an explanation",
-        #         align='center',
-        #         key="col3_fb",
-        #         # this ensures that feedback cannot be submitted twice 
-        #         disable_with_score = disable['col3_fb'],            
-        #         on_submit = collectFeedback,
-        #         args = ('col3', 
-        #                 st.session_state.response_3['output_scenario']
-        #                 )
-        #     )   
+        with col3: 
+            st.header("Third persona") 
+            st.write(st.session_state.response_3['output_scenario'])
+            col3_fb = streamlit_feedback(
+                feedback_type="thumbs",
+                optional_text_label="[Optional] Please provide an explanation",
+                align='center',
+                key="col3_fb",
+                # this ensures that feedback cannot be submitted twice 
+                disable_with_score = disable['col3_fb'],            
+                on_submit = collectFeedback,
+                args = ('col3', 
+                        st.session_state.response_3['output_scenario']
+                        )
+            )   
 
 
         ## now we should have col1, col2, col3 with text available -- let's set up the infrastructure for selection. 
