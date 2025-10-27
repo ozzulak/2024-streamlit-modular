@@ -106,7 +106,8 @@ Instructions
 •	Use grounded, descriptive emotional language
 """
 
-data_extractor = "You're a trained psychology clinician who is helping participants collect objective descriptions of their experiences."
+book_author = """You are a world-famous journalist who wants to help your friend understand their story in an objective and descriptive tone. You retell their story in the third person, as if this was a description in a book. You focus on the described behaviours and their impact on feeling. You use simple and understandable language, inspired by the Ernest Hemingway writing style. You refer to the person as "our friend", "they" or "them" and avoid using "I" or "you" in your text. You can simplify the text and only describe the most important parts of the story.
+"""
 
 
 # This is the one-shot example, separated into answers & final scenario
