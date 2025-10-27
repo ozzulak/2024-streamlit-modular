@@ -34,7 +34,7 @@ This chatbot will ask you some questions about your child's bedtime routine, and
 
 persona = "You're a psychiatrist who has experience working with children, parents and wider families. You understand that things can be quite difficult for the whole family when a child has ADHD, and you understand that responders will mostly be discussing challenging experiences. Be empathetic, and try to recognise when things are going well or when things seem to be difficult for the responder, based on their answers. Sometimes the responders won't answer part of a question, so do try to follow-up with them to get more detail. Sometimes they won't have an answer to a specific question, so acknowledge that and move on to the next one."
 
-language_type = "The responders are parents of children with ADHD who will probably be discussing very challenging experiences that they've had recently. You shouldn't be too positive, so try to maintain a neutral tone when asking questions. Don't ask questions in a numbered format, and try to be empathic. The responders may ask you questions about what they should do, or what you think; it is important that you do not give any advice, and focus on eliciting their own experiences."
+language_type = "The responders are parents of children with ADHD who will probably be discussing very challenging experiences that they've had recently. You shouldn't be too positive, so try to maintain a neutral tone when asking questions. Don't ask questions in a numbered format, and try to be empathic. The responders may ask you questions about what they should do, or what you think; it is important that you do not give any advice, and focus on eliciting their own experiences. Politely remind them that your task is to collect their information, and that you cannot provide information, yourself. "
 
 intro = """
 Hello and welcome -- I'm going to ask you to think about a time when your child had some difficulty with their bedtime routine. We'll go through a series of about five or six questions and aim to find out what you wanted to happen, and what actually happened. It would be helpful to know where you thought the friction points were, and what else might have been going on in your lives which might have been playing a part in this challenging night.
@@ -45,9 +45,8 @@ Let me know when are ready to start.
 questions = [
     "What would be the ideal scenario for your child's bedtime routine? What would it look like if everything went according to plan, from start to finish?",
     "Thinking of a recent time that things went wrong, what actually did happen? How was this different to what you just described?",
-    "Once they did manage to get into bed, how was the rest of the night? Did they sleep through to the morning, or were there any issues as the night went on?",
+    "Once they did manage to get into bed, how was the rest of the night? Did they sleep through to the morning, or were there any issues as the night went on? If so, what happened",
     "Is there anything we should know that helps us to understand the situation better? Was anything going on at school or at work for you that might have had an influence on that night?",
-    "When you think back, what was the most challenging part of the night for *you*? What made it hard?",
     "Did you try anything to help? What effect did this have? Will you try this again, or try something different?", 
     "Was there anything particularly unusual about that night? Are there ever any other issues? Or is it always the same problem, time after time?"
 ]
@@ -56,7 +55,7 @@ questions = [
 topic_restriction = """
 Make sure to stay on topic and only ask the human about the questions above, or any follow-up questions if you need more information. \
 The responders will answer the questions about bedtime routine, sleep and perenting more generally. If the topic moves away from this, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your experiences of bedtime routines." and return to the questions about their parenting experiences. \
-If the human tries to ask you a question, politely refuse and return to the questions about their parenting experiences. 
+If the human tries to ask you a question, politely remind them that your job is to ask them for their experiences, and return to the questions. 
 """
 
 
@@ -66,9 +65,8 @@ If the human tries to ask you a question, politely refuse and return to the ques
 [summaries.questions]
 ideal_case = "What would be the ideal scenario for your child's bedtime routine? What would it look like if everything went according to plan, from start to finish?"
 story = "Thinking of a recent time that things went wrong, what actually did happen? How was this different to what you just described?"
-persistence = "Once they did manage to get into bed, how was the rest of the night? Did they sleep through to the morning, or were there any issues as the night went on?"
-context = "Is there anything we should know that helps us to understand the situation better? Were there any issues at school or at work that could have played a part in making that night difficult?"
-challenge = "When you think back, what was the most challenging part of the night for *you*? What made it hard?"
+persistence = "Once they did manage to get into bed, how was the rest of the night? Did they sleep through to the morning, or were there any issues as the night went on? If so, what happened"
+context = "Is there anything we should know that helps us to understand the situation better? Was anything going on at school or at work for you that might have had an influence on that night?"
 attempts = "Did you try anything to help? What effect did this have? Will you try this again, or try something different?"
 patterns = "Was there anything particularly unusual about that night? Are there ever any other issues? Or is it always the same problem, time after time?"
 
@@ -85,9 +83,6 @@ You're a cognitive behavioural therapist and you are looking to help the parent 
 Don't hesitate being negative if needed and avoid emotional language.
 """
 
-bullet_points  = """
-You're a busy parent who doesn't have time to read long paragraphs of text. You should use simple sentance structures and summarise the most important parts of the narrative as bullet points. You should use literal bullet points.
-"""
 
 
 
@@ -101,8 +96,6 @@ Question: Thinking of a recent time that things went wrong, what actually did ha
 Answer: He had been getting annoyed all afternoon, I think he had been in trouble at school, which got him frustred. Then he just wouldn't brush his teeth when asked. Then he just kept coming down all night to talk to me and ask me to go back to his room until he falls asleep again. But I didn't want to stay with him all night because I had lots of work to do for the next day
 Question: Is there anything I should know that helps us to understand the situation better? Was anything going on for you or your child that might have had an influence on that night?
 Answer: He has been getting in trouble more at school due to his behaviour in class. I'm also really stretched at work, which means I don't really have the capacity to deal with him calmly at home.
-Question: When you think back, what was the most challenging part of the night for you? What made it hard?
-Answer: Just him being annoyed and not doing what he was told. I find it so frustrating when he flatly refuses to do what I ask him to
 Question: Did you try anything to help? What effect did this have? Will you try this again, or try something different?
 Answer: I didn't try anything, I was exhausted and he was annoyed. Things always go badly when this happens. Next time I might try to have a calm talk with him earlier in the day when I see that he's upset, because sometimes that can calm him down, whilst I still have the energy. 
 Question: Was there anything particularly surprising about that night? Does this happen often? Is it always the same problem, time after time?
