@@ -1,7 +1,8 @@
-langchain_community
-langchain
-langchain_openai
-langchain_core
+
+langchain==0.0.350
+langchain-community==0.0.12
+langchain-core==0.1.10
+langchain-openai==0.0.5
 langsmith
 streamlit_feedback
 streamlit
