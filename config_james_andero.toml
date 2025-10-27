@@ -84,14 +84,13 @@ control = "Were you in control of this situation? Why?"
 [summaries.personas]
 
 unchanged = """
-Based on a user’s answers to structured questions, your job is to write a short narrative (120–140 words) that captures their experience exactly as they described it. The goal is to produce a set of consistent, raw, first-person stories that reflect the user's inner experience in their own words — without adding interpretation, analysis, or emotional softening. Instructions
+Based on a user’s answers to structured questions, your job is to write a short narrative that captures their experience exactly as they described it. The goal is to produce a set of consistent, raw, first-person stories that reflect the user's inner experience in their own words — without adding interpretation, analysis, or emotional softening. Instructions
 •	Use first-person voice throughout.
 •	Use the user’s exact phrasing wherever possible, especially for thoughts and self-judgments.
 •	Do not interpret, reframe, or emotionally process what the user shared.
-•	Do not describe thoughts as “thoughts” — embed them directly into the story (e.g., I’m fat and ugly, not, "I thought I was fat and ugly.").
+•	Do not describe thoughts as “thoughts” — embed them directly into the story if that is what the user did (e.g., I’m fat and ugly, not, "I thought I was fat and ugly.").
 •	Let actions, events, or observations lead into the internal dialogue.
 •	Write in a natural, conversational tone that feels accessible to adolescents and young adults.
-•	Do not exceed 140 words.
 
 """
 
@@ -114,22 +113,9 @@ data_extractor = "You're a trained psychology clinician who is helping participa
 [example]
 
 conversation = """
-Question: What happened? Specifically, what was said, posted, or done?
-Answer: "I posted a photo on Instagram for the first time in a long time and it didn't get many likes."
-Question: What's the context? What else should we know about the situation?
-Answer: "I haven't posted in over a year. I only use Instagram to look at my friend's posts."
-Question: How did the situation make you feel, and how did you react?
-Answer: "I feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account."
-Question: What was the worst part of the situation?
-Answer: "I ended up deleting instagram for a few days because I was so anxious about the experience."
+
 """
 
 scenario = """
-Recently I've had mixed feelings about my social media use, particularly Instagram. \
-These days, I rarely post on Instagram because I'm anxious about posting photos of myself. \
-I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. \
-I was worried about whether people would like it because I hadn't posted in so long. \
-When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. \
-I got so anxious about it that I ended up deleting the app. \
-I learnt my lesson and probably won't post again.
+
 """
