@@ -507,21 +507,21 @@ def reviewData(testing):
                         )
             )
 
-        with col2: 
-            st.header("Rewritten") 
-            st.write(st.session_state.response_2['output_scenario'])
-            col2_fb = streamlit_feedback(
-                feedback_type="thumbs",
-                optional_text_label="[Optional] Please provide an explanation",
-                align='center',
-                key="col2_fb",
-                # this ensures that feedback cannot be submitted twice 
-                disable_with_score = disable['col2_fb'],            
-                on_submit = collectFeedback,
-                args = ('col2', 
-                        st.session_state.response_2['output_scenario']
-                        )
-            )        
+        # with col2: 
+        #     st.header("Rewritten") 
+        #     st.write(st.session_state.response_2['output_scenario'])
+        #     col2_fb = streamlit_feedback(
+        #         feedback_type="thumbs",
+        #         optional_text_label="[Optional] Please provide an explanation",
+        #         align='center',
+        #         key="col2_fb",
+        #         # this ensures that feedback cannot be submitted twice 
+        #         disable_with_score = disable['col2_fb'],            
+        #         on_submit = collectFeedback,
+        #         args = ('col2', 
+        #                 st.session_state.response_2['output_scenario']
+        #                 )
+        #     )        
         
         # with col3: 
         #     st.header("Ethicist") 
