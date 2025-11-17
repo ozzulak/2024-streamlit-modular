@@ -464,7 +464,7 @@ def reviewData(testing):
     st.session_state.scenario_package = {
             'scenario': st.session_state.response_1['output_scenario'],
             'answer set':  st.session_state['answer_set'],
-            'judgment': st.session_state['scenario_decision'],
+            'judgment': 'pre-update',
             'scenarios_all': scenario_dict,
             'chat history': msgs
     }
