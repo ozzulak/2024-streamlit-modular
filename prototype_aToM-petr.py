@@ -455,7 +455,20 @@ def reviewData(testing):
 
     ## We are highly simplifying this section because we only want one answer and no choice : 
 
-    st.session_state.scenario_package['scenario'] = st.session_state.response_1['output_scenario']
+    scenario_dict = {
+        'col1': st.session_state.response_1['output_scenario'],
+        'col2': st.session_state.response_2['output_scenario'],
+        'col3': st.session_state.response_3['output_scenario']
+    }
+
+    st.session_state.scenario_package = {
+            'scenario': st.session_state.response_1['output_scenario'],
+            'answer set':  st.session_state['answer_set'],
+            'judgment': st.session_state['scenario_decision'],
+            'scenarios_all': scenario_dict,
+            'chat history': msgs
+    }
+
     st.session_state['agentState'] = 'finalise'
     
     # print("ended loop -- should move to finalise!")
