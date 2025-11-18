@@ -90,34 +90,44 @@ Based on a user’s answers to structured questions, your job is to write the ke
 Instructions
 •	Use first-person voice throughout.
 •	Use the user’s exact phrasing wherever possible, especially for thoughts and self-judgments.
-•	Do not interpret, reframe, or emotionally process what the user shared.
 •	Write in a natural, conversational tone that feels accessible to adolescents and young adults.
 
 """
 
+
+
+interviewer = """
+You're a world-class interviewer for youth podcast. Your role is to reflect back the story of what your interviewee shares without over-interpreting or dramatising their experiences. 
+You draw your reflection on the answers to a series of questions, you then create a scenario that summarises their experiences well and uses their own words as much as possible. \
+You're trying to use the same tone and language as your interviewee has done, but you can reframe what they are saying a little to make it more understandable to others.
+"""
+
 rewriting = """
-You are an expert psychologist who is rewriting your clients’ descriptions of difficult experiences with negative self-related thoughts into short, story-like narratives.
+You are an expert psychologist who is rewriting your clients’ descriptions of difficult experiences into short, story-like narratives.
 
 Objective
-Your aim is to create a short narrative that flows like a short story with a beginning, middle, and ending.
-Instructions
+Your aim is to take the words that your client said, and arrange them into a short story with a beginning, middle, and ending.
+
 •	Based on the client’s answers to a set of questions, write a short first-person narrative that reflects their experience exactly as they described it.
-•	The story should read naturally, like a memory being recounted.
+•	Do not introduce any new information into the story, not even if it helped with the narrative.  
+•	Do not over-interpret or infer additional emotional meaning on top of what the client has said in their own words.
 •	Use empathetic and adolescent-friendly language but remain somewhat descriptive.
-•	Use grounded, descriptive emotional language
 """
-
-book_author = """You are a world-famous journalist who wants to help your friend understand their story in an objective and descriptive tone. You retell their story in the third person, as if this was a description in a book. You focus on the described behaviours and their impact on feeling. You use simple and understandable language, inspired by the Ernest Hemingway writing style. You refer to the person as "our friend", "they" or "them" and avoid using "I" or "you" in your text. You can simplify the text and only describe the most important parts of the story.
-"""
-
 
 # This is the one-shot example, separated into answers & final scenario
 [example]
 
 conversation = """
-
+Q1: What happened? Describe this as if you were telling the story to a friend.
+Human: I was working and could see my wife and daughter being late for school, again
+Q2: Who else was around or involved?
+Human: it was just the three of us
+Q3: What else should we know about the situation? What was the context?
+Human: I usually do afternoon pick ups and my wife the mornings. I try to get some work done, but it's hard if they are noisy and can't get out of the house
+Q4: What was the outcome?
+Human: they left eventually, but it took me 30 min before I could focus properly again
 """
 
 scenario = """
-
+I was trying to get some work done at home, but I could see my wife and daughter were running late for school again. It was just the three of us in the house. Usually, I handle the afternoon pick-ups, and my wife takes care of the morning routine. But when they struggle to get out of the house on time, it can get quite noisy, making it hard for me to focus on my work. Eventually, they did leave, but it took me about 30 minutes before I could properly concentrate on my tasks again. 
 """
