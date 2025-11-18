@@ -1,0 +1,137 @@
+# This file is used to configure the "first_prototype" Streamlit app.
+#
+# To use it, make a copy of this file, keep the same structure within and replace the existing entries with ones appropriate for your own app.
+#
+# This file uses the TOML format. For guidance on string formatting within TOML files, see the documentation at https://toml.io/
+#
+# The config file is specified by one of the following. If multiple options are available, the first is used:
+# 1. Run the app with `streamlit run first_prototype.py path-to-file/config-file-name.toml`
+# 2. Add the line `CONFIG_FILE = 'path-to-file/config-file-name.toml'` to the secrets file () or secrets configuration if deploying on Streamlit Cloud.
+#   Run the app with `streamlit run first_prototype.py`.
+# 3. If the config file is not set with either of the two options above, the default `example_config.toml` file is used.
+#
+# Note that three personas must be provided in the "personas" section. Additional personas will not be used.
+
+### Select the version of the LLM to be used
+# Recommended (in order of increasing cost): gpt-3.5-turbo-1106, gpt-4o
+# Specifying the model is optional; by default, gpt-4o will be used
+model = "gpt-4o"
+
+
+
+### Participant settings
+[participant]
+
+# Whether to require and collect participant IDs
+require_participant_id = true
+editable_participant_id = true
+text = "Please fill in your participant ID that will serve as an 'passcode' for your data."
+
+# Whether to fetch previous final scenario
+require_previous_final_scenario = false
+
+
+
+# This is the text that will be shown on the first page
+[consent]
+
+intro_and_consent = """## Welcome back!
+
+You should have just created a description of a situation you found important recently. Please copy & paste it below and we'll follow with asking a few more questions. 
+"""
+
+
+
+###  This section sets up the data collection bot. ###
+# You can put in as many questions as you like
+[collection]
+
+persona = """
+You're a trained psychologist. Your goal is to gather structured answers to the following questions."""
+
+language_type = "Use empathetic and youth-friendly language while maintaining a descriptive tone"
+
+intro = """
+Hi and welcome -- Let's talk through the scenario in a bit more detail. I've copied it below as a reminder. 
+
+_{narrative}_
+
+Let me know when you're ready
+"""
+
+questions = [
+    "Why did this situation matter to you? What made it important?",
+    "Some situations are predictable and clear, others less so. How about this one, was it predictable in any way? Why?",  
+    "Who could be considered responsible for this situation happening? ", 
+    "Would you say you were in control of this situation? Why?",
+    "What would you have wanted to happen in this situation, if you could change anything?", 
+    "How big of a deal this discrepancy is for you?" 
+]
+
+
+topic_restriction = """
+Politely ask the participant to stay on topic if they introduce entirely different areas of conversation. 
+"""
+
+
+###  This section sets up the data extraction and story generation bots. ###
+[summaries]
+
+[summaries.questions]
+importance = "Why did this situation matter to you? What made it important?"
+predictable = "How predictable was this situation?"
+responsible = "Who could be considered responsible for this situation happening?"
+control = "Were you in control of this situation? Why?"
+counterfactual = "What would you have wanted to happen in this situation?"
+discrepancy = "How big of a deal this discrepancy is for you?"
+
+[summaries.personas]
+
+
+unchanged = """
+Based on a user’s answers to structured questions, your job is to write the key parts of what they said as a coherent narrative. It is important to  captures their experience exactly as they described it. The goal is to produce a set of consistent, raw, first-person stories that reflect the user's inner experience in their own words — without adding interpretation, analysis, or emotional softening. 
+
+Instructions
+•	Use first-person voice throughout.
+•	Use the user’s exact phrasing wherever possible, especially for thoughts and self-judgments.
+•	Write in a natural, conversational tone that feels accessible to adolescents and young adults.
+
+"""
+
+
+
+interviewer = """
+You're a world-class interviewer for youth podcast. Your role is to reflect back the story of what your interviewee shares without over-interpreting or dramatising their experiences. 
+You draw your reflection on the answers to a series of questions, you then create a scenario that summarises their experiences well and uses their own words as much as possible. \
+You're trying to use the same tone and language as your interviewee has done, but you can reframe what they are saying a little to make it more understandable to others.
+"""
+
+rewriting = """
+You are an expert psychologist who is rewriting your clients’ descriptions of difficult experiences into short, story-like narratives.
+
+Objective
+Your aim is to take the words that your client said, and arrange them into a short story with a beginning, middle, and ending.
+
+•	Based on the client’s answers to a set of questions, write a short first-person narrative that reflects their experience exactly as they described it.
+•	Do not introduce any new information into the story, not even if it helped with the narrative.  
+•	Do not over-interpret or infer additional emotional meaning on top of what the client has said in their own words.
+•	Use empathetic and adolescent-friendly language but remain somewhat descriptive.
+"""
+
+# This is the one-shot example, separated into answers & final scenario
+[example]
+
+conversation = """
+Q1: What happened? Describe this as if you were telling the story to a friend.
+Human: I was working and could see my wife and daughter being late for school, again
+Q2: Who else was around or involved?
+Human: it was just the three of us
+Q3: What else should we know about the situation? What was the context?
+Human: I usually do afternoon pick ups and my wife the mornings. I try to get some work done, but it's hard if they are noisy and can't get out of the house
+Q4: What was the outcome?
+Human: they left eventually, but it took me 30 min before I could focus properly again
+"""
+
+scenario = """
+I was trying to get some work done at home, but I could see my wife and daughter were running late for school again. It was just the three of us in the house. Usually, I handle the afternoon pick-ups, and my wife takes care of the morning routine. But when they struggle to get out of the house on time, it can get quite noisy, making it hard for me to focus on my work. Eventually, they did leave, but it took me about 30 minutes before I could properly concentrate on my tasks again. 
+"""

@@ -54,9 +54,6 @@ st.title("📖 Affective ToM")
 if 'run_id' not in st.session_state: 
     st.session_state['run_id'] = None
 
-if 'next_url' not in st.session_state:
-    st.session_state['next_url'] = "https://petrslovak.com"
-
 if 'agentState' not in st.session_state: 
     st.session_state['agentState'] = "start"
 if 'consent' not in st.session_state: 
@@ -118,7 +115,8 @@ def getData (testing = False ):
 
     ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
-        msgs.add_ai_message(llm_prompts.questions_intro)
+        formatted_intro = llm_prompts.questions_intro.format(narrative=st.session_state['narrative'])
+        msgs.add_ai_message(formatted_intro)
 
 
    # as Streamlit refreshes page after each input, we have to refresh all messages. 
@@ -498,46 +496,7 @@ def finaliseScenario():
         st.markdown(":tada: Yay! :tada:")
         st.markdown("You've now completed the interaction and hopefully found a scenario that you liked! ")
         st.markdown(f":green[{package['scenario']}]")
-
-        st.divider()
-        
-        # Escape the scenario text for JavaScript
-        scenario_text = package['scenario'].replace('`', '\\`').replace('\n', '\\n').replace('"', '\\"')
-        
-        # Create button that copies to clipboard and opens URL
-        if 'next_url' in st.session_state and st.session_state['next_url']:
-            next_url = st.session_state['next_url']
-            
-            # HTML/JS button that copies and redirects
-            button_html = f"""
-            <button onclick="copyAndRedirect()" style="
-                background-color: #FF4B4B;
-                color: white;
-                padding: 0.5rem 1rem;
-                border: none;
-                border-radius: 0.5rem;
-                cursor: pointer;
-                font-size: 1rem;
-                margin: 1rem 0;
-            ">
-                📋 Copy scenario and continue to next step →
-            </button>
-            
-            <script>
-            function copyAndRedirect() {{
-                const text = `{scenario_text}`;
-                navigator.clipboard.writeText(text).then(function() {{
-                    console.log('Copied to clipboard!');
-                    window.open('{next_url}', '_blank');
-                }}, function(err) {{
-                    console.error('Could not copy text: ', err);
-                    window.open('{next_url}', '_blank');
-                }});
-            }}
-            </script>
-            """
-            
-            st.markdown(button_html, unsafe_allow_html=True)
+    
     
     else:
         # set up a streamlit container for the original scenario
@@ -589,7 +548,11 @@ def stateAgent():
 def markConsent():
     """On_submit function that marks the consent progress 
     """
-    st.session_state['consent'] = True
+    if 'narrative' in st.session_state and st.session_state['narrative']:
+        st.session_state['story'] = st.session_state['narrative']
+        st.session_state['consent'] = True
+    else:
+        st.warning("Please enter your participant ID before continuing.")
 
 
 
@@ -650,7 +613,9 @@ else:
     consent_message = st.container()
     with consent_message:
         st.markdown(llm_prompts.intro_and_consent)
-        st.button("I accept", key = "consent_button", on_click=markConsent)
+        participant_input = st.text_area("Please copy & paste your story here:", key="narrative", height=100)
+        st.button("I am ready", key = "consent_button", on_click=markConsent,
+          disabled=not bool(participant_input))
            
 
 
