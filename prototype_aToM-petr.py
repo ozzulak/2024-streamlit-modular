@@ -500,44 +500,45 @@ def finaliseScenario():
         st.markdown(f":green[{package['scenario']}]")
 
         st.divider()
+        st.markdown("Please make sure that you've copy & pasted the scenario above, and then [click this link](https://2024-app-modular-rwg6iru9ojv7s7q9c5t6pc.streamlit.app/) to continue. This is clumsy and just for the prototyping -- the process would be automated in the real deployment.", unsafe_allow_html=True)
         
-        # Escape the scenario text for JavaScript
-        scenario_text = package['scenario'].replace('`', '\\`').replace('\n', '\\n').replace('"', '\\"')
+        # # Escape the scenario text for JavaScript
+        # scenario_text = package['scenario'].replace('`', '\\`').replace('\n', '\\n').replace('"', '\\"')
         
-        # Create button that copies to clipboard and opens URL
-        if 'next_url' in st.session_state and st.session_state['next_url']:
-            next_url = st.session_state['next_url']
+        # # Create button that copies to clipboard and opens URL
+        # if 'next_url' in st.session_state and st.session_state['next_url']:
+        #     next_url = "https://2024-app-modular-rwg6iru9ojv7s7q9c5t6pc.streamlit.app/"
             
             # HTML/JS button that copies and redirects
-            button_html = f"""
-            <button onclick="copyAndRedirect()" style="
-                background-color: #FF4B4B;
-                color: white;
-                padding: 0.5rem 1rem;
-                border: none;
-                border-radius: 0.5rem;
-                cursor: pointer;
-                font-size: 1rem;
-                margin: 1rem 0;
-            ">
-                📋 Copy scenario and continue to next step →
-            </button>
+            # button_html = f"""
+            # <button onclick="copyAndRedirect()" style="
+            #     background-color: #FF4B4B;
+            #     color: white;
+            #     padding: 0.5rem 1rem;
+            #     border: none;
+            #     border-radius: 0.5rem;
+            #     cursor: pointer;
+            #     font-size: 1rem;
+            #     margin: 1rem 0;
+            # ">
+            #     📋 Copy scenario and continue to next step →
+            # </button>
             
-            <script>
-            function copyAndRedirect() {{
-                const text = `{scenario_text}`;
-                navigator.clipboard.writeText(text).then(function() {{
-                    console.log('Copied to clipboard!');
-                    window.open('{next_url}', '_blank');
-                }}, function(err) {{
-                    console.error('Could not copy text: ', err);
-                    window.open('{next_url}', '_blank');
-                }});
-            }}
-            </script>
-            """
+            # <script>
+            # function copyAndRedirect() {{
+            #     const text = `{scenario_text}`;
+            #     navigator.clipboard.writeText(text).then(function() {{
+            #         console.log('Copied to clipboard!');
+            #         window.open('{next_url}', '_blank');
+            #     }}, function(err) {{
+            #         console.error('Could not copy text: ', err);
+            #         window.open('{next_url}', '_blank');
+            #     }});
+            # }}
+            # </script>
+            # """
             
-            st.markdown(button_html, unsafe_allow_html=True)
+            
     
     else:
         # set up a streamlit container for the original scenario
