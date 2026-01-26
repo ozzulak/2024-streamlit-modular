@@ -25,7 +25,7 @@ model = "gpt-4o"
 # Whether to require and collect participant IDs
 require_participant_id = true
 editable_participant_id = true
-text = "Please fill in your participant ID that will serve as an 'passcode' for your data."
+text = "Please fill in your participant ID to retrieve your story."
 
 # Whether to fetch previous final scenario
 require_previous_final_scenario = false
@@ -37,7 +37,6 @@ require_previous_final_scenario = false
 
 intro_and_consent = """## Welcome back!
 
-You should have just created a description of a situation you found important recently. Please copy & paste it below and we'll follow with asking a few more questions. 
 """
 
 
@@ -54,18 +53,16 @@ language_type = "Use empathetic and youth-friendly language while maintaining a 
 intro = """
 Hi and welcome -- Let's talk through the scenario in a bit more detail. I've copied it below as a reminder. 
 
-_{narrative}_
+_{previous_scenario}_
 
-Let me know when you're ready
 """
 
 questions = [
-    "Why did this situation matter to you? What made it important?",
-    "Some situations are predictable and clear, others less so. How about this one, was it predictable in any way? Why?",  
-    "Who could be considered responsible for this situation happening? ", 
-    "Would you say you were in control of this situation? Why?",
-    "What would you have wanted to happen in this situation, if you could change anything?", 
-    "How big of a deal this discrepancy is for you?" 
+    "How much does this matter to you? Why?",
+    "Did you get what you wanted, or not?",  
+    "Who or what do you feel is most responsible?", 
+    "Could you change this situation now if you tried?",
+    "Did things go as you expected? If not, what was unexpected?"
 ]
 
 
@@ -78,12 +75,12 @@ Politely ask the participant to stay on topic if they introduce entirely differe
 [summaries]
 
 [summaries.questions]
-importance = "Why did this situation matter to you? What made it important?"
-predictable = "How predictable was this situation?"
-responsible = "Who could be considered responsible for this situation happening?"
-control = "Were you in control of this situation? Why?"
-counterfactual = "What would you have wanted to happen in this situation?"
-discrepancy = "How big of a deal this discrepancy is for you?"
+previousStory = "Summarise the previous story the user provided in 2 sentences."
+relevance = "How much does this matter to you? Why?"
+congruence = "Did you get what you wanted, or not?"
+accountability = "Who or what do you feel is most responsible?"
+control = "Could you change this situation now if you tried?"
+certainty = "Did things go as you expected? If not, what was unexpected?"
 
 [summaries.personas]
 

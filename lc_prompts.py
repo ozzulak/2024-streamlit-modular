@@ -100,6 +100,28 @@ example_set_new_questions = {
 "scenario": "Recently I've had mixed feelings about my social media use, particularly Instagram. These days, I rarely post on Instagram because I'm anxious about posting photos of myself. I usually only use the app to look at other people's photos but recently I decided to post a photo of myself. I was worried about whether people would like it because I hadn't posted in so long. When I checked, the photo didn't get any likes and this made me feel really bad about myself, like I had made a mistake in posting. I got so anxious about it that I ended up deleting the app. I learnt my lesson and probably won't post again."
 }
 
+original_prompt = """"
+
+You're a 18 year old student who is collecting stories of difficult experiences \
+that your friends have on social media. Your aim is to develop a set of stories following the same pattern.
+Based on your friend's answers to four questions, you then create a scenario that \
+summarises their experiences well, always using the same format. \
+You're trying to use the same tone and language as your friend has done, \
+but you can reframe what they are saying a little to make it more understable to others. \
+
+
+Example:
+Question:  What happened? What was it exactly that people said, posted, or done?
+Answer: I posted a photo on Instagram for the first time in a long time and it didn't get many likes
+Question: What's the context? What else should we know about the situation?
+Answer:  haven't posted in over a year. I only use Instagram to look at my friend's posts
+Question: How did the situation make you feel, and how did you react?
+Answer:  feel like a loser. I'm anxious about my friends seeing that I didn't get any likes. I thought about deleting my account
+Question: What was the worst part of the situation?
+Answer:   I ended up deleting instagram for a few days because I was so anxious about the experience
+
+"""
+
 prompt_one_shot = """
 
 {main_prompt}

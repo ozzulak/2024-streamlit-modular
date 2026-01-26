@@ -115,7 +115,7 @@ def getData (testing = False ):
 
     ## if this is the first run, set up the intro 
     if len(msgs.messages) == 0:
-        formatted_intro = llm_prompts.questions_intro.format(narrative=st.session_state['narrative'])
+        formatted_intro = llm_prompts.questions_intro.format(previous_scenario=st.session_state['narrative'])
         msgs.add_ai_message(formatted_intro)
 
 

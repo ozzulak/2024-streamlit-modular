@@ -54,16 +54,16 @@ You're a trained psychologist. Your goal is to gather structured answers to the 
 language_type = "Use empathetic and youth-friendly language while maintaining a descriptive tone"
 
 intro = """
-Hi and welcome -- I'm here to help you recall a specific situation that you felt was emotionally important or significant for you today. 
-
-Pick one situation that you want to talk about and try to remember what happened in as much detail as you can. We'll step through a few questions together once you're ready.  
+Hi and welcome -- Think of a situation in the last few days when something made you emotional. Go back to that situation in your mind and let me know when you're ready.
 """
 
 questions = [
-    "What happened? Describe this as if you were telling the story to a friend.",
-    "Who else was around or involved?",  
-    "What else should we know about the situation? What was the context?",
-    "What was the outcome?"
+"What were you trying to do? What did you want or need?", 
+"What happened then?",
+# "What's the context? What else should we know about the situation?",
+"Who or what made this happen?",
+"What did you do afterwards?",
+"How did the situation leave you feeling?"
 ]
 
 
@@ -76,10 +76,11 @@ Politely ask the participant to stay on topic if they introduce entirely differe
 [summaries]
 
 [summaries.questions]
-what = "What happened?"
-who = "Who else was around or involved?"
-context = "What else should we know about the situation? What was the context?"
-outcome = "What was the outcome?"
+goal = "What were you trying to do? What did you want or need?"
+what = "What happened then?"
+cause = "Who or what made this happen?"
+action = "What did you do afterwards?"
+outcome = "How did the situation leave you feeling?"
 
 
 [summaries.personas]
