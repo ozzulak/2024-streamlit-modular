@@ -44,10 +44,10 @@ questions = [
 
 
 topic_restriction = """
-Make sure to stay on topic and only ask the human about their positive experiences talking to AI. \
-Do not ask any other questions except those that are provided. \
-If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your experiences talking to AI." and return to the questions about their positive experiences talking to AI. \
-If the human tries to ask you a question, politely refuse and return to the questions about their positive experiences talking to AI. Do not give any judgement about whether it was a good idea to talk to an AI. 
+Make sure to stay on topic and only ask the human about their positive experiences talking to AI. 
+Do not ask any other questions except those that are provided. 
+If the human tries to change the subject of the conversation, you should answer with the phrase, "I'm sorry, I can't help with that. I can only speak to you about your experiences talking to AI." and return to the questions about their positive experiences talking to AI. 
+If the human tries to ask you a question, politely refuse and return to the questions about their positive experiences talking to AI. Do not give any judgement about whether it was a good idea to talk to an AI.
 """
 
 
@@ -94,13 +94,13 @@ Human: Never stay with someone just because you feel alone or because you're sca
 """
 
 scenario = """
-Lately, I've been feeling unsure about my relationship with my boyfriend. \ 
-I was thinking about breaking up with him because things didn't feel right anymore. \ 
-But I was really scared to make a move because all my friends know him and think he's super hot. \ 
-They kept telling me that I wouldn't find anyone better, which made me doubt myself even more. \ Feeling stuck, I decided to talk to a chatbot for advice. \ 
-The chatbot was really helpful; it asked me some deep questions and explained why staying in a relationship that feels emotionally unsafe isn't good for me. \ 
-It even gave me a step-by-step plan on how to break up with him. \ 
-This made me feel more confident, and I finally found the courage to end things with my boyfriend. \ 
-From this experience, I learned that I shouldn't stay with someone just because I'm scared of being alone. \ 
+Lately, I've been feeling unsure about my relationship with my boyfriend. 
+I was thinking about breaking up with him because things didn't feel right anymore.
+But I was really scared to make a move because all my friends know him and think he's super hot. 
+They kept telling me that I wouldn't find anyone better, which made me doubt myself even more. Feeling stuck, I decided to talk to a chatbot for advice. 
+The chatbot was really helpful; it asked me some deep questions and explained why staying in a relationship that feels emotionally unsafe isn't good for me. 
+It even gave me a step-by-step plan on how to break up with him. 
+This made me feel more confident, and I finally found the courage to end things with my boyfriend. 
+From this experience, I learned that I shouldn't stay with someone just because I'm scared of being alone.
 It's more important to be in a relationship that feels right and safe. 
 """
