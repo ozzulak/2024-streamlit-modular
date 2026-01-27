@@ -16,9 +16,7 @@
 # This is the text that will be shown on the first page
 [consent]
 
-intro_and_consent = """## Welcome to our Caroline's SECOND teenbot-prototype.
-
-We need to change this to align with what Caroline is doing.
+intro_and_consent = """## Hi and welcome this chatbot experience for the study exploring your perspectives on AI.  
 """
 
 
