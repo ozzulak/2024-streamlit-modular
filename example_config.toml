@@ -13,6 +13,25 @@
 # Note that three personas must be provided in the "personas" section. Additional personas will not be used.
 
 
+### Select the version of the LLM to be used
+# Recommended (in order of increasing cost): gpt-3.5-turbo-1106, gpt-4o
+# Specifying the model is optional; by default, gpt-4o will be used
+model = "gpt-4o"
+
+
+
+### Participant settings
+[participant]
+
+# Whether to require and collect participant IDs
+require_participant_id = false
+editable_participant_id = true
+text = "Please fill in your participant ID that will serve as an 'passcode' for your data."
+
+# Whether to fetch previous final scenario
+require_previous_final_scenario = false
+
+
 # This is the text that will be shown on the first page
 [consent]
 
